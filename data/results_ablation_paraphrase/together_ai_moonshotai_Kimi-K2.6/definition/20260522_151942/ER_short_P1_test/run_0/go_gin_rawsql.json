@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `getProduct`, the SELECT query filters only by `p_productkey` without checking `p_status`, so a product that was soft-deleted/discontinued by `discontinueProduct` (which sets `p_status = 'discontinued'`) is still returned to clients as if active. The read endpoint fails to exclude records whose lifecycle status was updated by the write endpoint."
+  }
+]

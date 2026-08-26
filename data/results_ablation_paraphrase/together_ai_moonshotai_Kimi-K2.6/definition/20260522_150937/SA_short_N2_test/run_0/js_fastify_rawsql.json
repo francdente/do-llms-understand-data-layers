@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance was found: the read endpoint GET /api/orders/:o_orderkey dynamically computes o_totalprice from lineitem rows on each request, and no cached or precomputed aggregate value is stored in the orders table or elsewhere."
+  }
+]

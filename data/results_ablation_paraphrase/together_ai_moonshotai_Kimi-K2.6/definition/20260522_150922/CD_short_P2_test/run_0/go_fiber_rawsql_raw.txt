@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, explicit `DELETE FROM orders WHERE o_custkey = ?` removes child order records before deleting the parent customer. The `ordersHistory` endpoint reads from the `orders` table and will now return incomplete data — missing all orders belonging to deleted customers — because those rows have been permanently removed by the application-level cascade delete."
+  }
+]
+```

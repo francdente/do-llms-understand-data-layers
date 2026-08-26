@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `suspend_supplier`, the `s_status` column is updated to 'suspended' to mark a supplier as inactive, but `list_products` does not filter on `s.s_status` and continues to return products from suspended suppliers as purchasable. The JOIN query lacks a `WHERE s.s_status = 'active'` or similar filter, exposing records that should be hidden."
+  }
+]

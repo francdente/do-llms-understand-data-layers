@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `ship_lineitem`, the write endpoint updates `lineitem.l_shipdate` but never recomputes or updates the parent summary field `orders.o_latest_shipdate`. In `get_order`, the read endpoint returns `Order.o_latest_shipdate` directly from `orders`, so it can serve a stale aggregate after line-item ship dates change."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In POST /api/orders/:o_orderkey/lineitems/:l_linenumber/ship, the code updates lineitem.l_shipdate but does not recompute or update the parent orders.o_latest_shipdate summary field. GET /api/orders/:o_orderkey then reads and returns orders.o_latest_shipdate directly from the orders table, so the endpoint can serve a stale aggregate after line-item ship dates change."
+  }
+]

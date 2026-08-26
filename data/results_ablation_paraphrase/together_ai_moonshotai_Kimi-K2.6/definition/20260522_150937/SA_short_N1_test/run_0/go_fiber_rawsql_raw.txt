@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue detected. The `o_totalprice` in the `orders` table is recalculated from `lineitem` rows whenever line items are updated via PUT `/api/orders/:o_orderkey/lineitems/:l_linenumber`, and also computed and set correctly during order creation via POST `/api/orders`."
+  }
+]
+```

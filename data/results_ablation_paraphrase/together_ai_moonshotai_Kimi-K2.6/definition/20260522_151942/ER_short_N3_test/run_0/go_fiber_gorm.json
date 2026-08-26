@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "The `app.Post(\"/api/products/:p_productkey/archive\")` endpoint updates `p_status` to 'archived', but there is no general product read endpoint (e.g., `GET /api/products/:p_productkey`) that filters out archived records. However, the `app.Get(\"/api/products/archived\")` endpoint correctly filters for archived records only. Since no active-product read endpoint exists that would expose archived records, the core issue pattern is not fully realized\u2014yet the archive write exists without a corresponding safe read, which is the structural gap. Re-evaluating: no read endpoint returns all/active products without status filtering, so strictly speaking no exposed record read exists. The archive endpoint writes status but no read endpoint ignores it."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In main.go, the DELETE /api/customers/:c_custkey handler explicitly executes `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer. This matches an application-level child-row cascade delete, and it causes observable data loss because GET /api/orders/summary is documented to summarize all historical orders but will no longer include orders for deleted customers."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "Detected in the write endpoint `ship_lineitem` and the read endpoint `get_order`. `ship_lineitem` updates `lineitem.l_shipdate` but does not update or recalculate the parent summary field `orders.o_latest_shipdate`, while `get_order` later returns `Order.o_latest_shipdate` directly from the `orders` table; this matches a stale aggregate where the parent cached summary can become outdated after detail-row writes."
+  }
+]

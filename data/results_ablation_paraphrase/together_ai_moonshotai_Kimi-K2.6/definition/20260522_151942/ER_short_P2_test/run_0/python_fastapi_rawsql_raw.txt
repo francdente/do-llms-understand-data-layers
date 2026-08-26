@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `get_product_availability`, the SELECT query joins `product` and `inventory` but does not filter on `p.p_status`, so a product that was soft-deleted via `discontinue_product` (which sets `p_status = 'discontinued'`) will still be returned to clients as available. The write endpoint updates lifecycle status, but the read endpoint ignores it."
+  }
+]
+```

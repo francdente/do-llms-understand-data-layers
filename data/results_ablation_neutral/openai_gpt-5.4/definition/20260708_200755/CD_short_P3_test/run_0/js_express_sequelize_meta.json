@@ -1,0 +1,8 @@
+{
+  "finish_reason": "stop",
+  "usage": {
+    "prompt_tokens": 1215,
+    "completion_tokens": 114,
+    "total_tokens": 1329
+  }
+}

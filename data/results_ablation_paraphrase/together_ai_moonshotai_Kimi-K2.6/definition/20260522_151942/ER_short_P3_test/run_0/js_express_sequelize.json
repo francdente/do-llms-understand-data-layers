@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `app.get('/api/products')`, the read endpoint joins with Supplier via `include: [{ model: Supplier, required: true }]` but does not filter on `s_status`, so products from suspended suppliers (updated by `app.post('/api/suppliers/:s_suppkey/suspend')` setting `s_status: 'suspended'`) continue to be returned as purchasable."
+  }
+]

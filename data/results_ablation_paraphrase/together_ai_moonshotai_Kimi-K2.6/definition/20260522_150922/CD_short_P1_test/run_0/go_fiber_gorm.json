@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, deleting a customer first explicitly deletes all related orders with 'DELETE FROM orders WHERE o_custkey = ?', then deletes the customer. The GET /api/orders/summary endpoint depends on the orders table to return historical total revenue and order count, so after customer deletion, this summary endpoint returns incomplete/missing data because the associated orders have been permanently removed."
+  }
+]

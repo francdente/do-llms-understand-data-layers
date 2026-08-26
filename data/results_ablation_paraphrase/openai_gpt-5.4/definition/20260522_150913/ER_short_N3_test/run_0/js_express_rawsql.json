@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance was found: the write endpoint archives products by setting p_status = 'archived', and the read endpoint shown explicitly filters for archived records rather than returning them as active/visible records."
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "taxonomy": ["ER_short_P3"],
+    "description": "suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers."
+  }
+]

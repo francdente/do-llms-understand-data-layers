@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: deleting a customer in /api/customers/:c_custkey does not cascade to orders, and the code explicitly blocks parent deletion when child orders exist, so no child-row data loss affecting /api/dashboard is introduced."
+  }
+]

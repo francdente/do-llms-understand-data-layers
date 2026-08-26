@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In add_lineitem(), the write endpoint inserts a new lineitem for an existing order but never recalculates or updates orders.o_totalprice. In get_order(), the read endpoint returns Order.o_totalprice directly from the orders table, so after lineitem changes this cached aggregate can be stale and incorrect relative to the current lineitem rows."
+  }
+]

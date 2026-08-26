@@ -1,0 +1,8 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "taxonomy": ["ER_short_N2"],
+    "description": "update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue."
+  }
+]

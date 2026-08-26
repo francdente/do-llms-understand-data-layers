@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `create_order()`, the `o_totalprice` is computed as a SUM aggregate from `lineitem` rows and stored in the `orders` table. However, in `update_lineitem()`, when a line item's `l_extendedprice`, `l_discount`, or `l_tax` is modified, the `orders.o_totalprice` is not recalculated and updated, causing the parent order's total price to become stale."
+  }
+]
+```

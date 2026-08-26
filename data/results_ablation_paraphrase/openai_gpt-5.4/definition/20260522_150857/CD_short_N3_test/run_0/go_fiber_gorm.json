@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: the DELETE handler in main.go deletes from customer, but the schema's foreign key from orders to customer has no ON DELETE CASCADE and the code explicitly treats existing child orders as a constraint error instead of removing them."
+  }
+]

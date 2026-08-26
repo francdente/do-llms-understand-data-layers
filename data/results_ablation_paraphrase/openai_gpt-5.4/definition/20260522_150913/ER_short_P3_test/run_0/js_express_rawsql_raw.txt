@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the POST /api/suppliers/:s_suppkey/suspend endpoint, supplier records are lifecycle-updated via `UPDATE supplier SET s_status = 'suspended'`. In the GET /api/products endpoint, the query joins `product` to `supplier` but does not filter out suspended suppliers (for example, no `WHERE s.s_status != 'suspended'`), so products from suspended suppliers are still returned as purchasable/visible."
+  }
+]

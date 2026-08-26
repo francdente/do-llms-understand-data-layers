@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found: the delete_customer endpoint explicitly catches IntegrityError when foreign key constraints are violated, and no ON DELETE CASCADE is configured in the schema or application code."
+  }
+]
+```

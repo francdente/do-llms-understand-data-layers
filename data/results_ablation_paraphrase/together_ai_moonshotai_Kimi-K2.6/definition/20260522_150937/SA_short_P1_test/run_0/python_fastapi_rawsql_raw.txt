@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `update_lineitem` (PUT /api/orders/{o_orderkey}/lineitems/{l_linenumber}), the `o_totalprice` column in the parent `orders` table is not recalculated after updating `l_extendedprice`, `l_discount`, or `l_tax` in the `lineitem` table. The `get_order` endpoint reads this stale `o_totalprice` value, which no longer reflects the actual sum of line item prices. Detection signal: parent table stores a precomputed aggregate (`o_totalprice`) that is updated only in `create_order` but not when detail rows are modified by another write endpoint."
+  }
+]
+```

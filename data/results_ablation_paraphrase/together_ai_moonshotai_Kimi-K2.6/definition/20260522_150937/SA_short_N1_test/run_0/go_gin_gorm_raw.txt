@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The `o_totalprice` in the `orders` table is recalculated from `lineitem` rows whenever line items are updated (PUT endpoint) or created (POST endpoint), and the GET endpoint reads the current value from the database."
+  }
+]
+```

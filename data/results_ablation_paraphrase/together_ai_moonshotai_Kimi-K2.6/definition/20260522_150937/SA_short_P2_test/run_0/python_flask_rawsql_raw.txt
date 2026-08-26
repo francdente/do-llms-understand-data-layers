@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `add_lineitem` (POST /api/orders/<o_orderkey>/lineitems), a new lineitem is inserted but `orders.o_totalprice` is not recalculated and updated. The `get_order` endpoint reads `o_totalprice` from the parent `orders` table, which is now stale because it doesn't reflect the newly added lineitem's extended price, discount, and tax."
+  }
+]
+```

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly deletes child records from the 'orders' table (DELETE FROM orders WHERE o_custkey = ?) before deleting the parent customer record. The GET /api/orders/monthly-trend endpoint depends on the 'orders' table to compute monthly revenue and order counts, so deleting orders causes this read endpoint to return incomplete/missing historical data for months that previously included the deleted customer's orders."
+  }
+]

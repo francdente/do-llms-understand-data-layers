@@ -1,0 +1,1 @@
+[{"name":"cascade_delete","detected":false,"description":"No instance was found: deleting a customer in DELETE /api/customers/:c_custkey does not cascade to orders, and the code explicitly blocks deletion when child orders exist via a foreign key constraint error."}]

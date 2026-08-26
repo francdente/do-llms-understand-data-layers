@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly deletes all `Order` rows with matching `o_custkey` before deleting the `Customer`. The `/api/orders/history` endpoint returns 'the history of all existed orders', meaning orders should remain observable after a customer is deleted. This explicit child-row deletion causes data loss for that endpoint."
+  }
+]

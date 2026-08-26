@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly deletes all orders with matching o_custkey before deleting the customer. The GET /api/orders endpoint only returns orders joined to active customers, so this cascade is safe for that endpoint. However, there is no other endpoint that needs orphaned orders, so no observable data loss occurs for another endpoint."
+  }
+]

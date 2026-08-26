@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `listProducts`, the query joins `product` with `supplier` but does not filter on `s.s_status`, so products from suspended suppliers are still returned. The `suspendSupplier` endpoint sets `s_status = 'suspended'` to deactivate suppliers, but this status is never checked in the read path."
+  }
+]

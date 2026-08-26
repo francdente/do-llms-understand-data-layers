@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer` at `/api/customers/{c_custkey}`, the endpoint explicitly deletes all `Order` rows with `db.execute(delete(Order).where(Order.o_custkey == c_custkey))` before deleting the customer. This causes observable data loss for the `/api/orders` endpoint, which only returns orders tied to active customers (via `IN` subquery on `Customer.c_custkey`). Once a customer is deleted, their orders are permanently gone and can never be retrieved by `list_orders`, even though the orders table could logically retain them."
+  }
+]
+```

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer` function, explicit `DELETE FROM orders WHERE o_custkey = ?` is executed before deleting the customer. The `ordersSummary` endpoint relies on all historical orders for its `total_orders` and `total_revenue` calculations, so deleting orders when a customer is removed causes observable data loss for that summary endpoint."
+  }
+]

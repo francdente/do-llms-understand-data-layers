@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "Detected in the DELETE endpoint function delete_customer: it explicitly deletes child rows with db.query(Order).filter(Order.o_custkey == c_custkey).delete(...) before deleting the parent Customer row. This matches an application-level cascade delete, and the separate read endpoint orders_history depends on Order rows, so deleting a customer permanently removes orders that /api/orders/history expects to return."
+  }
+]

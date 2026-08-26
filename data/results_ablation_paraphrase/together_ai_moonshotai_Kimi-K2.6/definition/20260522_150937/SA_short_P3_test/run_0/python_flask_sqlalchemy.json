@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `ship_lineitem`, updating `l_shipdate` on a lineitem does not recalculate or update `Order.o_latest_shipdate`, yet `get_order` returns this cached aggregate field directly from the orders table. The `o_latest_shipdate` stored in the parent table becomes stale when lineitem ship dates change."
+  }
+]

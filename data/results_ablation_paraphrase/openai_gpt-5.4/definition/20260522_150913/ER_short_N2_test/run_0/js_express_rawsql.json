@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the code does not include any write endpoint that updates a product lifecycle status such as soft-delete, archive, or deactivation, so there is no corresponding missing status filter on reads to report."
+  }
+]

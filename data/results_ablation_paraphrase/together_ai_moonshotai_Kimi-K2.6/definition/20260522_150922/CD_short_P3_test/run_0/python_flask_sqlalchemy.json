@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, explicit `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` removes all child orders before deleting the customer. The `monthly_trend` endpoint depends on these order rows to compute per-month aggregates, so after a customer deletion, historical revenue and order counts will be permanently missing/incomplete."
+  }
+]

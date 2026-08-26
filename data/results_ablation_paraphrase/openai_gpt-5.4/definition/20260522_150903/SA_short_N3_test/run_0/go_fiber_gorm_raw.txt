@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance of a stale aggregate was found: the write endpoint shipLineitem updates the summarized parent field orders.o_latest_shipdate after modifying lineitem.l_shipdate, and the read endpoint getOrder serves that maintained value."
+  }
+]

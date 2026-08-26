@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The customer DELETE endpoint explicitly checks for foreign key constraint violations and returns a 409 error rather than allowing cascading deletion, and there are no ON DELETE CASCADE constraints in the schema."
+  }
+]

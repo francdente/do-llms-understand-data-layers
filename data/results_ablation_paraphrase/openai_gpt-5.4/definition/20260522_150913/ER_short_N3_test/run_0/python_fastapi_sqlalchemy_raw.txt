@@ -1,0 +1,1 @@
+[{"name":"exposed_record","detected":false,"description":"No instance found: the write endpoint `archive_product` marks records with `p_status = \"archived\"`, and the only read endpoint shown, `list_archived_products`, explicitly filters on `Product.p_status == \"archived\"` rather than exposing archived records as active."}]

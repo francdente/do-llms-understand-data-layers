@@ -1,0 +1,1367 @@
+task,variant,label,gt_detected,gt_description,raw_output,judge_detected,judge_explanation,F_classification,F_explanation,D_classification,D_explanation,Agreement,,,
+CD_short_N1_test,go_fiber_gorm,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Incorrect RowsAffected Check"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code checks result.RowsAffected after a db.Raw().Scan() call. In GORM, Scan() does not populate RowsAffected; this check will always be 0 (or fail to detect the record), causing the API to return 404 even if the customer exists.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned orders, or stale data visibility after deleting a customer. They only report an unrelated RowsAffected/Scan issue.",FALSE,,FALSE,,1,,Total agreement:,1
+CD_short_N1_test,go_fiber_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Resource Leak"",
+    ""detected"": true,
+    ""description"": ""In the deleteCustomer function, the database transaction (tx) is deferred to Rollback, but if tx.Commit() is successful, the deferred Rollback still executes. While often a no-op in some drivers, it is a pattern that can lead to unexpected behavior or warnings depending on the SQL driver implementation.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned orders, or stale data visibility after deleting a customer. They only flag a transaction rollback/commit pattern issue, which is unrelated.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,go_gin_gorm,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Incorrect Column Reference in Join"",
+    ""detected"": true,
+    ""description"": ""In the GET /api/orders handler, the Joins clause uses 'o.o_custkey', but the orders table column is 'o_custkey'. The prefix 'o.' is applied to the column name, resulting in a reference to 'o.o_custkey' which does not exist in the schema.""
+  }
+]",False,"The reviewer does not mention delete_customer, cascading/orphaned order rows, or stale data visibility after customer deletion. They only report an incorrect join column reference, which is a different issue.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,go_gin_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Resource Leak"",
+    ""detected"": true,
+    ""description"": ""In the deleteCustomer function, the database transaction (tx) is not closed if the function returns early due to an error after tx.Exec calls, as defer tx.Rollback() only handles the rollback and not the explicit release of resources in all driver implementations.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned/stale orders, or any issue related to delete_customer removing orders and list_orders JOIN behavior. They only report a transaction/resource leak, which is a different root cause.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,js_express_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Resource Leak on Error"",
+    ""detected"": true,
+    ""description"": ""In the DELETE and GET endpoints, the catch block throws the error after calling db.close(), but since the error is thrown inside an Express route handler without being passed to next(), it may cause the process to crash or hang without sending a response to the client.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned orders, or stale data visibility after deleting a customer. They only report an Express error-handling issue, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,js_express_sequelize,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.",[],False,"The reviewer output is empty and does not flag this issue, which agrees with the expected result that it should not be detected.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,js_fastify_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Non-Atomic Deletion"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the deletion of related orders and the customer record are performed as separate calls without a transaction. If the process crashes between the two calls, the database will be left in an inconsistent state with orphaned records or partial deletions.""
+  }
+]",False,"The reviewer flags a different issue: lack of transactional atomicity causing possible partial deletions/orphans on crash. They do not describe the expected cascade_delete concern about observable stale/orphaned orders after customer deletion, which should not be detected here.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,js_fastify_sequelize,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Incorrect Data Type Mapping"",
+    ""detected"": true,
+    ""description"": ""In the Order model definition, 'o_totalprice' is mapped to 'DataTypes.REAL'. In Sequelize, 'REAL' is not a standard DataType; it should be 'DataTypes.FLOAT' or 'DataTypes.DECIMAL' to match the SQLite REAL type.""
+  }
+]",False,"The reviewer does not mention any issue about deleting customers, cascading/removing orders, orphaned rows, or stale data visibility. They only flag a datatype mapping problem, so they correctly do not detect this non-issue.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,python_fastapi_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Incorrect JSONResponse Usage"",
+    ""detected"": true,
+    ""description"": ""In the list_orders function, JSONResponse is called with a list as the first argument, but it expects a dictionary for the 'content' parameter, which will cause a runtime error.""
+  }
+]",False,"The reviewer only reports an unrelated JSONResponse misuse and does not mention delete_customer, cascading/orphaned orders, or stale data visibility.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,python_fastapi_sqlalchemy,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Missing Transactional Atomicity"",
+    ""detected"": true,
+    ""description"": ""In the delete_customer function, the deletion of related orders and the customer record are performed as separate queries. If the process fails between these two calls, it will leave orphaned orders in the database.""
+  }
+]",False,The reviewer did not describe the expected cascade-delete/orphan-visibility issue. They instead flagged a different problem: lack of transactional atomicity causing possible orphaned orders if deletion fails mid-process.,FALSE,,FALSE,,1,,,
+CD_short_N1_test,python_flask_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.",[],False,"The expected finding should not be detected, and the reviewer output is empty, so they did not incorrectly flag this issue.",FALSE,,FALSE,,1,,,
+CD_short_N1_test,python_flask_sqlalchemy,cascade_delete,False,"delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable.",[],False,"The expected finding should not be detected, and the reviewer output is empty, so they did not incorrectly flag this issue.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,go_fiber_gorm,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Incorrect RowsAffected Check"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code checks result.RowsAffected after a .Scan() call. In GORM, .Scan() does not populate RowsAffected; it should be checked on the result of the query execution (e.g., using .Find() or checking the result of the Raw query before scanning).""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned orders, or stale rows after deleting a customer. They only flag an unrelated RowsAffected/Scan issue, so they correctly do not detect this non-issue.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,go_fiber_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Inefficient Existence Check"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code performs a separate SELECT query to check for customer existence before starting a transaction to delete, which creates a race condition and unnecessary database round-trip.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned orders, or stale observable data after deleting a customer. They only flag a separate existence-check/race-condition issue.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,go_gin_gorm,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Potential Resource Leak"",
+    ""detected"": true,
+    ""description"": ""In the DELETE handler, the `row := gormDB.Raw(...).Row()` call returns a *sql.Row. While sql.Row doesn't have a Close method, the underlying connection is not released until Scan is called; however, if an error occurs before Scan or if the logic changes, it can lead to connection pool exhaustion in some drivers.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned orders, or stale data visibility after deleting a customer. They only report a potential resource leak, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,go_gin_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Database Connection Leak"",
+    ""detected"": true,
+    ""description"": ""In the main function, db.Close() is called via defer, but the application is started with router.Run(), which blocks indefinitely. This means the database connection is never closed gracefully during the application's lifecycle.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned orders, or deleted customers' orders remaining observable. They only report a database connection lifecycle issue, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,js_express_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Race Condition / Time-of-Check Time-of-Use"",
+    ""detected"": true,
+    ""description"": ""The check for customer existence is performed outside the transaction. A customer could be deleted by another process between the SELECT check and the transaction execution, leading to inconsistent state or unexpected behavior.""
+  }
+]",False,"The reviewer only reports a race condition/TOCTOU issue about checking customer existence outside a transaction. They do not mention cascade deletion, orphaned orders, or stale observable data from deleted customers.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,js_express_sequelize,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""SQL Injection"",
+    ""detected"": true,
+    ""description"": ""The use of `Sequelize.literal` in the `/api/orders` endpoint's `where` clause can be dangerous if any part of the literal string is constructed from user input, although in this specific case it is a static string. However, using `Sequelize.literal` bypasses the ORM's safety mechanisms and is a high-risk pattern.""
+  }
+]",False,"The reviewer does not mention any issue about deleting customers, cascading/removing orders, orphaned rows, or stale order visibility. They only discuss a separate SQL injection concern.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,js_fastify_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Incorrect Port Binding"",
+    ""detected"": false,
+    ""description"": """"
+  }
+]",False,"The expected finding should not be detected, and the reviewer output does not mention cascade delete, orphaned orders, or any equivalent data-layer issue.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,js_fastify_sequelize,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""SQL Injection"",
+    ""detected"": true,
+    ""description"": ""The use of `sequelize.literal` in the `/api/orders` endpoint's `where` clause can be dangerous if the literal string is ever constructed from user input, although here it is a static string. However, using `sequelize.literal` bypasses the ORM's safety mechanisms and is a pattern that leads to SQL injection.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned/stale orders, or any issue related to deleting customers and order visibility. They only flag a separate SQL injection concern.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,python_fastapi_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Incorrect JSONResponse usage"",
+    ""detected"": true,
+    ""description"": ""In the list_orders function, JSONResponse is called with a list as the first positional argument, but it expects a 'content' keyword argument or a dictionary. This will cause a runtime error when attempting to return the list of orders.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned/stale orders, or delete_customer/list_orders interaction. They only flag an unrelated JSONResponse usage issue.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,python_fastapi_sqlalchemy,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Inefficient Subquery"",
+    ""detected"": true,
+    ""description"": ""In the `list_orders` function, the `where(Order.o_custkey.in_(subquery))` clause uses a subquery that selects all customer keys, which is logically equivalent to a join or a simple select and can lead to poor performance as the customer table grows.""
+  }
+]",False,"The reviewer does not mention cascade deletion, orphaned orders, or stale data after deleting a customer. They only flag a performance issue with the subquery in list_orders, which is a different concept.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,python_flask_rawsql,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.",[],False,"The reviewer output is empty and does not flag any cascade delete/orphaned orders issue, which agrees with the expected result that this issue should not be detected.",FALSE,,FALSE,,1,,,
+CD_short_N2_test,python_flask_sqlalchemy,cascade_delete,False,"delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable.","[
+  {
+    ""name"": ""Inefficient Subquery"",
+    ""detected"": true,
+    ""description"": ""In the `list_orders` function, the `where(Order.o_custkey.in_(subquery))` clause uses a subquery that selects all customer keys, which is logically equivalent to a join or a simple select on the orders table given the foreign key constraint, potentially causing performance degradation as the customer table grows.""
+  }
+]",False,"The reviewer does not mention stale/orphaned orders or deletion behavior. They only flag a performance issue with the subquery in list_orders, which is a different concept. Since cascade_delete should NOT be detected, this is correctly not flagged.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,go_fiber_gorm,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Incorrect Existence Check"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code checks if existing.CCustkey == 0 to determine if a customer exists. Since c_custkey is an integer, this will incorrectly report a 'Customer not found' error if a customer with ID 0 actually exists in the database.""
+  }
+]",False,"The reviewer does not mention deleting customers with dependent orders, foreign key enforcement, or cascade behavior. They only flag an existence-check bug unrelated to cascade delete.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,go_fiber_rawsql,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Incorrect Error Handling for Foreign Key Violation"",
+    ""detected"": true,
+    ""description"": ""In deleteCustomer, the code assumes any error from db.Exec is a foreign key violation (returning 409), but it could be any other database error, leading to misleading API responses.""
+  }
+]",False,"The reviewer did not claim that deleting a customer wrongly cascades and removes child orders or that missing child deletion is a data-loss issue. They instead flagged overly broad error handling for database errors, which is a different root cause.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,go_gin_gorm,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Incorrect Error Handling for Foreign Key Violation"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code assumes any error from db.Exec is a foreign key violation (returning StatusConflict), which would incorrectly categorize database connection failures or other system errors as constraint violations.""
+  }
+]",False,The expected finding says cascade delete should NOT be flagged because deleting a customer with child orders is blocked by foreign key enforcement rather than silently deleting orders. The reviewer instead flags a different issue: overly broad error handling that treats any delete error as a foreign key violation. They do not claim child orders are improperly deleted or that cascade deletion is a problem.,FALSE,,FALSE,,1,,,
+CD_short_N3_test,go_gin_rawsql,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Foreign Key Constraint Violation Handling"",
+    ""detected"": true,
+    ""description"": ""In deleteCustomer, the code assumes any error from db.Exec is a foreign key violation (returning StatusConflict), but it could be any other database error, leading to incorrect API responses.""
+  }
+]",False,"The reviewer did not claim that deleting a customer wrongly cascades or silently loses child orders. They instead flagged overly broad error handling for delete failures, which is a different issue from cascade deletion.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,js_express_rawsql,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.",[],False,"The reviewer output is empty and does not flag any issue about deleting customers with dependent orders, which correctly agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,js_express_sequelize,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Unprotected Database Path"",
+    ""detected"": true,
+    ""description"": ""The DATABASE constant is initialized using process.env.DB_PATH, which allows an attacker to control the database file path via environment variables, potentially leading to arbitrary file read/write or denial of service.""
+  }
+]",False,"The reviewer does not mention deleting customers with dependent orders, missing child-row cleanup, foreign key enforcement, or any cascade-delete-related issue. They only flag an unrelated database path/environment variable concern.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,js_fastify_rawsql,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.",[],False,"The reviewer output is empty and does not flag any issue about deleting customers with dependent orders, which correctly agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,js_fastify_sequelize,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Foreign Key Enforcement Failure"",
+    ""detected"": true,
+    ""description"": ""The code relies on 'PRAGMA foreign_keys = ON' to trigger a ForeignKeyConstraintError during customer deletion. However, in SQLite, this pragma must be executed on every single connection; since Sequelize uses a connection pool, subsequent requests may use connections where foreign keys are disabled, allowing deletions that violate referential integrity.""
+  }
+]",False,"The expected finding says missing child-row deletion is not a real issue because foreign key enforcement blocks the delete. The reviewer instead flags a different root cause: foreign key pragma may not be enabled on every pooled SQLite connection, potentially allowing invalid deletes. That is not the same as claiming the code should cascade-delete orders.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,python_fastapi_rawsql,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Foreign Key Constraint Violation Handling"",
+    ""detected"": true,
+    ""description"": ""In delete_customer, the code catches sqlite3.IntegrityError to handle existing orders, but the schema does not define an ON DELETE RESTRICT or NO ACTION clause, and SQLite's default behavior for foreign keys may not trigger an IntegrityError during a DELETE unless the constraint is explicitly violated in a way the engine catches.""
+  }
+]",True,"The expected finding says this issue should NOT be detected because deleting a customer with child orders is correctly blocked by foreign key enforcement. The reviewer nevertheless flags this same underlying area as a problem, claiming delete_customer's IntegrityError handling may not work due to foreign key behavior. That is an incorrect detection of the non-issue.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,python_fastapi_sqlalchemy,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Foreign Key Constraint Violation Handling"",
+    ""detected"": true,
+    ""description"": ""In `delete_customer`, the code catches `IntegrityError` to handle cases where a customer has orders. However, since the schema does not define `ON DELETE CASCADE`, the database will raise a foreign key violation, but the current implementation relies on a try-except block that may not be the only way the DB signals this, and more importantly, it assumes any IntegrityError is specifically a foreign key violation.""
+  }
+]",True,"The expected finding should NOT be detected, but the reviewer explicitly flags the lack of ON DELETE CASCADE / foreign key violation behavior in delete_customer as a problem. This matches the underlying cascade-delete concept, even though the ground truth says it is not a real issue.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,python_flask_rawsql,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.",[],False,"The reviewer output is empty and does not flag any issue about deleting customers with dependent orders, which correctly agrees with the expectation that this should not be detected.",FALSE,,FALSE,,1,,,
+CD_short_N3_test,python_flask_sqlalchemy,cascade_delete,False,"delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct.","[
+  {
+    ""name"": ""Incorrect PRAGMA execution"",
+    ""detected"": true,
+    ""description"": ""In get_db(), the code attempts to execute 'PRAGMA foreign_keys = ON;' as a raw string via session.execute(). In SQLAlchemy 2.0+, raw SQL strings must be wrapped in text() to be executed, otherwise this will raise an ArgumentError.""
+  }
+]",False,"The reviewer does not mention deleting customers with dependent orders, missing child-row cleanup, foreign key rejection, or any cascade-delete-related issue. They only flag incorrect PRAGMA execution.",FALSE,,FALSE,,1,,,
+CD_short_P1_test,go_fiber_gorm,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Incorrect RowsAffected Check"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code checks result.RowsAffected after a .Scan() call. In GORM, .Scan() does not populate RowsAffected; it should be checked on the result of the query execution (e.g., using .Find() or checking the result of the Raw query before scanning).""
+  }
+]",False,The reviewer only mentions an incorrect RowsAffected check after Scan() in the delete handler. They do not describe the cascade deletion of orders causing orders_summary to lose historical order counts/revenue due to aggregating directly from orders.,FALSE,,FALSE,,1,,,
+CD_short_P1_test,go_fiber_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Potential Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the check for customer existence is performed outside the transaction. A customer could be deleted by another process between the check and the transaction start, leading to a successful 204 response for a non-existent entity.""
+  }
+]",False,"The reviewer describes a race condition where customer existence is checked outside the transaction, causing a possible 204 for a non-existent customer. This does not match the expected issue about deleting a customer cascading to orders and causing orders_summary aggregates to drop that customer's historical orders.",FALSE,,FALSE,,1,,,
+CD_short_P1_test,go_gin_gorm,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Incorrect RowsAffected Check"",
+    ""detected"": true,
+    ""description"": ""In deleteCustomer, the code checks result.RowsAffected after a .Scan() call. In GORM, .Scan() does not populate RowsAffected; it should be checked on the result of the query execution (e.g., using .Find() or checking the scan result differently), leading to incorrect 'Customer not found' responses.""
+  }
+]",False,The reviewer only reports an incorrect RowsAffected check in deleteCustomer. They do not mention cascade deletion of orders or the resulting inconsistency in orders_summary aggregation after customer deletion.,FALSE,,FALSE,,1,,,
+CD_short_P1_test,go_gin_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Database Connection Leak"",
+    ""detected"": true,
+    ""description"": ""In the main function, db.Close() is deferred, but the application starts a blocking HTTP server via router.Run(). This means the database connection will not be closed gracefully until the process is terminated.""
+  }
+]",False,The reviewer only mentions a database connection leak related to db.Close() and the blocking HTTP server. They do not describe the delete_customer cascade deleting orders or the resulting inconsistency in orders_summary aggregation.,FALSE,,FALSE,,1,,,
+CD_short_P1_test,js_express_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Time-of-check to time-of-use (TOCTOU) Race Condition"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey endpoint, the existence check is performed outside the transaction. A concurrent request could delete the customer between the check and the transaction execution, leading to inconsistent behavior.""
+  }
+]",False,The reviewer only reports a TOCTOU race condition around checking customer existence before deletion. They do not mention the core issue that deleting a customer cascades/removes orders and thereby causes orders_summary to lose historical order counts and revenue because it aggregates directly from orders.,FALSE,,FALSE,,1,,,
+CD_short_P1_test,js_express_sequelize,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.",[],False,The reviewer output is empty and does not mention the issue where deleting a customer cascades to orders and causes orders_summary to lose that customer's historical counts/revenue.,FALSE,,FALSE,,1,,,
+CD_short_P1_test,js_fastify_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Incorrect Fastify Listen Method"",
+    ""detected"": true,
+    ""description"": ""The code calls `app.listen` as a synchronous function with a callback, but in Fastify v4+, `listen` is an asynchronous method that returns a promise and does not accept a callback as the second argument.""
+  }
+]",False,The reviewer only mentions an unrelated Fastify listen API issue and does not describe the data-layer problem where deleting a customer cascades order deletion and causes orders_summary to lose that customer's historical counts/revenue.,FALSE,,FALSE,,1,,,
+CD_short_P1_test,js_fastify_sequelize,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Potential Data Loss via Unintended Cascade"",
+    ""detected"": false,
+    ""description"": ""No issues found.""
+  }
+]",False,"The expected issue should have been detected, but the reviewer explicitly said no issues were found and did not describe the problem of deleting customer orders causing orders_summary to lose that customer's historical counts and revenue.",FALSE,,FALSE,"Issue name seems correct, but detected is false and no description given",1,,,
+CD_short_P1_test,python_fastapi_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Missing Transactional Atomicity"",
+    ""detected"": true,
+    ""description"": ""In the `delete_customer` function, the deletion of records from `orders` and `customer` is performed in separate execute calls without an explicit transaction. If the second delete fails, the system is left in an inconsistent state where orders are gone but the customer remains.""
+  }
+]",False,"The reviewer only reports a lack of transactional atomicity in delete_customer. They do not mention the expected issue that deleting a customer cascades/removes orders and thereby causes orders_summary, which aggregates all orders rows, to lose that customer's historical counts and revenue.",FALSE,,FALSE,,1,,,
+CD_short_P1_test,python_fastapi_sqlalchemy,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Missing Transactional Atomicity"",
+    ""detected"": true,
+    ""description"": ""In the delete_customer endpoint, the deletion of related orders and the customer record are performed as separate queries. If the process fails between these two calls, it will leave orphaned orders in the database.""
+  }
+]",False,"The expected issue is that deleting a customer cascades to orders, causing orders_summary to lose historical order counts/revenue because it aggregates directly from orders. The reviewer instead reports a transactional atomicity problem about separate delete queries potentially leaving orphaned orders. This is a different root cause.",FALSE,,FALSE,,1,,,
+CD_short_P1_test,python_flask_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Missing Transactional Atomicity"",
+    ""detected"": true,
+    ""description"": ""In the delete_customer route, the deletion of orders and the customer is performed in two separate execute calls. If the process crashes between these calls, the database will be left in an inconsistent state where orders are deleted but the customer remains.""
+  }
+]",False,The reviewer describes a lack of transactional atomicity between deleting orders and deleting the customer. They do not mention the expected issue: that deleting a customer cascades to orders and causes orders_summary to lose historical order counts/revenue because it aggregates directly from orders.,FALSE,,FALSE,,1,,,
+CD_short_P1_test,python_flask_sqlalchemy,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue.","[
+  {
+    ""name"": ""Inconsistent Data Deletion"",
+    ""detected"": true,
+    ""description"": ""In the delete_customer function, the code manually deletes associated orders before deleting the customer. This bypasses database-level referential integrity constraints and can lead to orphaned records if the transaction fails between the two delete calls.""
+  }
+]",False,"The expected issue is that deleting a customer and their orders causes orders_summary to lose historical order counts/revenue because it aggregates directly from orders. The reviewer instead discusses manual deletion/orphaned records and transaction integrity, which is a different root cause.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,go_fiber_gorm,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Inconsistent Data State on Delete"",
+    ""detected"": true,
+    ""description"": ""The DELETE operation for customers and their orders is performed in a manual transaction, but the initial check for customer existence is done outside that transaction. This creates a race condition where a customer could be deleted by another process between the check and the transaction start.""
+  }
+]",False,"The expected issue is that deleting a customer also deletes their orders, causing historical order records to disappear from orders_history. The reviewer instead describes a race condition from checking customer existence outside the transaction, which is a different root cause.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,go_fiber_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Resource Leak"",
+    ""detected"": true,
+    ""description"": ""In the main function, db.Close() is deferred, but log.Fatal(app.Listen(...)) calls os.Exit(1), which prevents deferred functions from executing.""
+  }
+]",False,The reviewer only reports a resource leak caused by log.Fatal preventing db.Close() from running. They do not mention deleting a customer cascading to orders and causing historical order records to disappear from orders_history.,FALSE,,FALSE,,1,,,
+CD_short_P2_test,go_gin_gorm,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Potential SQL Injection"",
+    ""detected"": true,
+    ""description"": ""The `db.Table(\""orders\"").Order(\""o_orderdate\"").Find(&rows)` call is safe, but the use of `tx.Exec` with raw SQL strings is generally risky; however, in this specific code, parameters are passed via placeholders, so no immediate injection is present. Wait, looking closer at the `Order` history endpoint, there are no user-controlled inputs in the `Order` clause, so this is actually safe.""
+  }
+]
+
+Wait, I must re-evaluate. Looking at the code again:
+1. `DELETE /api/customers/:c_custkey`: Uses `strconv.Atoi` for the ID and parameterized queries `?`. Safe.
+2. `GET /api/orders/history`: Hardcoded `Order(""o_orderdate"")`. Safe.
+
+Actually, there are no data-layer issues based on the provided ground rules (ignoring style, validation, and concurrency).
+
+Correct response:
+[]",False,"The reviewer did not identify that deleting a customer also deletes their orders, causing the orders history endpoint to lose historical records. They explicitly concluded there were no data-layer issues.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,go_gin_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Resource Leak"",
+    ""detected"": true,
+    ""description"": ""In the `ordersHistory` function, if `rows.Scan` returns an error, the function returns immediately without calling `rows.Close()`, potentially leaking database connections.""
+  }
+]",False,"The reviewer only reports a resource leak in ordersHistory due to rows.Close() not being called on scan error. They do not mention the core issue that deleting a customer cascades to delete orders, causing historical order records to disappear.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,js_express_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Resource Leak on Error"",
+    ""detected"": true,
+    ""description"": ""In both the DELETE and GET endpoints, the catch block throws the error after calling db.close(), but since these are Express route handlers, throwing an error without calling next(err) or sending a response will cause the request to hang or the process to crash, potentially bypassing proper cleanup in more complex scenarios.""
+  }
+]",False,"The reviewer only mentions error handling in Express route handlers causing hangs/crashes. They do not describe the data-layer issue where deleting a customer cascades to delete orders, causing historical order records to disappear from orders_history.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,js_express_sequelize,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.",[],False,"The reviewer output is empty and does not mention the issue that deleting a customer cascades to orders, causing historical order records to disappear from orders_history.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,js_fastify_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Incorrect Transaction Usage"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, db.transaction() returns a function that must be executed to start the transaction. While txn() is called, the internal db.prepare().run() calls are executed on the main db instance rather than within the transaction context provided by the wrapper, which can lead to unexpected behavior in some better-sqlite3 versions or configurations.""
+  }
+]",False,The reviewer only reports a transaction-handling issue in the DELETE customer handler. They do not mention deletion of orders causing historical order records to disappear or any mismatch with orders_history semantics.,FALSE,,FALSE,,1,,,
+CD_short_P2_test,js_fastify_sequelize,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.",[],False,"The reviewer output is empty and does not mention the issue that deleting a customer cascades to orders, causing historical order records to disappear.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,python_fastapi_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Invalid JSONResponse usage"",
+    ""detected"": true,
+    ""description"": ""In the `orders_history` function, `JSONResponse` is called with a list as the first positional argument, but it expects a `content` keyword argument or a dictionary. This will cause a runtime error when attempting to return the order history.""
+  }
+]",False,"The reviewer only reports an invalid JSONResponse/runtime issue in orders_history. They do not mention the data-layer problem where deleting a customer cascades to delete orders, causing historical records to disappear.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,python_fastapi_sqlalchemy,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Missing Foreign Key Constraint in ORM"",
+    ""detected"": true,
+    ""description"": ""The Order class in the SQLAlchemy model lacks a ForeignKey definition for o_custkey, which deviates from the provided DB schema and prevents the ORM from understanding the relationship between Customer and Order.""
+  }
+]",False,The reviewer only mentions a missing ORM ForeignKey on o_custkey. They do not identify the data-loss issue where deleting a customer removes orders that the orders_history route is expected to preserve.,FALSE,,FALSE,,1,,,
+CD_short_P2_test,python_flask_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.","[
+  {
+    ""name"": ""Missing Transactional Atomicity"",
+    ""detected"": true,
+    ""description"": ""In the delete_customer route, the deletion of orders and the customer is performed in separate execute calls without an explicit transaction wrapper. If the second delete fails, the system is left in an inconsistent state where orders are gone but the customer remains.""
+  }
+]",False,"The reviewer describes a lack of transactional atomicity between deleting orders and deleting the customer. They do not mention the expected issue: that deleting a customer cascades/removes orders needed by orders_history, causing historical records to disappear.",FALSE,,FALSE,,1,,,
+CD_short_P2_test,python_flask_sqlalchemy,cascade_delete,True,"delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear.",[],False,"The reviewer output is empty and does not mention the issue that deleting a customer cascades to orders, causing historical order records to disappear.",FALSE,,FALSE,,1,,,
+CD_short_P3_test,go_fiber_gorm,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Incorrect RowsAffected Check"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code checks result.RowsAffected after a .Scan() call. In GORM, .Scan() does not populate RowsAffected; it should be checked on the result of the query execution (e.g., using .Find() or checking the result of the Raw query before scanning).""
+  }
+]",False,"The reviewer only reports an issue with checking RowsAffected after Scan() in the customer delete handler. They do not mention cascading deletion of orders, loss of historical order data, or distortion of monthly trend calculations.",FALSE,,FALSE,,1,,,
+CD_short_P3_test,go_fiber_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Resource Leak"",
+    ""detected"": true,
+    ""description"": ""In the main function, db.Close() is deferred, but log.Fatal(app.Listen(...)) calls os.Exit(1), which prevents deferred functions from executing.""
+  }
+]",False,"The reviewer only reports a resource leak caused by log.Fatal preventing deferred db.Close() from running. They do not mention cascading deletion of orders, loss of historical order data, or distortion of monthly trend calculations.",FALSE,,FALSE,,1,,,
+CD_short_P3_test,go_gin_gorm,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Incorrect Error Comparison"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code uses 'result.Error == gorm.ErrRecordNotFound'. Since gorm.ErrRecordNotFound is a sentinel error, it should be checked using errors.Is(result.Error, gorm.ErrRecordNotFound) to ensure compatibility with wrapped errors.""
+  }
+]",False,The reviewer only mentions improper comparison to gorm.ErrRecordNotFound in the customer delete handler. They do not describe cascade deletion of orders or the resulting distortion of monthly trend/history calculations.,FALSE,,FALSE,,1,,,
+CD_short_P3_test,go_gin_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Incorrect Database Connection Lifecycle"",
+    ""detected"": true,
+    ""description"": ""In the main function, db.Close() is deferred immediately after sql.Open. Since the HTTP server (app.Run) is blocking, the database connection will remain open, but if the server were to restart or the main function were structured differently, the defer would execute too late or the connection would be closed prematurely relative to the server's lifecycle.""
+  }
+]",False,The reviewer only mentions database connection lifecycle concerns and does not describe the cascade deletion of customer orders or its impact on monthly trend/history calculations.,FALSE,,FALSE,,1,,,
+CD_short_P3_test,js_express_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Redundant Manual Cascade Delete"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the code manually deletes orders before the customer. Since foreign keys are enabled via pragma, this logic is redundant if the schema were configured for CASCADE, or potentially problematic if the transaction fails partially, though the primary issue is the manual implementation of a relationship constraint.""
+  }
+]",False,"The reviewer mentions manual deletion of orders before deleting a customer as redundant or potentially problematic, but does not identify the expected issue: that deleting orders causes historical monthly trend/revenue calculations to become distorted because monthly_trend aggregates orders without preserving deleted-customer history.",FALSE,,FALSE,,1,,,
+CD_short_P3_test,js_express_sequelize,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""SQL Injection"",
+    ""detected"": true,
+    ""description"": ""The `/api/orders/monthly-trend` endpoint uses string concatenation to build a SQL query. While no user input is currently concatenated, this pattern is highly susceptible to SQL injection if parameters are added in the future.""
+  }
+]",False,The reviewer only reports a potential SQL injection issue in the monthly-trend query. They do not mention cascade deletion of customer orders or the resulting distortion of historical monthly trend data.,FALSE,,FALSE,,1,,,
+CD_short_P3_test,js_fastify_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Non-Atomic Deletion"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, the deletion of related orders and the customer record are performed as separate statements without a transaction, risking partial data deletion if the process crashes between calls.""
+  }
+]",False,"The expected issue is that deleting a customer cascades to deleting orders, which distorts historical monthly trend analytics because monthly_trend counts orders without filtering on customer existence. The reviewer instead reports a different issue: lack of transactionality causing possible partial deletion. That does not describe the analytics/history distortion root cause.",FALSE,,FALSE,,1,,,
+CD_short_P3_test,js_fastify_sequelize,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Potential Transaction Leak"",
+    ""detected"": true,
+    ""description"": ""In the DELETE /api/customers/:c_custkey handler, if an error occurs during the transaction, the catch block calls rollback but does not ensure the transaction is closed in all failure paths, and the logic relies on manual transaction management which can leak if the process crashes or errors occur outside the try-catch block.""
+  }
+]",False,"The reviewer only reports a transaction management/leak issue in the customer delete handler. They do not mention cascading deletion of orders, loss of historical order data, or distortion of monthly trend calculations due to deleted orders disappearing.",FALSE,,FALSE,,1,,,
+CD_short_P3_test,python_fastapi_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Incorrect JSONResponse Usage"",
+    ""detected"": true,
+    ""description"": ""In the `/api/orders/monthly-trend` endpoint, `JSONResponse` is instantiated with a list as the first argument, but it expects a dictionary for the 'content' parameter, which will lead to a runtime error.""
+  }
+]",False,The reviewer only reports incorrect JSONResponse usage in the monthly-trend endpoint. They do not mention cascade deletion of orders when deleting a customer or the resulting distortion of historical monthly trends/revenue.,FALSE,,FALSE,,1,,,
+CD_short_P3_test,python_fastapi_sqlalchemy,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Incorrect Group By Reference"",
+    ""detected"": true,
+    ""description"": ""In the `monthly_trend` function, `.group_by(\""month\"")` uses a string literal instead of the labeled column or the function expression, which in many SQLAlchemy/SQLite configurations will fail to group by the calculated date string.""
+  }
+]",False,The reviewer only reports a GROUP BY bug in monthly_trend. They do not mention delete_customer cascading order deletion or the resulting distortion of historical monthly counts/revenue.,FALSE,,FALSE,,1,,,
+CD_short_P3_test,python_flask_rawsql,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Non-Atomic Deletion"",
+    ""detected"": true,
+    ""description"": ""In the delete_customer route, the deletion of orders and the customer is performed in separate execute calls without an explicit transaction wrapper. If the process crashes between the two DELETE statements, the database will be left in an inconsistent state with orphaned orders removed but the customer remaining.""
+  }
+]",False,"The reviewer describes a transactional consistency issue from performing two DELETEs separately, not the expected problem that deleting a customer also deletes historical orders and thereby distorts monthly trend analytics.",FALSE,,FALSE,,1,,,
+CD_short_P3_test,python_flask_sqlalchemy,cascade_delete,True,"delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue.","[
+  {
+    ""name"": ""Missing Transactional Atomicity"",
+    ""detected"": true,
+    ""description"": ""In the delete_customer route, the deletion of related orders and the customer record are performed as separate queries. If the process fails between these two calls, it will leave orphaned records or an inconsistent state because they are not wrapped in an explicit transaction block before the final commit.""
+  }
+]",False,"The expected issue is that deleting a customer also deletes their orders, which causes historical monthly trend analytics to lose past order data. The reviewer instead reports a lack of transactional atomicity between deleting orders and deleting the customer. That is a different root cause and does not mention distortion of analytics from cascading deletion.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,go_fiber_gorm,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.",[],False,"The reviewer output is empty and does not flag any issue about discontinued products being exposed, which agrees with the expected result that this should NOT be detected.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,go_fiber_rawsql,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.","[
+  {
+    ""name"": ""Resource Leak"",
+    ""detected"": true,
+    ""description"": ""In the /api/products endpoint, if rows.Scan returns an error, the function returns immediately without calling rows.Close(), potentially leaking database connections.""
+  }
+]",False,"The reviewer only reports a resource leak in /api/products related to rows.Close() on Scan error. They do not mention discontinued products being exposed or any issue with p_status filtering, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,go_gin_gorm,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.",[],False,"The reviewer output is empty and does not flag any issue about discontinued products being exposed, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,go_gin_rawsql,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.","[
+  {
+    ""name"": ""Data Loss in API Response"",
+    ""detected"": true,
+    ""description"": ""In the listProducts function, the 'item' map is initialized with 'p_name' and 'p_retailprice' set to nil, and they are only updated if the database values are valid. If the values are NULL in the database, the keys remain in the map as nil rather than being omitted or handled, but more critically, the logic explicitly sets them to nil initially, which is redundant and potentially misleading.""
+  }
+]",False,"The expected finding should not be detected because discontinued products are filtered out correctly. The reviewer does not mention discontinued products, status filtering, or exposure of records; they only discuss nil fields in the API response, which is a different issue.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,js_express_rawsql,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.","[
+  {
+    ""name"": ""Resource Leak"",
+    ""detected"": true,
+    ""description"": ""In the /api/products/:p_productkey/discontinue and /api/products endpoints, the database connection is not closed if an error is thrown and caught by the Express global error handler, as the 'throw err' occurs after the try-catch block's internal logic but the connection management is handled manually inside the block.""
+  }
+]",False,"The reviewer does not mention discontinued products being exposed by list_products or any issue with p_status filtering. They only report a resource leak, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,js_express_sequelize,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.",[],False,"The reviewer output is empty and does not flag any issue. Since this finding should NOT be detected, the reviewer correctly did not mention it.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,js_fastify_rawsql,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.",[],False,"The reviewer output is empty and does not flag any issue about discontinued products being exposed, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,js_fastify_sequelize,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.",[],False,The reviewer output is empty and does not flag any issue. This agrees with the expected result that exposed_record should NOT be detected.,FALSE,,FALSE,,1,,,
+ER_short_N1_test,python_fastapi_rawsql,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.",[],False,"The reviewer output is empty and does not flag any issue. Since this finding should NOT be detected, the reviewer correctly did not mention it.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,python_fastapi_sqlalchemy,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.","[
+  {
+    ""name"": ""Inefficient Database Roundtrips"",
+    ""detected"": true,
+    ""description"": ""In the `discontinue_product` function, the code performs two separate queries (one `.filter().first()` and one `db.get()`) to retrieve the same product record, causing unnecessary database overhead.""
+  }
+]",False,"The reviewer does not mention discontinued products being exposed by list_products or any failure to filter inactive records. They only flag an inefficiency from duplicate database fetches, which is a different issue.",FALSE,,FALSE,,1,,,
+ER_short_N1_test,python_flask_rawsql,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.",[],False,The reviewer output is empty and does not flag any issue. This agrees with the expected result that exposed_record should NOT be detected.,FALSE,,FALSE,,1,,,
+ER_short_N1_test,python_flask_sqlalchemy,exposed_record,False,"discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results.",[],False,"The reviewer output is empty and does not flag any issue about discontinued products being exposed, which agrees with the expected result that this should NOT be detected.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,go_fiber_gorm,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Unintentional Zero-Value Update"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/products/:p_productkey/price handler, if the request body is empty or missing the p_retailprice field, the BodyParser failure results in an empty UpdatePricePayload. This causes the database to be updated with the float64 zero value (0.0) instead of ignoring the update or returning an error.""
+  }
+]",False,"The reviewer does not mention any issue about a write making a previously hidden/unavailable product visible or otherwise exposing a record. They only describe an unintended zero-value price update, which is a different root cause.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,go_fiber_rawsql,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Unintentional Null Update"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/products/:p_productkey/price handler, if the 'p_retailprice' key is missing from the request body, payload['p_retailprice'] evaluates to nil, causing the database column to be updated to NULL regardless of its previous value.""
+  }
+]",False,"The reviewer does not mention any issue about changing product visibility or exposing a record after update. They only report a null price update problem, which is a different root cause.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,go_gin_gorm,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.",[],False,"The reviewer output is empty and does not flag any exposed-record issue, which agrees with the expected result that this issue should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,go_gin_rawsql,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Unintentional Null Update"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/products/:p_productkey/price handler, if the 'p_retailprice' key is missing from the JSON payload, payload[\""p_retailprice\""] evaluates to nil, causing the database column to be updated to NULL regardless of its previous value.""
+  }
+]",False,"The reviewer does not mention any issue about a write making a record visible or exposing it through get_product. They only report a null update problem for p_retailprice, which is a different root cause.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,js_express_rawsql,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Unconditional Update"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/products/:p_productkey/price endpoint, the UPDATE statement is executed regardless of whether payload['p_retailprice'] is provided, potentially setting the price to NULL.""
+  }
+]",False,"The reviewer only reports an unconditional update that may set p_retailprice to NULL. They do not mention any issue about changing availability/visibility or exposing a record, so they correctly do not detect this non-issue.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,js_express_sequelize,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Mass Assignment Vulnerability"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/products/:p_productkey/price endpoint, the code uses payload['p_retailprice'] directly from req.body. While it currently targets one field, the pattern of using the raw payload object for updates without strict filtering can lead to unintended data modification if the update logic is expanded.""
+  }
+]",False,"The reviewer does not mention any issue about a record becoming exposed or visible due to the price update. They only flag a mass assignment concern, which is a different root cause.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,js_fastify_rawsql,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Unintentional Null Update"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/products/:p_productkey/price handler, if payload.p_retailprice is missing or undefined, the UPDATE statement will set the p_retailprice column to NULL in the database.""
+  }
+]",False,"The reviewer does not mention any issue about a write making a record exposed or changing visibility/availability state. They only report a possible NULL update to p_retailprice, which is a different problem.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,js_fastify_sequelize,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Unintentional Null Update"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/products/:p_productkey/price handler, if payload.p_retailprice is undefined, Sequelize will update the p_retailprice column to NULL in the database, potentially erasing existing data.""
+  }
+]",False,"The reviewer does not mention any issue about changing product visibility or exposing a record after update. They only flag a possible null update of p_retailprice, which is a different data-layer concern.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,python_fastapi_rawsql,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Uncommitted Transaction"",
+    ""detected"": true,
+    ""description"": ""In the `get_product` function, the database connection is opened and queried, but since it is a read operation in SQLite, it is generally safe; however, the `update_product_price` function correctly calls `db.commit()`, but the overall pattern lacks consistent transaction management for the read-after-write sequence.""
+  }
+]",False,"The reviewer does not mention any issue about a record becoming exposed or visible due to update_product_price/get_product. They only discuss transaction management, which is a different concept.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,python_fastapi_sqlalchemy,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Unsafe Dictionary Access"",
+    ""detected"": true,
+    ""description"": ""In the `update_product_price` function, `payload['p_retailprice']` is accessed without checking if the key exists in the dictionary, which will cause a KeyError if the key is missing from the request body.""
+  }
+]",False,"The reviewer does not mention any issue about product visibility or exposing a record after updating price. They only report unsafe dictionary access, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,python_flask_rawsql,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Potential KeyError"",
+    ""detected"": true,
+    ""description"": ""In the `update_product_price` function, `payload['p_retailprice']` is accessed without verifying if the key exists in the JSON payload, which will cause a 500 Internal Server Error if the key is missing.""
+  }
+]",False,"The reviewer does not mention any issue about a write making a record improperly visible or exposed. They only report a missing-key/KeyError problem, which is unrelated.",FALSE,,FALSE,,1,,,
+ER_short_N2_test,python_flask_sqlalchemy,exposed_record,False,"update_product_price only modifies p_retailprice, which does not affect product visibility. get_product returns the product, but since the write does not change any availability-related state, there is no exposed record issue.","[
+  {
+    ""name"": ""Potential Null Pointer Dereference"",
+    ""detected"": true,
+    ""description"": ""In `update_product_price`, the code performs a `db.commit()` and then queries the product again. If the product is deleted by another process between the update and the final query, `row` will be `None`, causing the application to crash when accessing `row.p_productkey`.""
+  }
+]",False,"The expected finding should not be detected, and the reviewer does not mention any exposed-record or visibility issue related to product availability. They only report a potential null dereference after re-querying.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,go_fiber_gorm,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should NOT be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,go_fiber_rawsql,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.","[
+  {
+    ""name"": ""Incorrect Error Handling for Non-Existent Resource"",
+    ""detected"": true,
+    ""description"": ""In the /api/products/:p_productkey/archive handler, if strconv.Atoi fails, the code returns a 404 'Product not found' error, which is semantically incorrect as it is a type conversion error (400 Bad Request) rather than a missing resource.""
+  }
+]",False,"The reviewer does not mention archived products being improperly exposed or any issue with list_archived_products returning archived records. Their finding is about incorrect HTTP error handling for invalid product IDs, which is unrelated.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,go_gin_gorm,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,go_gin_rawsql,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,js_express_rawsql,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,js_express_sequelize,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,js_fastify_rawsql,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,js_fastify_sequelize,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,python_fastapi_rawsql,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.","[
+  {
+    ""name"": ""Incorrect JSONResponse usage"",
+    ""detected"": true,
+    ""description"": ""In list_archived_products, JSONResponse is called with a list as the first argument. JSONResponse expects a content dictionary or a response body, and passing a list directly as the first positional argument will result in a TypeError or incorrect response structure.""
+  }
+]",False,"The reviewer does not mention any improper exposure of archived products or an authorization/filtering flaw. They only flag a JSONResponse usage issue, so they correctly do not detect this non-issue.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,python_fastapi_sqlalchemy,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,python_flask_rawsql,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_N3_test,python_flask_sqlalchemy,exposed_record,False,"archive_product sets p_status to 'archived'. list_archived_products returns only archived products via WHERE p_status = 'archived'. The endpoint is intentionally designed to serve these records, so no product is incorrectly exposed.",[],False,"The reviewer output is empty and does not flag any exposure issue, which agrees with the expected result that this should not be detected.",FALSE,,FALSE,,1,,,
+ER_short_P1_test,go_fiber_gorm,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The GET /api/products/:p_productkey endpoint claims to return 'purchasable product' in the comments, but the query lacks a filter for p_status, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly identifies that the product GET endpoint lacks a p_status filter and therefore returns discontinued products, which matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,go_fiber_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The GET /api/products/:p_productkey endpoint documentation states it should return 'purchasable' products, but the SQL query lacks a WHERE clause to filter by p_status, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly identifies that the product GET query does not filter by p_status, so discontinued products can still be returned. This matches the expected issue's root cause.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,go_gin_gorm,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The GET /api/products/:p_productkey endpoint contains a comment stating it should return 'purchasable product', but the query lacks a WHERE clause to filter out products with a 'discontinued' status.""
+  }
+]",True,"The reviewer explicitly says the product GET endpoint lacks a filter to exclude products with 'discontinued' status, which matches the expected issue that discontinued products are still returned.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,go_gin_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The getProduct function documentation states it should return 'purchasable product', but the SQL query lacks a WHERE clause to filter by p_status, returning products regardless of their status.""
+  }
+]",True,"The reviewer explicitly says getProduct lacks a filter on p_status and returns products regardless of status, which matches the issue that discontinued products are still exposed.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,js_express_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Incorrect Business Logic Implementation"",
+    ""detected"": true,
+    ""description"": ""The GET /api/products/:p_productkey endpoint documentation states it should return 'purchasable' products, but the SQL query fails to filter out products where p_status is 'discontinued'.""
+  }
+]",True,"The reviewer explicitly states that the product GET endpoint fails to filter out products with p_status = 'discontinued', which matches the expected issue that discontinued products are still returned to clients.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,js_express_sequelize,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The GET /api/products/:p_productkey endpoint documentation states it should return 'purchasable' products, but the implementation fails to filter out products where p_status is 'discontinued'.""
+  }
+]",True,"The reviewer explicitly states that the product GET endpoint fails to filter out products with p_status = 'discontinued', which matches the expected issue that discontinued products are still returned to clients.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,js_fastify_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Business Logic Violation"",
+    ""detected"": true,
+    ""description"": ""The GET /api/products/:p_productkey endpoint is documented to return 'purchasable' products, but the SQL query fails to filter out products where p_status is 'discontinued'.""
+  }
+]",True,"The reviewer explicitly states that the product GET endpoint does not filter out records with p_status = 'discontinued', which matches the expected issue that discontinued products are still returned to clients.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,js_fastify_sequelize,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The GET /api/products/:p_productkey endpoint claims to return 'purchasable product' in the comments, but the query fails to filter by p_status, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly says the product GET endpoint does not filter by p_status and therefore returns discontinued products, which matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,python_fastapi_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The `get_product` endpoint documentation states it should return 'purchasable product', but the SQL query lacks a filter on `p_status`, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly says `get_product` lacks a `p_status` filter and therefore returns discontinued products, which matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,python_fastapi_sqlalchemy,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The `get_product` endpoint documentation states it should return 'purchasable product', but the implementation lacks a filter on `p_status` to exclude discontinued products.""
+  }
+]",True,"The reviewer explicitly says `get_product` lacks a `p_status` filter and therefore can return discontinued products, which matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,python_flask_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Filter for Purchasable Products"",
+    ""detected"": true,
+    ""description"": ""The `get_product` function's docstring states it should return a 'purchasable product', but the SQL query lacks a filter on `p_status`, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly says `get_product` lacks a `p_status` filter and therefore can return discontinued products, which matches the expected issue that discontinued products are still exposed to clients.",TRUE,,TRUE,,1,,,
+ER_short_P1_test,python_flask_sqlalchemy,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The `get_product` function's docstring states it should return 'purchasable product', but the query lacks a filter on `p_status` to exclude discontinued products.""
+  }
+]",True,"The reviewer explicitly says `get_product` lacks a `p_status` filter to exclude discontinued products, which matches the expected issue that discontinued products are still returned.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,go_fiber_gorm,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The /api/products/:p_productkey/availability endpoint claims to get availability for 'purchasable' products in the comments, but the SQL query fails to filter by p_status, potentially returning stock for discontinued products.""
+  }
+]",True,"The reviewer explicitly states that the availability query does not filter by p_status and may return stock for discontinued products, which matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,go_fiber_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Incorrect Error Handling for Aggregate Query"",
+    ""detected"": true,
+    ""description"": ""In getProductAvailability, the query uses a LEFT JOIN and SUM() with GROUP BY. In SQLite, such aggregate queries return a single row with NULLs or zeros even if no product matches the WHERE clause, meaning db.QueryRow().Scan() will not return sql.ErrNoRows, and the 404 error logic will never be triggered.""
+  }
+]",False,"The expected issue is that discontinued products remain exposed as available because get_product_availability does not check p_status. The reviewer instead reports incorrect no-row/error handling for an aggregate query, which is a different root cause.",FALSE,,FALSE,,1,,,
+ER_short_P2_test,go_gin_gorm,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The /api/products/:p_productkey/availability endpoint claims to get availability for 'purchasable' products in the comments, but the SQL query fails to filter by p_status, allowing availability to be returned for discontinued products.""
+  }
+]",True,"The reviewer explicitly states that the availability query does not filter by p_status, so discontinued products can still have availability returned. This matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,go_gin_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The getProductAvailability function claims to get availability for 'purchasable' products in its comments, but the SQL query fails to filter by p_status, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly states that getProductAvailability does not filter by p_status, so discontinued products can still be returned as available/purchasable. This matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,js_express_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The `/api/products/:p_productkey/availability` endpoint claims to get availability for 'purchasable' products in its comments, but the SQL query fails to filter by `p_status`, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly identifies that the availability query does not filter by p_status, so discontinued products can still be returned as available/purchasable. This matches the expected finding's core issue.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,js_express_sequelize,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The `/api/products/:p_productkey/availability` endpoint claims to get availability for 'purchasable' products in its comments, but the SQL query fails to filter out products where `p_status` is 'discontinued'.""
+  }
+]",True,"The reviewer explicitly identifies that the availability endpoint does not filter out products with `p_status = 'discontinued'`, which matches the expected issue that discontinued products still appear available/purchasable.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,js_fastify_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The `/api/products/:p_productkey/availability` endpoint claims to get availability for 'purchasable' products in its comments, but the SQL query fails to filter by `p_status`, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly identifies that the availability query does not filter by `p_status`, so discontinued products can still be returned as available/purchasable. This matches the expected finding's core issue.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,js_fastify_sequelize,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The `/api/products/:p_productkey/availability` endpoint claims to get availability for 'purchasable' products in its comments, but the SQL query fails to filter by `p_status`, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly identifies that the availability query does not filter by `p_status`, so discontinued products can still be returned as available/purchasable. This matches the expected finding's core issue.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,python_fastapi_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The `get_product_availability` endpoint claims to get availability for 'purchasable' products, but the SQL query fails to filter by `p_status`, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly states that `get_product_availability` does not filter by `p_status`, so discontinued products can still be returned as available/purchasable. This matches the expected root cause.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,python_fastapi_sqlalchemy,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Filter"",
+    ""detected"": true,
+    ""description"": ""The `get_product_availability` endpoint documentation states it is for 'purchasable product', but the query fails to filter out products where `p_status` is 'discontinued'.""
+  }
+]",True,"The reviewer explicitly identifies that `get_product_availability` does not filter out products with `p_status = 'discontinued'`, which matches the expected issue that discontinued products still appear available/purchasable.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,python_flask_rawsql,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The `get_product_availability` endpoint claims to get availability for 'purchasable' products, but the SQL query fails to filter by `p_status`, allowing availability to be returned for discontinued products.""
+  }
+]",True,"The reviewer explicitly states that get_product_availability does not filter by p_status and therefore returns availability for discontinued products, which matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P2_test,python_flask_sqlalchemy,exposed_record,True,"discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock.","[
+  {
+    ""name"": ""Missing Business Logic Constraint"",
+    ""detected"": true,
+    ""description"": ""The `get_product_availability` endpoint documentation states it is for 'purchasable product', but the implementation fails to filter by `Product.p_status`, allowing discontinued products to be returned.""
+  }
+]",True,"The reviewer explicitly states that `get_product_availability` does not filter by `Product.p_status`, so discontinued products can still be returned as purchasable. This matches the expected issue's root cause.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,go_fiber_gorm,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Join Logic for Purchasable Products"",
+    ""detected"": true,
+    ""description"": ""The `/api/products` endpoint claims to list 'purchasable products' but performs a simple JOIN without filtering for the supplier's status, meaning it returns products from suspended suppliers as well.""
+  }
+]",True,"The reviewer explicitly states that the products endpoint joins supplier data without filtering on supplier status, causing products from suspended suppliers to still be returned. This matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,go_fiber_rawsql,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Business Logic Implementation"",
+    ""detected"": true,
+    ""description"": ""The listProducts function is documented to 'List purchasable products', but the SQL query fails to filter out products associated with suspended suppliers (s_status = 'suspended').""
+  }
+]",True,"The reviewer explicitly states that listProducts fails to filter out products from suspended suppliers, which matches the expected issue that suspended suppliers' products remain visible.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,go_gin_gorm,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Join Logic for Purchasable Products"",
+    ""detected"": true,
+    ""description"": ""The GET /api/products endpoint claims to list 'purchasable products' but fails to filter out products associated with suspended suppliers, returning all products regardless of the supplier's s_status.""
+  }
+]",True,"The reviewer explicitly states that the products endpoint fails to filter out products from suspended suppliers and returns them regardless of supplier s_status, which matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,go_gin_rawsql,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Business Logic in listProducts"",
+    ""detected"": true,
+    ""description"": ""The listProducts function claims to list 'purchasable products' in its comments, but the SQL query fails to filter out products associated with suspended suppliers (s_status = 'suspended').""
+  }
+]",True,"The reviewer explicitly states that listProducts fails to filter out products from suspended suppliers, which matches the expected issue that suspended suppliers' products remain visible.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,js_express_rawsql,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Business Logic"",
+    ""detected"": true,
+    ""description"": ""The /api/products endpoint is documented to list 'purchasable products', but the SQL query fails to filter out products from suppliers whose s_status is 'suspended'.""
+  }
+]",True,"The reviewer explicitly identifies that the products query does not filter out suppliers with s_status = 'suspended', which matches the expected issue that products from suspended suppliers remain visible.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,js_express_sequelize,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Business Logic in Product Listing"",
+    ""detected"": true,
+    ""description"": ""The `/api/products` endpoint is documented to list 'purchasable products', but it fails to filter out products associated with 'suspended' suppliers, allowing suspended inventory to be listed.""
+  }
+]",True,"The reviewer explicitly states that the product listing fails to filter out products from suspended suppliers, which matches the expected issue that suspended suppliers' products remain visible.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,js_fastify_rawsql,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Business Logic Leak"",
+    ""detected"": true,
+    ""description"": ""The `/api/products` endpoint lists all products regardless of supplier status, failing to filter out products from 'suspended' suppliers despite the intent to list 'purchasable' products.""
+  }
+]",True,"The reviewer explicitly states that the products endpoint lists products regardless of supplier status and fails to filter out products from suspended suppliers, which matches the expected issue.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,js_fastify_sequelize,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Column Reference in Projection"",
+    ""detected"": true,
+    ""description"": ""In the `/api/products` endpoint, `Sequelize.col('supplier.s_name')` is used. Because Sequelize aliases joined tables by default (e.g., as 'supplier'), the raw SQL generated may not match the expected column reference, potentially leading to a database error or null values.""
+  }
+]",False,"The expected issue is that suspended suppliers' products remain visible because list_products does not filter on supplier status. The reviewer instead reports a column/alias reference problem in the projection, which is a different root cause.",FALSE,,FALSE,,1,,,
+ER_short_P3_test,python_fastapi_rawsql,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Business Logic Leak"",
+    ""detected"": true,
+    ""description"": ""The `list_products` endpoint claims to list 'purchasable products' but fails to filter out products associated with 'suspended' suppliers, allowing suspended inventory to be listed.""
+  }
+]",True,"The reviewer explicitly states that `list_products` does not filter out products from `suspended` suppliers, which matches the expected issue that suspended suppliers' products remain visible.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,python_fastapi_sqlalchemy,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Business Logic in Product Listing"",
+    ""detected"": true,
+    ""description"": ""The `list_products` endpoint is documented to list 'purchasable products', but it fails to filter out products associated with suppliers whose `s_status` is 'suspended'.""
+  }
+]",True,"The reviewer explicitly states that `list_products` fails to filter out products from suppliers whose `s_status` is `suspended`, which matches the expected issue that suspended suppliers' products remain visible.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,python_flask_rawsql,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Business Logic Leak"",
+    ""detected"": true,
+    ""description"": ""The `list_products` endpoint claims to list 'purchasable products' but fails to filter out products associated with suppliers whose `s_status` is 'suspended'.""
+  }
+]",True,"The reviewer explicitly states that `list_products` fails to filter out products from suppliers whose `s_status` is `suspended`, which matches the expected issue that suspended suppliers' products remain visible.",TRUE,,TRUE,,1,,,
+ER_short_P3_test,python_flask_sqlalchemy,exposed_record,True,"suspend_supplier sets s_status to 'suspended', but list_products joins supplier only to fetch the name without filtering on s_status. Products from a suspended supplier still appear browsable to customers.","[
+  {
+    ""name"": ""Incorrect Business Logic in Product Listing"",
+    ""detected"": true,
+    ""description"": ""The `list_products` endpoint is documented to list 'purchasable products', but it fails to filter out products associated with suppliers whose `s_status` is 'suspended'.""
+  }
+]",True,"The reviewer explicitly states that `list_products` fails to filter out products from suppliers whose `s_status` is `suspended`, which matches the expected issue that suspended suppliers' products remain visible.",TRUE,,TRUE,,1,,,
+SA_short_N1_test,go_fiber_gorm,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Incorrect Primary Key Retrieval"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the code attempts to retrieve the new order ID using `res.Statement.ConnPool.(gorm.ConnPool).(*sql.DB).Stats().MaxOpenConnections`, which returns the database connection pool limit rather than the inserted row ID.""
+  }
+]",False,The reviewer does not mention any issue about order total aggregates becoming stale or inconsistent after line item updates. They only report an unrelated problem about incorrect retrieval of a new order ID.,FALSE,,FALSE,,1,,,
+SA_short_N1_test,go_fiber_rawsql,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Potential Null Pointer Dereference"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the code performs a type assertion `payload[\""lineitems\""].([]interface{})` without checking if the key exists or if the value is actually a slice, which will cause a panic if 'lineitems' is missing or of a different type.""
+  }
+]",False,"The reviewer only reports a potential null/type assertion panic in the POST /api/orders handler. They do not mention any stale or inconsistent aggregate totalprice issue, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N1_test,go_gin_gorm,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Uncommitted Transaction on Error"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler, if tx.DB() returns an error, the transaction is rolled back, but the code continues to execute subsequent logic if not for the return statement. More critically, if tx.Commit() fails, the transaction may remain open in some database drivers, though the primary issue here is the inconsistent error handling pattern.""
+  },
+  {
+    ""name"": ""Potential Null Pointer Dereference"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the code accesses payload[\""o_orderdate\""] and casts it to a string without checking if the key exists or if the value is nil, which can lead to a panic if the field is missing from the JSON payload.""
+  }
+]",False,"The reviewer does not mention any issue about orders.o_totalprice becoming stale or inconsistent after lineitem updates. Their findings are about transaction error handling and a nil/type assertion panic, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N1_test,go_gin_rawsql,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Partial Update Data Loss"",
+    ""detected"": true,
+    ""description"": ""In updateLineitem, the code updates l_extendedprice, l_discount, and l_tax using values from the payload without checking if they exist. If a user provides a partial JSON payload, existing values for the missing fields will be overwritten with nil/null in the database.""
+  }
+]",False,"The reviewer does not mention any stale or inconsistent aggregate in orders.o_totalprice. Their finding is about partial updates overwriting missing pricing fields with null, which is a different root cause.",FALSE,,FALSE,,1,,,
+SA_short_N1_test,js_express_rawsql,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Potential Null Pointer Dereference"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the code iterates over payload['lineitems'] without checking if it exists or is an array, which will cause a crash if the field is missing from the request body.""
+  }
+]",False,The reviewer only reported a potential null pointer issue in request handling and did not mention any stale or inconsistent aggregate/order total problem.,FALSE,,FALSE,,1,,,
+SA_short_N1_test,js_express_sequelize,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""SQL Injection"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber endpoint, the UPDATE orders query uses string concatenation for the subquery, which could lead to SQL injection if the query structure were modified or if replacements were handled incorrectly.""
+  }
+]",False,"The reviewer only reports a SQL injection concern and does not mention any stale or inconsistent aggregate/totalprice issue. Since stale_aggregate should NOT be detected, this is correct non-detection.",FALSE,,FALSE,,1,,,
+SA_short_N1_test,js_fastify_rawsql,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Potential Null Pointer Dereference"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the code iterates over payload['lineitems'] without checking if it exists or is an array, which will cause a crash if the field is missing from the request body.""
+  }
+]",False,"The reviewer does not mention any stale or inconsistent aggregate/order total issue. They only report a null pointer risk in request handling, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N1_test,js_fastify_sequelize,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Incorrect Primary Key Retrieval"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the code assumes the first element of the insertResult array is the new o_orderkey. In Sequelize with SQLite, the result of an INSERT query is typically an array where the first element is the result object/metadata, not the auto-incremented ID.""
+  }
+]",False,The reviewer does not mention any issue about orders.o_totalprice becoming stale or inconsistent after lineitem updates. They only flag an unrelated primary key retrieval problem.,FALSE,,FALSE,,1,,,
+SA_short_N1_test,python_fastapi_rawsql,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Transaction Leak on Error"",
+    ""detected"": true,
+    ""description"": ""In `update_lineitem` and `create_order`, the code calls `db.execute('BEGIN')` but does not wrap the subsequent logic in a try-except block. If an exception occurs before `db.commit()` or `db.execute('ROLLBACK')`, the transaction remains open on the connection.""
+  }
+]",False,"The reviewer does not mention any stale or inconsistent aggregate on orders.o_totalprice. They only report a transaction leak on error, which is a different issue.",FALSE,,FALSE,,1,,,
+SA_short_N1_test,python_fastapi_sqlalchemy,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Stale Data Read"",
+    ""detected"": true,
+    ""description"": ""In `update_lineitem`, the final `select` query to fetch the updated row is executed before `db.commit()`. While it may work in some isolation levels, it is a risky pattern that can lead to reading inconsistent state or failing to reflect the final committed state of the record.""
+  }
+]",False,The expected finding says stale aggregate should NOT be detected because o_totalprice is recalculated consistently in the same transaction. The reviewer flags a different issue about selecting before commit and does not describe a stale aggregate/root-cause problem with orders.o_totalprice.,FALSE,,FALSE,There is a concept of staleness but it's still related to a single endpoint / entity,1,,,
+SA_short_N1_test,python_flask_rawsql,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Transaction Leak on Error"",
+    ""detected"": true,
+    ""description"": ""In `update_lineitem` and `create_order`, the code manually calls `db.execute('BEGIN')`. If an exception occurs during the execution of subsequent queries (e.g., a KeyError from the payload), the transaction is never rolled back or committed, leaving the connection in a pending transaction state.""
+  }
+]",False,"The reviewer does not mention any stale or inconsistent aggregate in orders.o_totalprice after update_lineitem. Their finding is about transaction handling on errors, which is a different root cause.",FALSE,,FALSE,,1,,,
+SA_short_N1_test,python_flask_sqlalchemy,stale_aggregate,False,update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent.,"[
+  {
+    ""name"": ""Incorrect Total Price Calculation"",
+    ""detected"": true,
+    ""description"": ""In update_lineitem and create_order, the o_totalprice is calculated as sum(extendedprice * (1 - discount) * (1 + tax)). This is mathematically incorrect as tax is typically applied to the discounted price, not the original price multiplied by (1 + tax).""
+  }
+]",False,"The reviewer does not mention stale or inconsistent aggregate data caused by update_lineitem/get_order. They flag a different issue about the mathematical formula for total price calculation, not a stale aggregate problem.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,go_fiber_gorm,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Potential Data Loss via Map Body Parsing"",
+    ""detected"": true,
+    ""description"": ""In the PUT handler, the code uses a map[string]interface{} for body parsing and manually extracts fields. If the request body is malformed or empty, it defaults to an empty map, which then triggers 500 errors for missing fields instead of a 400 Bad Request.""
+  }
+]",False,"The reviewer output does not mention stale aggregates, denormalized totals, or failure to recalculate order totals after lineitem updates. It discusses request body parsing and error handling instead, so this expected non-issue was not incorrectly flagged.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,go_fiber_rawsql,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Potential Null Value Update"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler, the UPDATE statement uses values directly from the payload map. If keys like 'l_extendedprice' are missing from the request body, they will be passed as nil, potentially overwriting existing data with NULL in the database.""
+  }
+]",False,"The reviewer does not mention stale or denormalized aggregate totals, recalculation of order totals, or any issue with get_order computing totals live from lineitems. They only flag possible NULL overwrites from missing payload fields.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,go_gin_gorm,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Transaction Leak"",
+    ""detected"": true,
+    ""description"": ""In the GET /api/orders/:o_orderkey handler, the code calls tx.Exec(\""ROLLBACK\"") and tx.Exec(\""COMMIT\"") manually instead of using tx.Rollback() or tx.Commit(). This bypasses GORM's transaction management and can lead to connection leaks or inconsistent state.""
+  }
+]",False,"The reviewer does not mention stale or denormalized aggregate totals, lineitem price updates, or order total recalculation. They only report a transaction management issue, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,go_gin_rawsql,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Transaction Leak"",
+    ""detected"": true,
+    ""description"": ""In getOrder and updateLineitem, if tx.Commit() fails, the transaction is not rolled back, potentially leaking database connections or holding locks.""
+  }
+]",False,"The reviewer does not mention any stale or denormalized aggregate/total-price issue. They only report a transaction handling problem, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,js_express_rawsql,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Transaction Leak on Error"",
+    ""detected"": true,
+    ""description"": ""In the GET /api/orders/:o_orderkey and PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handlers, if an error occurs during the execution of the logic, the catch block attempts a ROLLBACK. However, if the error occurred before the transaction was successfully started or if the connection is in a state where ROLLBACK fails, the error handling is minimal, and more importantly, the manual 'BEGIN' calls without a guaranteed cleanup mechanism in all edge cases can lead to orphaned transactions in SQLite.""
+  }
+]",False,"The reviewer does not mention stale or unrecalculated order totals, denormalized aggregates, or any issue related to lineitem price updates causing observable aggregate inconsistency. They only report a transaction-handling problem, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,js_express_sequelize,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Potential Null Update"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber endpoint, the UPDATE query uses values directly from the payload without checking for existence. If l_extendedprice, l_discount, or l_tax are missing from the request body, they will be updated to NULL in the database.""
+  }
+]",False,The reviewer does not mention any stale aggregate or missing recalculation of order totals. They only flag a separate issue about fields potentially being updated to NULL.,FALSE,,FALSE,,1,,,
+SA_short_N2_test,js_fastify_rawsql,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Resource Leak on Early Return"",
+    ""detected"": true,
+    ""description"": ""In the GET /api/orders/:o_orderkey handler, the code returns a 404 response after calling db.exec('ROLLBACK') but before the finally block is reached. While the finally block does execute in this specific JS structure, the pattern of manual transaction management combined with early returns in other contexts often leads to leaks; however, specifically here, the db connection is closed, but the logic relies on the finally block to clean up the database handle created via get_db() on every request.""
+  }
+]",False,"The reviewer does not mention stale or denormalized aggregate data, lineitem price updates, or order totals being out of sync. They only discuss a supposed resource leak/transaction cleanup pattern, which is unrelated.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,js_fastify_sequelize,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Partial Update Data Loss"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber endpoint, the UPDATE query sets l_extendedprice, l_discount, and l_tax using values from the payload without checking for their existence. If any of these fields are missing from the request body, they will be updated to NULL in the database, overwriting existing data.""
+  }
+]",False,"The reviewer does not mention any issue about stale order totals, denormalized aggregates, or failure to recalculate totals after lineitem updates. They only report a partial-update NULL overwrite problem, which is a different root cause.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,python_fastapi_rawsql,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Transaction Leak"",
+    ""detected"": true,
+    ""description"": ""In the `update_lineitem` function, the transaction is started with `db.execute(\""BEGIN\"")` but is committed using `db.commit()`. In sqlite3, `db.commit()` is a method of the connection object, whereas `db.execute(\""BEGIN\"")` manually manages the transaction state; mixing these can lead to inconsistent transaction states or leaked locks.""
+  }
+]",False,"The reviewer does not mention any stale aggregate or failure to recalculate order totals after lineitem updates. They only report a transaction-management issue, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,python_fastapi_sqlalchemy,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Double Transaction Management"",
+    ""detected"": true,
+    ""description"": ""In `get_order` and `update_lineitem`, the code calls `db.begin()` to start a transaction but then calls `db.commit()` or `transaction.rollback()`. In SQLAlchemy, calling `db.commit()` on the session while a manual transaction object is active can lead to inconsistent state or errors.""
+  },
+  {
+    ""name"": ""Session State Inconsistency"",
+    ""detected"": true,
+    ""description"": ""In `update_lineitem`, the code uses `update()` with `synchronize_session=False` and then immediately performs a `first()` query to fetch the updated row. Because the session is not synchronized, the subsequent query may return stale data from the identity map instead of the updated database values.""
+  }
+]",False,"The reviewer does not mention any stale or denormalized aggregate/total-price issue. Their findings are about transaction handling and SQLAlchemy session synchronization, which are different root causes.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,python_flask_rawsql,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Transaction Leak"",
+    ""detected"": true,
+    ""description"": ""In the `update_lineitem` function, the transaction is started with `db.execute(\""BEGIN\"")` but is committed using `db.commit()`. In sqlite3, `db.commit()` is a method of the connection object, whereas `db.execute(\""BEGIN\"")` manually manages the transaction state; mixing these can lead to inconsistent transaction states or leaked locks.""
+  }
+]",False,"The reviewer does not mention any stale aggregate or failure to recalculate order totals after lineitem updates. They only report a transaction management issue, so they correctly do not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N2_test,python_flask_sqlalchemy,stale_aggregate,False,"update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)","[
+  {
+    ""name"": ""Incorrect Transaction Management"",
+    ""detected"": true,
+    ""description"": ""In `get_order` and `update_lineitem`, `db.begin()` is called on a session created by `sessionmaker`. In SQLAlchemy, `Session` objects typically manage transactions automatically (autobegin), and calling `.begin()` manually on a session that is already in a transaction or using the session's internal transaction management can lead to `InvalidRequestError` or unexpected behavior.""
+  }
+]",False,"The reviewer does not mention any stale or denormalized aggregate/total-price issue. They only discuss transaction management, so they correctly did not flag this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,go_fiber_gorm,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Transaction Leak"",
+    ""detected"": true,
+    ""description"": ""In the shipLineitem function, if the code reaches the final return statement (HTTP 200), the transaction is committed, but if an error occurs during the final commit or if the function returns early without calling Rollback or Commit, the transaction may remain open. Specifically, the defer block only handles panics, not normal error returns that might bypass the commit.""
+  }
+]",False,The reviewer does not mention any issue about o_latest_shipdate becoming stale or aggregate recalculation after updating l_shipdate. Their only finding is an unrelated transaction-handling problem.,FALSE,,FALSE,,1,,,
+SA_short_N3_test,go_fiber_rawsql,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency Risk"",
+    ""detected"": true,
+    ""description"": ""In shipLineitem, the update to lineitem and the subsequent update to orders.o_latest_shipdate are performed as separate database calls without a transaction, which can lead to o_latest_shipdate becoming out of sync if the second update fails.""
+  }
+]",True,"The expected finding says this issue should NOT be detected, but the reviewer explicitly flags o_latest_shipdate as potentially becoming out of sync after updating l_shipdate and then recalculating the aggregate in a separate call. This matches the stale aggregate concept and is therefore an incorrect detection.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,go_gin_gorm,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency on Ship Date Update"",
+    ""detected"": true,
+    ""description"": ""In the /api/orders/:o_orderkey/lineitems/:l_linenumber/ship endpoint, the code updates o_latest_shipdate to the MAX(l_shipdate). If a user updates a line item's ship date to a value earlier than another existing line item in the same order, the o_latest_shipdate will be incorrectly 'moved back' to the date of the other line item instead of reflecting the change or remaining the true maximum.""
+  }
+]",True,"The expected finding says this issue should NOT be detected because recalculating o_latest_shipdate as MAX(l_shipdate) keeps it current. The reviewer explicitly flags this exact aggregate update logic as a data inconsistency problem, so they incorrectly detected a non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,go_gin_rawsql,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency Risk"",
+    ""detected"": true,
+    ""description"": ""In shipLineitem, the o_latest_shipdate in the orders table is updated based on a MAX(l_shipdate) query. If a line item's ship date is updated to an earlier date than another existing line item in the same order, the o_latest_shipdate will remain the same, but the logic does not account for cases where the updated item was previously the latest and is now not.""
+  }
+]",True,"The expected finding says this issue should NOT be detected because o_latest_shipdate is recalculated correctly after updating l_shipdate. The reviewer explicitly flags a supposed inconsistency in that recalculation logic, which matches the stale aggregate concept and is therefore an incorrect detection.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,js_express_rawsql,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency on Ship Date Update"",
+    ""detected"": true,
+    ""description"": ""In the `/api/orders/:o_orderkey/lineitems/:l_linenumber/ship` endpoint, the `o_latest_shipdate` is updated using `MAX(l_shipdate)`. If a line item's ship date is updated to a date earlier than the current `o_latest_shipdate`, the order's latest ship date will be incorrectly overwritten with a smaller value.""
+  }
+]",True,"The reviewer explicitly flags the order-level latest ship date aggregate as becoming incorrect after updating a line item's ship date, which matches the stale aggregate concept. Since this issue should NOT be detected, this is an incorrect detection.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,js_express_sequelize,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency Risk"",
+    ""detected"": true,
+    ""description"": ""In the '/api/orders/:o_orderkey/lineitems/:l_linenumber/ship' endpoint, the 'o_latest_shipdate' in the 'orders' table is updated based on the MAX(l_shipdate) of all line items. However, if a line item's ship date were to be updated to an earlier date (though not currently possible with the hardcoded 'today' logic), the 'o_latest_shipdate' would not be correctly recalculated if it was previously set to a later date by another item.""
+  }
+]",True,"The expected finding says this issue should NOT be detected because o_latest_shipdate is recalculated correctly after updating l_shipdate. The reviewer explicitly flags a data inconsistency around recalculating o_latest_shipdate from MAX(l_shipdate), which matches the stale aggregate concept and is therefore an incorrect detection.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,js_fastify_rawsql,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""In the /api/orders/:o_orderkey/lineitems/:l_linenumber/ship endpoint, the update to lineitem.l_shipdate and orders.o_latest_shipdate is performed in separate statements without a transaction, risking a state where the order's latest ship date is out of sync with its line items if the process crashes between updates.""
+  }
+]",True,"The expected finding says this issue should NOT be detected, but the reviewer explicitly flags the order's latest ship date becoming out of sync with line items due to separate updates without a transaction. This matches the same core stale aggregate/inconsistency concept, so it is an incorrect detection.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,js_fastify_sequelize,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency Risk"",
+    ""detected"": true,
+    ""description"": ""In the '/api/orders/:o_orderkey/lineitems/:l_linenumber/ship' endpoint, the 'o_latest_shipdate' in the 'orders' table is updated using the MAX(l_shipdate) from 'lineitem'. If a user updates a ship date to a value earlier than the current maximum, the 'o_latest_shipdate' will remain the same, but if the record being updated was the previous maximum, the 'o_latest_shipdate' will not be correctly recalculated to the next most recent date.""
+  }
+]",True,"The expected finding says this issue should NOT be detected because o_latest_shipdate is recalculated correctly after updating l_shipdate. The reviewer explicitly flags the opposite core issue, claiming the aggregate may remain stale when the previous maximum ship date is changed.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,python_fastapi_rawsql,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency Risk"",
+    ""detected"": true,
+    ""description"": ""In the `ship_lineitem` function, the `o_latest_shipdate` in the `orders` table is updated based on the maximum `l_shipdate` of all line items. However, if a line item's ship date were to be updated to an earlier date or deleted (though not implemented here), the `o_latest_shipdate` would not be correctly recalculated to the previous maximum, leading to stale data.""
+  }
+]",True,"The expected finding says this issue should NOT be detected, but the reviewer explicitly flags a stale aggregate problem with `o_latest_shipdate` becoming outdated after line item date changes/deletions.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,python_fastapi_sqlalchemy,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency Risk"",
+    ""detected"": true,
+    ""description"": ""In the `ship_lineitem` function, the `o_latest_shipdate` in the `orders` table is updated based on the maximum `l_shipdate` of all line items for that order. However, if a line item's ship date were to be updated to an earlier date or cleared, the `o_latest_shipdate` would still reflect the maximum, but the logic does not account for the possibility of `latest` being NULL if no line items have ship dates, potentially overwriting existing data with NULL.""
+  }
+]",True,"The expected finding should NOT be detected, but the reviewer explicitly flags a data inconsistency around recalculating `o_latest_shipdate` from line items. Although framed as a NULL/max edge case, it is still the same aggregate-maintenance concept and thus incorrectly reports this non-issue.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,python_flask_rawsql,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency on Ship Date Update"",
+    ""detected"": true,
+    ""description"": ""In ship_lineitem, the o_latest_shipdate in the orders table is updated using MAX(l_shipdate). If a line item's ship date is updated to a date earlier than the current o_latest_shipdate, the order's latest ship date will be incorrectly overwritten with a smaller value.""
+  }
+]",True,"The expected finding says this issue should NOT be detected because recalculating o_latest_shipdate with MAX(l_shipdate) keeps it current. The reviewer explicitly flags this as a problem, claiming the aggregate can be overwritten with a smaller value, which is the same stale/incorrect aggregate concept.",FALSE,,FALSE,,1,,,
+SA_short_N3_test,python_flask_sqlalchemy,stale_aggregate,False,"ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation.","[
+  {
+    ""name"": ""Data Inconsistency on Ship Date Update"",
+    ""detected"": true,
+    ""description"": ""In the ship_lineitem function, the Order.o_latest_shipdate is updated using the max(LineItem.l_shipdate) for the order. However, if the current update sets a ship date that is earlier than an existing one, or if the current update is the only one, the logic correctly finds the max but fails to handle cases where the updated line item was previously the latest ship date and is now changed to an earlier date (though unlikely for 'shipping', it is a logic flaw in maintaining the derived field).""
+  }
+]",True,"The expected finding should NOT be detected, but the reviewer explicitly flags a supposed inconsistency in maintaining o_latest_shipdate after ship_lineitem updates and recalculates the MAX ship date. This matches the stale aggregate concept and is therefore an incorrect detection.",FALSE,,FALSE,,1,,,
+SA_short_P1_test,go_fiber_gorm,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Incorrect Column Reference in SELECT"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler, the query 'SELECT l_orderkey FROM lineitem WHERE l_orderkey = ? AND l_linenumber = ?' is used to check for existence, but the variable passed as the first argument is oOrderkey, which is correct, but the logic is redundant as it selects the same value it filters by.""
+  }
+]",False,"The reviewer only mentions a redundant existence-check SELECT in the lineitem update handler. They do not mention that updating lineitem pricing fields fails to recalculate orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P1_test,go_fiber_rawsql,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency on Update"",
+    ""detected"": true,
+    ""description"": ""The updateLineitem function updates lineitem prices, discounts, and taxes but fails to update the corresponding o_totalprice in the orders table, leading to a mismatch between the order total and the sum of its line items.""
+  }
+]",True,"The reviewer explicitly states that updating lineitem pricing/discount/tax does not update orders.o_totalprice, causing the order total to mismatch the sum of line items. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P1_test,go_gin_gorm,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Incorrect RowsAffected Check"",
+    ""detected"": true,
+    ""description"": ""In the GET /api/orders/:o_orderkey handler, the code checks res.RowsAffected == 0 after a .Scan() call. In GORM, .Scan() does not populate RowsAffected; this check will fail to correctly identify when an order is not found.""
+  },
+  {
+    ""name"": ""Incorrect RowsAffected Check in PUT"",
+    ""detected"": true,
+    ""description"": ""In the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler, the code checks res.RowsAffected == 0 after a .Scan() call to verify the existence of a line item. .Scan() does not populate RowsAffected, meaning the 'Line item not found' error will not be triggered correctly.""
+  }
+]",False,"The reviewer only reports incorrect use of RowsAffected after Scan() in GET and PUT handlers. They do not mention that updating lineitem pricing fields leaves orders.o_totalprice unrecalculated, causing stale aggregate order totals.",FALSE,,FALSE,,1,,,
+SA_short_P1_test,go_gin_rawsql,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Partial Update Data Loss"",
+    ""detected"": true,
+    ""description"": ""In updateLineitem, the UPDATE statement sets l_extendedprice, l_discount, and l_tax using values from the payload map. If any of these keys are missing from the request, they will be updated to NULL in the database, overwriting existing data.""
+  }
+]",False,"The reviewer only reports that missing payload fields could overwrite lineitem pricing columns with NULL. They do not mention that updating lineitem pricing fails to recalculate orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P1_test,js_express_rawsql,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency on Update"",
+    ""detected"": true,
+    ""description"": ""The PUT endpoint /api/orders/:o_orderkey/lineitems/:l_linenumber updates lineitem prices, discounts, and taxes but fails to update the corresponding o_totalprice in the orders table, leading to a mismatch between the order total and the sum of its line items.""
+  }
+]",True,"The reviewer explicitly states that updating lineitem pricing/discount/tax does not update orders.o_totalprice, causing the order total to mismatch the line items. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P1_test,js_express_sequelize,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency on Update"",
+    ""detected"": true,
+    ""description"": ""The PUT endpoint /api/orders/:o_orderkey/lineitems/:l_linenumber updates lineitem prices and taxes but fails to update the corresponding o_totalprice in the orders table, leading to a mismatch between the order total and the sum of its line items.""
+  }
+]",True,"The reviewer explicitly states that updating lineitem pricing/tax fields does not update orders.o_totalprice, causing the order total to mismatch the line items. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P1_test,js_fastify_rawsql,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Incorrect Total Price Calculation"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the total price is calculated as SUM(l_extendedprice * (1 - l_discount) * (1 + l_tax)), which incorrectly applies tax to the discounted price instead of the base price or following standard accounting rules, and potentially deviates from the intended business logic for o_totalprice.""
+  }
+]",False,"The expected issue is that updating lineitem pricing fields does not recompute orders.o_totalprice, causing get_order to return a stale aggregate. The reviewer instead flags a formula/business-logic concern in POST /api/orders total price calculation, which is a different root cause and does not mention stale stored totals after lineitem updates.",FALSE,,FALSE,,1,,,
+SA_short_P1_test,js_fastify_sequelize,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency on Update"",
+    ""detected"": true,
+    ""description"": ""The PUT endpoint /api/orders/:o_orderkey/lineitems/:l_linenumber updates line item prices and taxes but fails to update the corresponding o_totalprice in the orders table, leading to a mismatch between the order total and the sum of its line items.""
+  }
+]",True,"The reviewer explicitly states that updating line item prices/taxes does not update orders.o_totalprice, causing the order total to mismatch the sum of line items. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P1_test,python_fastapi_rawsql,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Transaction Leak"",
+    ""detected"": true,
+    ""description"": ""In the `update_lineitem` function, if an exception occurs after 'BEGIN' but before 'ROLLBACK' or 'commit', the connection is closed without rolling back the transaction, potentially leaving the database in an inconsistent state or locking resources.""
+  },
+  {
+    ""name"": ""Transaction Leak"",
+    ""detected"": true,
+    ""description"": ""In the `create_order` function, if an exception occurs during the insertion of line items or the total price update, the transaction is never rolled back before the connection is closed in the 'finally' block.""
+  }
+]",False,"The reviewer only reports transaction rollback/cleanup issues. They do not mention that update_lineitem changes pricing fields without recomputing orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P1_test,python_fastapi_sqlalchemy,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency on Update"",
+    ""detected"": true,
+    ""description"": ""The `update_lineitem` endpoint updates individual line item prices, discounts, and taxes but fails to update the corresponding `o_totalprice` in the `orders` table, leading to a mismatch between the order total and the sum of its line items.""
+  }
+]",True,"The reviewer explicitly states that update_lineitem changes line item pricing fields without updating orders.o_totalprice, causing the order total to mismatch the sum of line items. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P1_test,python_flask_rawsql,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency on Update"",
+    ""detected"": true,
+    ""description"": ""The `update_lineitem` function updates the `lineitem` table but fails to update the corresponding `o_totalprice` in the `orders` table, leading to a mismatch between the order total and the sum of its line items.""
+  }
+]",True,"The reviewer explicitly states that update_lineitem changes lineitem data without updating orders.o_totalprice, causing the order total to mismatch the sum of line items. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P1_test,python_flask_sqlalchemy,stale_aggregate,True,"update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency on Update"",
+    ""detected"": true,
+    ""description"": ""The `update_lineitem` function updates individual line item prices and taxes but fails to recalculate and update the `Order.o_totalprice` in the `orders` table, leading to a mismatch between the order total and the sum of its line items.""
+  }
+]",True,"The reviewer explicitly states that update_lineitem changes line item prices/taxes without recalculating orders.o_totalprice, causing the order total to mismatch the sum of line items. This matches the expected stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P2_test,go_fiber_gorm,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Missing Total Price Update on Lineitem Addition"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders/:o_orderkey/lineitems handler, a new lineitem is added to an existing order, but the o_totalprice in the orders table is not updated to reflect the new item's cost.""
+  }
+]",True,"The reviewer explicitly states that adding a lineitem does not update orders.o_totalprice, which matches the core issue of the aggregate total becoming stale after insert.",TRUE,,TRUE,,1,,,
+SA_short_P2_test,go_fiber_rawsql,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The addLineitem function inserts a new lineitem but fails to update the o_totalprice in the orders table, leading to a mismatch between the sum of lineitems and the order total.""
+  }
+]",True,"The reviewer explicitly states that addLineitem inserts a new lineitem without updating orders.o_totalprice, causing a mismatch between lineitems and the stored order total. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P2_test,go_gin_gorm,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Incorrect Total Price Calculation"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the total price is calculated as SUM(l_extendedprice * (1 - l_discount) * (1 + l_tax)). This is mathematically incorrect as tax is typically applied to the discounted price, not as a multiplier to the whole expression in this specific way, and it deviates from standard TPC-H style calculations where tax is usually a separate additive component.""
+  }
+]",False,"The reviewer flags an incorrect formula for computing total price in a POST handler, not the issue that adding a lineitem fails to update orders.o_totalprice and causes get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P2_test,go_gin_rawsql,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The add_lineitem function inserts a new lineitem into the database but fails to update the o_totalprice in the orders table, leading to a mismatch between the sum of lineitems and the order total.""
+  }
+]",True,"The reviewer explicitly states that add_lineitem inserts a lineitem but does not update orders.o_totalprice, causing a mismatch between lineitems and the stored order total. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P2_test,js_express_rawsql,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Inconsistent Order Total"",
+    ""detected"": true,
+    ""description"": ""The POST /api/orders/:o_orderkey/lineitems endpoint allows adding new line items to an existing order without updating the o_totalprice in the orders table, leading to data inconsistency.""
+  }
+]",True,"The reviewer explicitly states that adding line items does not update orders.o_totalprice, causing data inconsistency. This matches the expected stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P2_test,js_express_sequelize,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Potential Crash on Missing Lineitems"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the code iterates over payload['lineitems'] using a for...of loop without checking if the field exists or is an array, which will cause the application to crash if the field is missing.""
+  }
+]",False,"The reviewer only mentions a crash risk when payload.lineitems is missing or not an array. They do not describe the data-layer issue where adding a lineitem fails to recompute orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P2_test,js_fastify_rawsql,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Nested Transaction Commands"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders/:o_orderkey/lineitems and POST /api/orders endpoints, the code calls db.prepare('BEGIN').run() and db.prepare('COMMIT').run() inside a db.transaction() wrapper. better-sqlite3's transaction() method already handles the BEGIN/COMMIT/ROLLBACK lifecycle, and executing these manually inside the wrapper will cause a 'cannot start a transaction within a transaction' error.""
+  },
+  {
+    ""name"": ""Manual Rollback in Transaction Wrapper"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders/:o_orderkey/lineitems endpoint, db.prepare('ROLLBACK').run() is called manually inside a db.transaction() block. In better-sqlite3, the correct way to trigger a rollback within a transaction wrapper is to throw an error.""
+  }
+]",False,"The reviewer only reports transaction misuse issues (nested BEGIN/COMMIT and manual ROLLBACK). They do not mention that adding a lineitem fails to recompute orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P2_test,js_fastify_sequelize,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Potential Crash on Null Lineitems"",
+    ""detected"": true,
+    ""description"": ""In the POST /api/orders handler, the code iterates over payload['lineitems'] using a for...of loop without checking if the field exists or is an array, which will cause the application to crash if the field is missing.""
+  }
+]",False,"The reviewer only reports a possible crash when lineitems is null or missing. They do not mention that adding a lineitem fails to recompute orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P2_test,python_fastapi_rawsql,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Missing Transaction Rollback on Error"",
+    ""detected"": true,
+    ""description"": ""In the `create_order` function, a transaction is started with `BEGIN`, but there is no `except` block to call `ROLLBACK` if an exception occurs during the insertion of lineitems or the total price update, potentially leaving the database in an inconsistent state or locking resources.""
+  }
+]",False,"The reviewer only mentions missing rollback/transaction handling in create_order. They do not describe the core issue that add_lineitem inserts a row without recalculating orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P2_test,python_fastapi_sqlalchemy,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Data Inconsistency in add_lineitem"",
+    ""detected"": true,
+    ""description"": ""The `add_lineitem` endpoint inserts a new Lineitem but fails to update the `o_totalprice` in the Orders table, leading to a discrepancy between the sum of line items and the order total.""
+  }
+]",True,"The reviewer explicitly states that add_lineitem inserts a new line item without updating Orders.o_totalprice, causing a mismatch between line items and the stored order total. This matches the expected stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P2_test,python_flask_rawsql,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Missing Transaction Rollback on Error"",
+    ""detected"": true,
+    ""description"": ""In the `create_order` function, a transaction is started with `db.execute(\""BEGIN\"")`, but there is no try-except block to call `ROLLBACK` if an exception occurs during the insertion of lineitems or the total price update.""
+  }
+]",False,"The reviewer only mentions missing rollback/transaction error handling in create_order. They do not identify that add_lineitem inserts a line item without recalculating orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P2_test,python_flask_sqlalchemy,stale_aggregate,True,"add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value.","[
+  {
+    ""name"": ""Invalid Transaction Management"",
+    ""detected"": true,
+    ""description"": ""In add_lineitem and create_order, db.begin() is called on a session created via sessionmaker(autocommit=False). In SQLAlchemy, calling begin() on a session that is already in a transaction or managed by the session's internal transaction state can lead to IllegalState errors or unexpected behavior.""
+  }
+]",False,"The reviewer only reports a transaction-management issue with db.begin() usage. They do not mention that add_lineitem fails to recompute orders.o_totalprice, causing get_order to return a stale aggregate.",FALSE,,FALSE,,1,,,
+SA_short_P3_test,go_fiber_gorm,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The endpoint `/api/orders/:o_orderkey/lineitems/:l_linenumber/ship` updates `lineitem.l_shipdate` but fails to update the corresponding `orders.o_latest_shipdate`, violating the implicit relationship where the order's latest ship date should reflect its line items.""
+  }
+]",True,"The reviewer explicitly states that updating lineitem.l_shipdate does not update orders.o_latest_shipdate, causing the order's latest ship date to no longer reflect its line items. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,go_fiber_rawsql,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The shipLineitem function updates l_shipdate in the lineitem table but fails to update the corresponding o_latest_shipdate in the orders table, leading to denormalized data inconsistency.""
+  }
+]",True,"The reviewer explicitly says shipLineitem updates l_shipdate but does not update orders.o_latest_shipdate, causing denormalized inconsistency. This matches the core stale aggregate/root-cause issue.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,go_gin_gorm,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The POST /api/orders/:o_orderkey/lineitems/:l_linenumber/ship endpoint updates l_shipdate in the lineitem table but fails to update the corresponding o_latest_shipdate in the orders table, violating the implicit relationship between the two fields.""
+  }
+]",True,"The reviewer explicitly says shipping a line item updates l_shipdate but does not update orders.o_latest_shipdate, causing inconsistency between the two fields. This matches the core stale aggregate problem.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,go_gin_rawsql,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The shipLineitem function updates l_shipdate in the lineitem table but fails to update the corresponding o_latest_shipdate in the orders table, leading to denormalized data inconsistency.""
+  }
+]",True,"The reviewer explicitly states that updating l_shipdate in lineitem without updating orders.o_latest_shipdate causes denormalized data inconsistency, which matches the stale aggregate/root-cause issue.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,js_express_rawsql,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The endpoint `/api/orders/:o_orderkey/lineitems/:l_linenumber/ship` updates `lineitem.l_shipdate` but fails to update the corresponding `orders.o_latest_shipdate`, leading to a synchronization failure between the order and its line items.""
+  }
+]",True,"The reviewer explicitly states that updating `lineitem.l_shipdate` does not update `orders.o_latest_shipdate`, causing synchronization inconsistency between the order and its line items. This matches the core stale aggregate problem.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,js_express_sequelize,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The `/api/orders/:o_orderkey/lineitems/:l_linenumber/ship` endpoint updates `l_shipdate` in the `lineitem` table but fails to update the corresponding `o_latest_shipdate` in the `orders` table, violating the implied relationship between the two fields.""
+  }
+]",True,"The reviewer explicitly states that updating `lineitem.l_shipdate` does not update `orders.o_latest_shipdate`, causing inconsistency between the aggregate field and underlying data. This matches the stale aggregate/root-cause issue.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,js_fastify_rawsql,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The endpoint /api/orders/:o_orderkey/lineitems/:l_linenumber/ship updates l_shipdate in the lineitem table but fails to update the corresponding o_latest_shipdate in the orders table, leading to denormalized data inconsistency.""
+  }
+]",True,"The reviewer explicitly says shipping a line item updates l_shipdate but does not update orders.o_latest_shipdate, causing denormalized inconsistency. This matches the expected stale aggregate/root cause.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,js_fastify_sequelize,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The `/api/orders/:o_orderkey/lineitems/:l_linenumber/ship` endpoint updates `l_shipdate` in the `lineitem` table but fails to update the corresponding `o_latest_shipdate` in the `orders` table, leading to denormalized data inconsistency.""
+  }
+]",True,"The reviewer explicitly states that updating `lineitem.l_shipdate` does not update `orders.o_latest_shipdate`, causing denormalized inconsistency. This matches the expected stale aggregate/root cause.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,python_fastapi_rawsql,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The ship_lineitem function updates l_shipdate in the lineitem table but fails to update the corresponding o_latest_shipdate in the orders table, leading to denormalized data inconsistency.""
+  }
+]",True,"The reviewer explicitly states that ship_lineitem updates l_shipdate but does not update orders.o_latest_shipdate, causing denormalized inconsistency. This matches the expected stale aggregate/root cause.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,python_fastapi_sqlalchemy,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The `ship_lineitem` function updates `lineitem.l_shipdate` but fails to update the corresponding `orders.o_latest_shipdate`, leading to a state where the order's latest ship date is out of sync with its line items.""
+  }
+]",True,"The reviewer explicitly states that `ship_lineitem` updates `lineitem.l_shipdate` without updating `orders.o_latest_shipdate`, causing the order's latest ship date to be out of sync with its line items. This matches the expected stale aggregate issue.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,python_flask_rawsql,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The ship_lineitem function updates l_shipdate in the lineitem table but fails to update the corresponding o_latest_shipdate in the orders table, leading to denormalized data inconsistency.""
+  }
+]",True,"The reviewer explicitly states that ship_lineitem updates l_shipdate but does not update orders.o_latest_shipdate, causing denormalized inconsistency. This matches the core stale aggregate problem.",TRUE,,TRUE,,1,,,
+SA_short_P3_test,python_flask_sqlalchemy,stale_aggregate,True,"ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment.","[
+  {
+    ""name"": ""Data Inconsistency"",
+    ""detected"": true,
+    ""description"": ""The ship_lineitem function updates LineItem.l_shipdate but fails to update the corresponding Order.o_latest_shipdate, leading to a state where the order's latest ship date is out of sync with its line items.""
+  }
+]",True,"The reviewer explicitly states that ship_lineitem updates LineItem.l_shipdate without updating Order.o_latest_shipdate, causing the order's latest ship date to be out of sync with its line items. This matches the stale aggregate issue.",TRUE,,TRUE,,1,,,

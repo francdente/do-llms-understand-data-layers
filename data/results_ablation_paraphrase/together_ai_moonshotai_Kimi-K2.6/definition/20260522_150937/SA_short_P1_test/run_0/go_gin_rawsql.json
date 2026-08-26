@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `updateLineitem`, the `lineitem` table is updated (l_extendedprice, l_discount, l_tax) but `orders.o_totalprice` is never recalculated or updated. The `getOrder` endpoint reads `o_totalprice` directly from `orders`, so after a line item update, the returned total price will be stale and incorrect."
+  }
+]

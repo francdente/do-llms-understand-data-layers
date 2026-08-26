@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the application explicitly deletes child records from orders table (db.prepare(\"DELETE FROM orders WHERE o_custkey = ?\").run(c_custkey)) before deleting the parent customer record. The GET /api/orders endpoint performs a JOIN between orders and customer to return orders tied to active customers, so after a customer deletion the orders that were cascade-deleted are permanently lost and any read that depended on them (e.g., historical order queries) would return incomplete data."
+  }
+]

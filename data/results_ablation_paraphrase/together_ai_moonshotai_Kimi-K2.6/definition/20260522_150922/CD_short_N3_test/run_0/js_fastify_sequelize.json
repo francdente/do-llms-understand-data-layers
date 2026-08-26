@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey', ...)`, the `Customer.destroy()` call with `PRAGMA foreign_keys = ON` triggers SQLite's ON DELETE CASCADE, permanently deleting all related orders. The `app.get('/api/dashboard', ...)` endpoint depends on those orders for its `total_orders` and `total_revenue` calculations, so it will now return incomplete/missing data after a customer deletion."
+  }
+]

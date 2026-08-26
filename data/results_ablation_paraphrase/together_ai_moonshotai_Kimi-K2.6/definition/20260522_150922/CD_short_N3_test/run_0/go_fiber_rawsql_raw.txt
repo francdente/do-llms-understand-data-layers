@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, deleting a customer with `DELETE FROM customer WHERE c_custkey = ?` triggers ON DELETE CASCADE (enabled by `PRAGMA foreign_keys = ON`), which permanently removes all related orders rows. The `dashboard` endpoint depends on those orders for `total_orders` and `total_revenue` calculations, so it will now return incomplete/missing data."
+  }
+]
+```

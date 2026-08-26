@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue detected. The `shipLineitem` endpoint correctly recalculates `o_latest_shipdate` from the current lineitem rows via `MAX(l_shipdate)` and updates the parent `orders` table within the same transaction, ensuring `getOrder` always reads the current value."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `get_product_availability`, the read query selects from `product` by `p_productkey` without filtering `p_status`, while `discontinue_product` updates `product.p_status` to `'discontinued'`. This matches the exposed record signal: a write endpoint marks the product as no longer active, but the read endpoint still returns it as available/visible."
+  }
+]

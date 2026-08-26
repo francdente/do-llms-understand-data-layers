@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In function `add_lineitem`, the write endpoint inserts into `lineitem` for an existing order but never recalculates or updates the parent `orders.o_totalprice`. The read endpoint `get_order` then serves `o_totalprice` directly from `orders`, so after line items are added the stored aggregate can be stale relative to the current `lineitem` rows."
+  }
+]

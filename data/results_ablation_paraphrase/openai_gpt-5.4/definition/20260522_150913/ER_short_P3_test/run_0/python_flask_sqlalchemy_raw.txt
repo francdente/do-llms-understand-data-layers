@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `suspend_supplier`, the write endpoint updates `Supplier.s_status` to `\"suspended\"`. In `list_products`, the read endpoint joins `Product` to `Supplier` but does not filter out suspended suppliers (e.g. no `Supplier.s_status != 'suspended'`), so products from suspended suppliers are still returned as purchasable/visible."
+  }
+]

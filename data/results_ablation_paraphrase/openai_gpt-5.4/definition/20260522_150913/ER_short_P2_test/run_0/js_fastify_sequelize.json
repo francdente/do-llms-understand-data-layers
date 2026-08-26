@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the write endpoint `app.post('/api/products/:p_productkey/discontinue')`, a product is marked inactive by updating `product.p_status` to `'discontinued'`. The read endpoint `app.get('/api/products/:p_productkey/availability')` then queries `product` by `p_productkey` only and does not filter out `p_status = 'discontinued'`, so discontinued products are still returned as available/visible records."
+  }
+]

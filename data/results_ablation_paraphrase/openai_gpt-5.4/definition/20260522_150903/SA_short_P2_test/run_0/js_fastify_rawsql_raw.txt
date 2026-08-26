@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the POST /api/orders/:o_orderkey/lineitems handler, a new lineitem is inserted for an existing order but orders.o_totalprice is never recomputed or updated. The GET /api/orders/:o_orderkey handler then reads and returns the cached orders.o_totalprice directly from the orders table, so after this write endpoint modifies detail rows, the parent aggregate can be stale and incorrect."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "The POST /api/products/:p_productkey/discontinue endpoint updates p_status to 'discontinued', but the GET /api/products/:p_productkey/availability endpoint does not filter on p_status and returns discontinued products as if they were still active and purchasable. The raw SQL query in the availability endpoint lacks a WHERE clause for p_status."
+  }
+]
+```

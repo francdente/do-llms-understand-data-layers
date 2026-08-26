@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `ship_lineitem`, the `o_latest_shipdate` in `orders` is updated when a line item ships, but other write endpoints that modify `l_shipdate` (or any other detail data that `o_latest_shipdate` summarizes) do not exist in the provided code. However, the `o_totalprice` in `orders` is never recalculated when line items are modified\u2014there is no endpoint shown that updates line item prices, but more critically, `o_totalprice` is a precomputed aggregate that could become stale if line item `l_extendedprice`, `l_discount`, or `l_tax` values change via unshown write paths. The `get_order` read endpoint serves `o_totalprice` directly from the `orders` table without computing it from current `lineitem` rows, making it a stale aggregate if line items are ever modified."
+  }
+]

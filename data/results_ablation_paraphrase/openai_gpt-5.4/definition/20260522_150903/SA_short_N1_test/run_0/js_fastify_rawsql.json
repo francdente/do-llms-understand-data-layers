@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance of a stale aggregate was found: write endpoints that modify lineitem rows recalculate orders.o_totalprice, and the read endpoint serves the stored aggregate without evidence of it becoming outdated from any shown write path."
+  }
+]

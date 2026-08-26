@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the application explicitly deletes child orders records with `DELETE FROM orders WHERE o_custkey = ?` before deleting the parent customer. The GET /api/orders/summary endpoint depends on all historical orders to compute total_orders and total_revenue; after customer deletion, those orders are permanently removed, causing the summary to return incomplete data."
+  }
+]

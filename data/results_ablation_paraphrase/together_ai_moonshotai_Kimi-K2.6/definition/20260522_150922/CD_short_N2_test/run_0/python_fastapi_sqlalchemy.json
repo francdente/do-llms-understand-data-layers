@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer` at `/api/customers/{c_custkey}`, the endpoint explicitly deletes all `Order` records with `db.execute(delete(Order).where(Order.o_custkey == c_custkey))` before deleting the customer. The `list_orders` endpoint at `/api/orders` returns orders tied to active customers via a subquery on `Customer.c_custkey`, so deleting orders when a customer is deleted causes no direct issue for that endpoint. However, if any other read endpoint (existing or future) were to query orders independently of customer existence, or if the `list_orders` endpoint's intent is to show historical orders, the explicit cascade delete of child `Order` records permanently removes data that could be needed."
+  }
+]

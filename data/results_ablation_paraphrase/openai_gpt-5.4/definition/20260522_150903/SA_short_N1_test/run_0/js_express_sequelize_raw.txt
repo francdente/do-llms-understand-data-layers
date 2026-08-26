@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance found: write endpoints that modify lineitem rows recalculate orders.o_totalprice before commit, and the read endpoint serves the stored aggregate without any shown path that leaves it stale."
+  }
+]

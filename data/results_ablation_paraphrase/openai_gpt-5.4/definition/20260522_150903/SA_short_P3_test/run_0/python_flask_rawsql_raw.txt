@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `ship_lineitem`, the write endpoint updates `lineitem.l_shipdate` but does not recompute or update the parent summary field `orders.o_latest_shipdate`. In `get_order`, the read endpoint returns `orders.o_latest_shipdate` directly, so the cached aggregate can become stale after shipping a line item and be served with outdated data."
+  }
+]

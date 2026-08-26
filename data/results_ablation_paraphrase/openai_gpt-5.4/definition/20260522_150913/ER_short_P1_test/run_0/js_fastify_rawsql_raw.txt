@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the Fastify POST endpoint `/api/products/:p_productkey/discontinue`, the code updates `product.p_status` to `'discontinued'`, signaling the record is no longer active. In the GET endpoint `/api/products/:p_productkey`, the query `SELECT ... FROM product WHERE p_productkey = ?` does not filter out discontinued records (for example by `p_status`), so a discontinued product is still returned as if visible/active."
+  }
+]

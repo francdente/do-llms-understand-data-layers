@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` explicitly deletes all child orders before deleting the customer. The `list_orders` endpoint joins `Order` with `Customer` and would silently omit these orders anyway, but any other read endpoint (or future API) that queries orders by `o_custkey` without joining to `customer` would return incomplete data after the cascade delete. The detection signal is the explicit application-level DELETE of dependent `Order` records followed by parent `Customer` deletion."
+  }
+]

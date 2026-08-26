@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: deleting a customer in deleteCustomer does not cascade to orders, and the dashboard endpoint continues to read from orders independently."
+  }
+]

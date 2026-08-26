@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly deletes all orders with matching o_custkey before deleting the customer (lines with tx.Exec(\"DELETE FROM orders WHERE o_custkey = ?\"...)). The GET /api/orders endpoint performs an INNER JOIN to customer and would exclude those orders anyway, but the orders are permanently destroyed rather than being queryable through any alternative endpoint. The explicit application-level cascade delete of child orders qualifies as unsafe cascade delete because dependent child records are permanently removed when the parent is deleted."
+  }
+]
+```

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber endpoint, lineitem prices are updated but orders.o_totalprice is never recalculated. The GET /api/orders/:o_orderkey endpoint reads the stale o_totalprice value, which no longer reflects the actual sum of lineitem prices after a lineitem update."
+  }
+]
+```

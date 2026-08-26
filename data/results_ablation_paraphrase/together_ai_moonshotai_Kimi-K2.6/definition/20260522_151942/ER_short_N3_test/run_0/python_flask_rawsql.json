@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the read endpoint `/api/products/archived` correctly filters on `p_status = 'archived'`, and there are no other read endpoints that return products without filtering by status."
+  }
+]

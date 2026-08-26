@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No cached or precomputed aggregate values were found in the parent table (orders) that could become stale when lineitem records are modified; the GET endpoint dynamically calculates o_totalprice from lineitem rows on each request."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance found: deleting a customer does not cascade to orders in the shown schema or code, and the delete handler explicitly returns a conflict when existing orders prevent deletion."
+  }
+]

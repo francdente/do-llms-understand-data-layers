@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In delete_customer, the handler explicitly deletes child rows with `DELETE FROM orders WHERE o_custkey = ?` before deleting the parent customer, and the separate read endpoint monthly_trend reads aggregated data from `orders`. This matches the unsafe delete cascade signal because deleting a customer permanently removes dependent orders that monthly_trend expects, causing missing or incomplete trend data."
+  }
+]

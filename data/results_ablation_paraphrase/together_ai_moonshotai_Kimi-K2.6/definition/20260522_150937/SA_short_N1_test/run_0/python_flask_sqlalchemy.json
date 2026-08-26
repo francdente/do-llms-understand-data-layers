@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `update_lineitem`, the `o_totalprice` aggregate is recalculated and updated after a line item change, but in `create_order`, line items are inserted and `o_totalprice` is updated, yet there is no endpoint to delete line items\u2014however, more critically, the `get_order` endpoint reads `Order.o_totalprice` directly without verifying it matches the live calculation from `lineitem` rows. The actual stale aggregate risk is absent for standard CRUD because `update_lineitem` and `create_order` both recompute and store the total, but no deletion endpoint exists that would leave the aggregate stale. Wait\u2014re-examining: the `update_lineitem` does update the aggregate, and `create_order` does too. There is no stale aggregate issue detected because all write paths that modify line items also update the parent aggregate. The `get_order` reads the stored value, but it is kept fresh by all modifying endpoints."
+  }
+]

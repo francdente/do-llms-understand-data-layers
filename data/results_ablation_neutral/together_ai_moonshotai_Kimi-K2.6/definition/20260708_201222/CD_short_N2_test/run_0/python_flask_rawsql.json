@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, the explicit `DELETE FROM orders WHERE o_custkey = ?` removes child rows from the `orders` table before deleting the parent `customer` row. The `list_orders` endpoint returns orders tied to active customers, so this cascade behavior is expected and intentional\u2014however, the issue definition flags any delete that removes child rows causing observable data loss for another endpoint. Since `list_orders` would no longer see these orders after customer deletion, this matches the unsafe delete cascade pattern at the application level in `delete_customer`."
+  }
+]

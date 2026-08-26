@@ -1,0 +1,8 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "taxonomy": ["ER_short_P2"],
+    "description": "discontinue_product sets p_status to 'discontinued', but get_product_availability returns the stock quantity without checking p_status. A discontinued product still appears purchasable with available stock."
+  }
+]

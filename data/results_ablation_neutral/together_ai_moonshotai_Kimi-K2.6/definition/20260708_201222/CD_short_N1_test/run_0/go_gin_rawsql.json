@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, the code explicitly deletes all rows from `orders` where `o_custkey = ?` before deleting the parent `customer` row. The `listOrders` endpoint only returns orders joined to active customers, so this explicit child deletion does not cause observable data loss for another endpoint\u2014no endpoint needs orphaned orders to exist after a customer is deleted. However, re-reading the definition: the issue requires that 'another endpoint needs those child rows to exist even after the parent is gone.' Since `listOrders` filters with `JOIN customer` and would never show orphaned orders, there is no endpoint that needs orphaned orders. Wait\u2014let me re-check: the definition says 'causes observable data loss for another endpoint that needs those child rows to exist even after the parent is gone.' Since no endpoint in this code needs orders without a customer, this is NOT an unsafe cascade delete. The explicit DELETE is actually safe because no endpoint reads orphaned orders."
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "taxonomy": ["SA_short_N2"],
+    "description": "update_lineitem modifies lineitem pricing without recalculating anything, but get_order computes the total live via SUM() from lineitem rows instead of reading the denormalized column. Staleness is not observable. (o_totalprice is not present in the db schema)"
+  }
+]

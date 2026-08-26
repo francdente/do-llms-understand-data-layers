@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No cached or precomputed aggregate values were found in the schema or code. The GET endpoint calculates the order total dynamically from lineitem rows at read time, and no parent table stores a summary column that could become stale when lineitems are updated."
+  }
+]
+```

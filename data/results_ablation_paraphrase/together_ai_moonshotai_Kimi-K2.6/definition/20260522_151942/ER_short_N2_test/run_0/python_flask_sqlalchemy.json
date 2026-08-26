@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the code updates only p_retailprice (not a lifecycle status), and there is no write endpoint that modifies p_status to mark records as inactive, nor any read endpoint that fails to filter on such a status."
+  }
+]

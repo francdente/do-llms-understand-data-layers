@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance found: deleting a customer in delete_customer does not cascade to orders; the schema has no ON DELETE CASCADE and the code instead blocks deletion with existing orders via foreign key enforcement and IntegrityError handling."
+  }
+]

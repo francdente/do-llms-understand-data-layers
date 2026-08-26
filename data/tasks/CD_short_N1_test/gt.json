@@ -1,0 +1,8 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "taxonomy": ["CD_short_N1"],
+    "description": "delete_customer removes orders rows, but list_orders uses a JOIN on customer, so deleted orders (whose customer no longer exists) are naturally excluded from results. No stale or orphaned data is observable."
+  }
+]

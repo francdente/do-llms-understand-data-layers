@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly deletes all orders with `Order.destroy({ where: { o_custkey } })` before deleting the customer. However, the `/api/orders` endpoint only returns orders tied to active customers via `WHERE o_custkey IN (SELECT c_custkey FROM customer)`, so child rows are not independently needed after parent deletion. This is a safe, intentional cascade with no observable data loss for other endpoints."
+  }
+]
+```

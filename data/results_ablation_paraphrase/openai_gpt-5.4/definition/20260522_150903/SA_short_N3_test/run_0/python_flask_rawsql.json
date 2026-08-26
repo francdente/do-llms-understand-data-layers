@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance found: the write endpoint `ship_lineitem` updates the parent aggregate `orders.o_latest_shipdate` after modifying `lineitem.l_shipdate`, and the read endpoint `get_order` serves that maintained value."
+  }
+]

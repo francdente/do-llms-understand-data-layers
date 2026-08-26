@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: deleting a customer in DELETE /api/customers/:c_custkey is blocked by the foreign key constraint and returns 409 when orders exist, and there is no explicit child-row delete or ON DELETE CASCADE behavior shown that would remove orders used by GET /api/dashboard."
+  }
+]

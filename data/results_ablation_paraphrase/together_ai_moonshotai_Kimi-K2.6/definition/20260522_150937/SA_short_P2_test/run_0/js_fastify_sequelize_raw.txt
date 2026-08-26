@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":true,"description":"In POST /api/orders/:o_orderkey/lineitems, new lineitems are inserted without recalculating and updating the parent order's o_totalprice. The GET /api/orders/:o_orderkey endpoint returns this stale o_totalprice, which no longer reflects the actual sum of lineitem prices after new lineitems are added."}]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance was found where a write endpoint updates a lifecycle status field such as soft-delete/archive/deactivate and a read endpoint fails to filter it; the code only reads and returns p_status without any endpoint modifying it."
+  }
+]

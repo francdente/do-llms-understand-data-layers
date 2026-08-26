@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In function `update_lineitem`, the endpoint updates detail rows in `lineitem` (`l_extendedprice`, `l_discount`, `l_tax`) for an order but never recalculates or updates the parent `orders.o_totalprice`. The read endpoint `get_order` then returns `o_totalprice` directly from `orders`, so the cached aggregate can become stale after line item edits."
+  }
+]

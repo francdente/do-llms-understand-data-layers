@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly deletes all orders with matching o_custkey before deleting the customer. The /api/orders/history endpoint returns 'the history of all existed orders', meaning it needs orders to persist for historical reporting even after their parent customer is deleted. This causes observable data loss for that endpoint."
+  }
+]
+```

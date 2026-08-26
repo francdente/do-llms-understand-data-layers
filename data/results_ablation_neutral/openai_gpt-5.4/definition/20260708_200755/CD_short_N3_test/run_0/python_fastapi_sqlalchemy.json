@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance found: deleting a customer does not cascade to orders, and the code explicitly blocks customer deletion when orders exist via foreign key enforcement and IntegrityError handling."
+  }
+]

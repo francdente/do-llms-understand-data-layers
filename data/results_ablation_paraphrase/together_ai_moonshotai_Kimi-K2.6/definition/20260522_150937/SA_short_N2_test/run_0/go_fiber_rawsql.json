@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue detected. The GET endpoint computes `o_totalprice` on-the-fly from lineitem rows rather than reading a cached value, and there is no precomputed summary column in the orders table that could become stale when lineitems are updated."
+  }
+]

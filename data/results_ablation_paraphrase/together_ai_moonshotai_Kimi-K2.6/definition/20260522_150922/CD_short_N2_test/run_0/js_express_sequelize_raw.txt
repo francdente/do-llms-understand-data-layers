@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, explicit `Order.destroy({ where: { o_custkey } })` deletes child orders before deleting the customer. The `app.get('/api/orders')` endpoint reads orders tied to active customers via `Op.in` subquery; if a customer is deleted between the subquery evaluation and result return, or if the endpoint is expected to return historical data including deleted customers' orders, the cascade delete causes permanent data loss that makes this read endpoint return incomplete data."
+  }
+]
+```

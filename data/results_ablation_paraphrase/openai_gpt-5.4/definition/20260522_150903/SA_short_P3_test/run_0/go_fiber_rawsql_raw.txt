@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In main.go, `shipLineitem` updates the detail row `lineitem.l_shipdate` but does not update the parent summary field `orders.o_latest_shipdate`. In the same file, `getOrder` reads and returns `orders.o_latest_shipdate` directly from `orders` without recalculating it from current `lineitem` rows, so the order-level aggregate can become stale after the write endpoint runs."
+  }
+]

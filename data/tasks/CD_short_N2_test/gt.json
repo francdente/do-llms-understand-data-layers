@@ -1,0 +1,8 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "taxonomy": ["CD_short_N2"],
+    "description": "delete_customer removes orders rows, but list_orders filters with a subquery (WHERE o_custkey IN (SELECT c_custkey FROM customer)), so orders belonging to a deleted customer are excluded from results. No stale or orphaned data is observable."
+  }
+]

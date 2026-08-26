@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly executes `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer. This matches the signal of an application-level child-table delete, and it causes observable data loss because `/api/orders/monthly-trend` aggregates from `orders` and will no longer include those historical orders after the customer is removed."
+  }
+]

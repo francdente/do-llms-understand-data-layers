@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":false,"description":"No instance found: the read endpoint computes o_totalprice directly from current lineitem rows with SUM(...) instead of reading a cached or stored aggregate from orders, so lineitem updates do not leave a served parent-table summary stale."}]

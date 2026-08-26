@@ -1,0 +1,29 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, the explicit `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer removes child order rows. The `list_orders` endpoint only returns orders tied to active customers (`o_custkey IN (SELECT c_custkey FROM customer)`), so this cascade behavior is expected and documented by that endpoint's design—no other endpoint needs orphaned orders. However, re-reading: the issue definition requires 'observable data loss for another endpoint that needs those child rows to exist even after the parent is gone.' Since `list_orders` explicitly filters out orphaned orders and no other endpoint accesses orders, there is no observable data loss for any endpoint that needs those rows. After careful analysis: no endpoint requires child rows to exist after parent deletion, so this does not qualify as unsafe cascade delete per the definition."
+  }
+]
+```
+
+Wait, let me re-analyze more carefully. The `list_orders` endpoint explicitly says "Return orders tied to active customers" and filters with `o_custkey IN (SELECT c_custkey FROM customer)`. This means the endpoint is designed to only show orders with existing customers. There is no endpoint that needs orders to exist after their customer is deleted. The delete operation is intentionally removing orders, and no endpoint suffers from this.
+
+However, I need to check if there's any implicit issue. The definition says "causes observable data loss for another endpoint that needs those child rows to exist even after the parent is gone." Since `list_orders` doesn't need orphaned orders (it explicitly excludes them), there's no such endpoint.
+
+But wait - is there data loss at all? The orders are deleted, but no endpoint is designed to read those deleted orders. The issue requires that "another endpoint needs those child rows to exist even after the parent is gone." Since no such endpoint exists, this is not an unsafe cascade delete.
+
+Actually, let me re-read once more. The code explicitly deletes orders before deleting the customer. This is application-level cascade. The question is whether this causes "observable data loss for another endpoint that needs those child rows to exist even after the parent is gone."
+
+Since `list_orders` only returns orders for active customers, it doesn't need or want orphaned orders. There's no other endpoint shown. So this is NOT an unsafe cascade delete per the definition.
+
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade detected. The explicit DELETE of orders in `delete_customer` is intentional, and the only order-reading endpoint (`list_orders`) explicitly filters to active customers only, so no endpoint needs orphaned orders to exist after parent deletion."
+  }
+]
+```

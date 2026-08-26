@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance was found where a write endpoint modifies detail rows without updating the stored parent summary, or where a read endpoint serves such a stale stored aggregate."
+  }
+]

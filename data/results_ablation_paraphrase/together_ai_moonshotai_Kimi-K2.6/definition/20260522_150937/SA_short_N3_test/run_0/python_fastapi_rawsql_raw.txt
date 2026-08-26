@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The `o_latest_shipdate` column in the `orders` table is correctly recalculated from the current `lineitem` rows via `MAX(l_shipdate)` and updated synchronously within the same transaction whenever a line item is shipped, ensuring the read endpoint `/api/orders/{o_orderkey}` always serves the current value."
+  }
+]

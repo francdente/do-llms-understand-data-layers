@@ -1,0 +1,66 @@
+const Fastify = require('fastify');
+const Database = require('better-sqlite3');
+
+const app = Fastify();
+const DATABASE = process.env.DB_PATH || 'app.db';
+const db = new Database(DATABASE);
+
+app.put('/api/products/:p_productkey/price', async (request, reply) => {
+  const p_productkey = Number(request.params.p_productkey);
+  const payload = request.body && typeof request.body === 'object' ? request.body : {};
+
+  const existing = db
+    .prepare('SELECT p_productkey FROM product WHERE p_productkey = ?')
+    .get(p_productkey);
+
+  if (existing === undefined) {
+    reply.code(404);
+    return { error: 'Product not found' };
+  }
+
+  db.prepare(
+    'UPDATE product SET p_retailprice = ? WHERE p_productkey = ?'
+  ).run(payload.p_retailprice, p_productkey);
+
+  const row = db
+    .prepare(
+      'SELECT p_productkey, p_name, p_status, p_retailprice FROM product WHERE p_productkey = ?'
+    )
+    .get(p_productkey);
+
+  reply.code(200);
+  return row;
+});
+
+app.get('/api/products/:p_productkey', async (request, reply) => {
+  const p_productkey = Number(request.params.p_productkey);
+
+  const row = db
+    .prepare(
+      'SELECT p_productkey, p_name, p_status, p_retailprice FROM product WHERE p_productkey = ?'
+    )
+    .get(p_productkey);
+
+  if (row === undefined) {
+    reply.code(404);
+    return { error: 'Product not found' };
+  }
+
+  reply.code(200);
+  return row;
+});
+
+const port = Number(process.env.PORT || 5000);
+
+app.listen({ host: '0.0.0.0', port }, (err) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+});
+
+process.on('exit', () => {
+  try {
+    db.close();
+  } catch (_) {}
+});

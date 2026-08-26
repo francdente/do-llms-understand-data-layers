@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance was found: the archive endpoint sets p_status='archived', and the only read endpoint (/api/products/archived) explicitly filters with WHERE p_status = 'archived'. No other read endpoints exist that would return products without status filtering."
+  }
+]

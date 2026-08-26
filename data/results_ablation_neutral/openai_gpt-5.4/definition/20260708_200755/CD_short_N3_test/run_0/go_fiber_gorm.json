@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: deleting a customer in main.go only issues DELETE FROM customer, and existing orders are preserved by the foreign key constraint rather than being cascaded or explicitly deleted."
+  }
+]

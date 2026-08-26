@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":false,"description":"No instance was found: the read endpoint GET /api/orders/:o_orderkey recalculates o_totalprice directly from lineitem rows on each request, and no cached or stored aggregate in orders is read after lineitem writes."}]

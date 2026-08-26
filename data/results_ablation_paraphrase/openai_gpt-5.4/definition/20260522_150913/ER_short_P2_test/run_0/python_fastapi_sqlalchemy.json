@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `discontinue_product`, the write endpoint updates `Product.p_status` to `\"discontinued\"`, but `get_product_availability` reads from `Product` using only `Product.p_productkey == p_productkey` and does not filter out discontinued records. This matches the exposed-record signal because a lifecycle status change is written, yet the read endpoint continues returning the product as purchasable/available."
+  }
+]

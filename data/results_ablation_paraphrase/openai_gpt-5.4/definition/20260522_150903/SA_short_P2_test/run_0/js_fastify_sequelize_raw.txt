@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In POST /api/orders/:o_orderkey/lineitems, the handler inserts a new lineitem for an existing order but never recalculates or updates orders.o_totalprice. The matching signal is a write endpoint modifying detail rows while GET /api/orders/:o_orderkey later reads the stored parent aggregate o_totalprice directly from orders, so the returned summary becomes stale after lineitem additions."
+  }
+]

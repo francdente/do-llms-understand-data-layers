@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "Detected in the DELETE endpoint `delete_customer` where `db.query(Order).filter(Order.o_custkey == c_custkey).delete(...)` removes child `orders` rows before deleting the parent `customer`. This matches the explicit application-level delete cascade signal, and it qualifies because the separate read endpoint `orders_summary` depends on `orders` rows for historical totals, which will become incomplete after those rows are permanently deleted."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, explicit `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` removes all orders for a customer before deleting the customer. The `/api/orders/summary` endpoint depends on all historical orders to compute `total_orders` and `total_revenue`, so this cascade delete causes observable data loss for that endpoint."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly deletes all orders with matching o_custkey before deleting the customer. This causes data loss for the /api/orders/monthly-trend endpoint, which needs all orders to exist to compute accurate monthly revenue and order count trends."
+  }
+]
+```

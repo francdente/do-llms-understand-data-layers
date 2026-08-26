@@ -1,0 +1,831 @@
+{
+  "model": "openai/gpt-5.4",
+  "prompt_type": "definition",
+  "label": "stale_aggregate",
+  "timestamp": "20260522_150903",
+  "runs": [
+    {
+      "run": 0,
+      "details": [
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N1_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N2_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_N3_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P1_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P2_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "SA_short_P3_test",
+          "label": "stale_aggregate",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        }
+      ],
+      "by_variant": {
+        "python_fastapi_sqlalchemy": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "python_flask_rawsql": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "js_express_rawsql": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "python_flask_sqlalchemy": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "go_gin_rawsql": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "js_express_sequelize": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "go_fiber_gorm": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "js_fastify_sequelize": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "js_fastify_rawsql": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "python_fastapi_rawsql": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "go_gin_gorm": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "go_fiber_rawsql": {
+          "stale_aggregate": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        }
+      },
+      "by_label": {
+        "stale_aggregate": {
+          "tp": 36,
+          "fp": 0,
+          "tn": 36,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "accuracy": 1.0
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "stale_aggregate": {
+      "tp": 36.0,
+      "fp": 0.0,
+      "tn": 36.0,
+      "fn": 0.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0
+    }
+  }
+}

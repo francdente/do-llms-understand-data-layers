@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "Detected in the read/write interaction between `update_lineitem` and `get_order`. `create_order` precomputes and stores the aggregate `orders.o_totalprice` from `lineitem` rows, but `update_lineitem` modifies `Lineitem.l_extendedprice`, `l_discount`, and `l_tax` without recomputing/updating `Orders.o_totalprice`; `get_order` then serves the stored `Orders.o_totalprice`, which can be stale relative to current line items."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The GET endpoint computes the order totalprice dynamically from lineitem rows at read time rather than using a cached/precomputed value, and the PUT endpoint modifies only detail records without maintaining any cached summary in the parent table."
+  }
+]
+```

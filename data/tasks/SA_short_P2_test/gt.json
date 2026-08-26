@@ -1,0 +1,8 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "taxonomy": ["SA_short_P2"],
+    "description": "add_lineitem inserts a new lineitem row (increasing the actual total) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value."
+  }
+]

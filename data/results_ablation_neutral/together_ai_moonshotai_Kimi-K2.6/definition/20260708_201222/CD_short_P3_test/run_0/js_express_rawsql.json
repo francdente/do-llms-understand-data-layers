@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey', ...)`, the code explicitly deletes all orders for a customer (`DELETE FROM orders WHERE o_custkey = ?`) before deleting the customer. This causes observable data loss for the `/api/orders/monthly-trend` endpoint, which needs order rows to exist to compute historical monthly revenue and order counts. The orders table contains analytical data that should persist even if the parent customer is deleted."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `app.get('/api/products/:p_productkey')`, the read endpoint queries by `p_productkey` without filtering on `p_status`, so a product marked 'discontinued' by the `POST /discontinue` endpoint is still returned to clients as if active and purchasable."
+  }
+]

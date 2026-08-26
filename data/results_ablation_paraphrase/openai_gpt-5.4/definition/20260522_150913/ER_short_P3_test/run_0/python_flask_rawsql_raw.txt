@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the Flask code, `suspend_supplier` updates `supplier.s_status` to `'suspended'`, but `list_products` still returns products joined to `supplier` without filtering on `s.s_status`. This matches the exposed-record signal: a write endpoint marks a supplier as no longer active, yet a read endpoint continues exposing records associated with that suspended supplier as purchasable/visible."
+  }
+]

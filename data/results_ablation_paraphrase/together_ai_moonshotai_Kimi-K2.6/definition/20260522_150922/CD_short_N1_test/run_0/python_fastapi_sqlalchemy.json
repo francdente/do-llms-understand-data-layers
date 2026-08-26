@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, after deleting a customer, all associated `Order` records are explicitly deleted via `db.query(Order).filter(Order.o_custkey == c_custkey).delete()`. The `list_orders` endpoint performs an inner join between `Order` and `Customer`, so deleting orders when a customer is deleted causes those orders to permanently disappear from `list_orders` results, resulting in missing/incomplete data for any dependent read operations."
+  }
+]

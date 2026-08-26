@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, explicit `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` removes child orders before deleting the customer. The `list_orders` endpoint depends on these orders via `Order.o_custkey.in_(select(Customer.c_custkey))`, so after a customer deletion, any previously existing orders for that customer are permanently gone and cannot be returned."
+  }
+]
+```

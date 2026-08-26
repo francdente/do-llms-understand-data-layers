@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance found: the write endpoint POST /api/orders/:o_orderkey/lineitems/:l_linenumber/ship updates the detail row and recomputes orders.o_latest_shipdate from lineitem within the same transaction before the read endpoint returns it."
+  }
+]

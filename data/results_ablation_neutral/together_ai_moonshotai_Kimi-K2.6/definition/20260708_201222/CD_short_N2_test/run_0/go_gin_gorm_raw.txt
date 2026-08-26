@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly deletes all orders with matching o_custkey before deleting the customer. The GET /api/orders endpoint only returns orders tied to active customers (o_custkey IN (SELECT c_custkey FROM customer)), so this cascade delete does not cause observable data loss for that endpoint. However, the orders are permanently deleted rather than archived, and no other endpoint in the provided code accesses orphaned orders, so there is no observable data loss for any endpoint shown."
+  }
+]
+```

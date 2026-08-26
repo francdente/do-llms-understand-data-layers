@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the POST /api/products/:p_productkey/discontinue endpoint, a product is lifecycle-updated via `UPDATE product SET p_status = 'discontinued'`. The GET /api/products/:p_productkey/availability endpoint then reads from `product` with `WHERE p.p_productkey = ?` but does not filter out `p_status = 'discontinued'`, so discontinued products remain visible through this read endpoint."
+  }
+]

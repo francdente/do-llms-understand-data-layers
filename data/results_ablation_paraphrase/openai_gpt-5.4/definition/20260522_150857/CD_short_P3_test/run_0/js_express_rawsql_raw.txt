@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "Detected in the DELETE /api/customers/:c_custkey handler, inside the transaction that executes `DELETE FROM orders WHERE o_custkey = ?` followed by `DELETE FROM customer WHERE c_custkey = ?`. This matches an explicit application-level delete cascade, and the GET /api/orders/monthly-trend endpoint depends on rows in `orders`, so deleting a customer permanently removes child order records that this read endpoint expects, causing missing/incomplete trend data."
+  }
+]

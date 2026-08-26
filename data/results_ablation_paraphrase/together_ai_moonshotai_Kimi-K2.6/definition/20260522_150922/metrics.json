@@ -1,0 +1,831 @@
+{
+  "model": "together_ai/moonshotai/Kimi-K2.6",
+  "prompt_type": "definition",
+  "label": "cascade_delete",
+  "timestamp": "20260522_150922",
+  "runs": [
+    {
+      "run": 0,
+      "details": [
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N1_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N2_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_N3_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P1_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P2_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "CD_short_P3_test",
+          "label": "cascade_delete",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        }
+      ],
+      "by_variant": {
+        "go_gin_rawsql": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "js_express_rawsql": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "python_fastapi_sqlalchemy": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "js_fastify_rawsql": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "python_flask_rawsql": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "go_fiber_rawsql": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 3,
+            "tn": 0,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "accuracy": 0.5
+          }
+        },
+        "go_fiber_gorm": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "python_fastapi_rawsql": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "js_express_sequelize": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "js_fastify_sequelize": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 3,
+            "tn": 0,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "accuracy": 0.5
+          }
+        },
+        "go_gin_gorm": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "python_flask_sqlalchemy": {
+          "cascade_delete": {
+            "tp": 3,
+            "fp": 3,
+            "tn": 0,
+            "fn": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "accuracy": 0.5
+          }
+        }
+      },
+      "by_label": {
+        "cascade_delete": {
+          "tp": 36,
+          "fp": 27,
+          "tn": 9,
+          "fn": 0,
+          "precision": 0.5714285714285714,
+          "recall": 1.0,
+          "f1": 0.7272727272727273,
+          "accuracy": 0.625
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "cascade_delete": {
+      "tp": 36.0,
+      "fp": 27.0,
+      "tn": 9.0,
+      "fn": 0.0,
+      "precision": 0.5714285714285714,
+      "recall": 1.0,
+      "f1": 0.7272727272727273,
+      "accuracy": 0.625
+    }
+  }
+}

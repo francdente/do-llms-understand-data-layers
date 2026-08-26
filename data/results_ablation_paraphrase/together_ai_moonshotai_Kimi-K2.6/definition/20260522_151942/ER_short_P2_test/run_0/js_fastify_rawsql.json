@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the GET /api/products/:p_productkey/availability endpoint, the query does not filter on p_status, so a product marked as 'discontinued' by the POST /api/products/:p_productkey/discontinue endpoint will still be returned with stock information as if it were purchasable. The write endpoint sets p_status = 'discontinued' but the read endpoint only checks p_productkey existence without excluding discontinued products."
+  }
+]

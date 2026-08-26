@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In main.go, `discontinueProduct` updates `product.p_status` to `'discontinued'`, signaling a lifecycle-status write. In the read endpoint `getProduct`, the query `SELECT ... FROM product WHERE p_productkey = ?` does not filter out discontinued records (for example by excluding `p_status = 'discontinued'`), so discontinued products are still returned as active/visible."
+  }
+]

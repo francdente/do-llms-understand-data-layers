@@ -1,0 +1,35 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "The `app.get(\"/api/products\")` read endpoint is missing from the code, but the `app.get(\"/api/products/archived\")` endpoint only returns archived records. However, there is no general product listing endpoint shown that would return all products without filtering by `p_status`. The archive endpoint (`POST /api/products/:p_productkey/archive`) sets `p_status = 'archived'`, but without seeing a general `GET /api/products` endpoint, we cannot confirm exposed records. Wait—re-examining: the issue requires a read endpoint that doesn't filter on status. The provided code only has `GET /api/products/archived` which does filter. No general listing endpoint exists in the code. But the schema has `p_status` and the archive endpoint updates it. Since no read endpoint returns unfiltered active/archived products together, no exposed record issue is detected in the provided code."
+  }
+]
+```
+
+Wait, let me re-analyze more carefully. The issue definition says: "A record's lifecycle status is updated by a write endpoint... but a read endpoint does not filter on this updated status and continues to return the record."
+
+Looking at the code:
+- `POST /api/products/:p_productkey/archive` - updates `p_status` to 'archived'
+- `GET /api/products/archived` - filters WHERE `p_status = 'archived'`
+
+There is NO general `GET /api/products` endpoint in the provided code that would return all products without filtering by status. The only read endpoint present specifically filters for archived records.
+
+However, I need to check if there's an implicit issue. The `GET /api/products/archived` endpoint returns archived records, which is correct behavior. There's no endpoint that returns products without checking `p_status`.
+
+Actually, re-reading once more: Is there any other read? No. The only SELECTs are:
+1. `SELECT p_productkey FROM product WHERE p_productkey = ?` in archive (checks existence)
+2. `SELECT ... FROM product WHERE p_status = 'archived'` in archived endpoint
+
+No exposed record issue exists because there's no read endpoint that fails to filter on `p_status`.
+
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance of exposed record was found. The only read endpoint present (`GET /api/products/archived`) correctly filters on `p_status = 'archived'`, and no general product listing endpoint exists that would return records without checking their lifecycle status."
+  }
+]
+```

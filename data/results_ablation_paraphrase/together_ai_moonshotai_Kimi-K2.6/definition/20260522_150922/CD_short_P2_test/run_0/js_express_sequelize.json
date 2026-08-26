@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly deletes all Order records with `Order.destroy({ where: { o_custkey } })` before deleting the Customer. The `app.get('/api/orders/history')` endpoint returns 'the history of all existed orders' but will now miss those deleted orders permanently, causing incomplete historical data."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `get_product` (GET /api/products/<p_productkey>), the query filters only by `p_productkey` without checking `p_status`, so a product marked 'discontinued' by `discontinue_product` is still returned. The detection signal is: write endpoint updates `p_status` to 'discontinued', but read endpoint does not exclude records with that status."
+  }
+]

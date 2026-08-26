@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the GET /api/products/:p_productkey/availability endpoint, the query joins product and inventory but does not filter on p_status, so a product marked 'discontinued' by the POST /api/products/:p_productkey/discontinue endpoint will still be returned as available. The write endpoint updates p_status to 'discontinued', but the read endpoint ignores this lifecycle field entirely."
+  }
+]

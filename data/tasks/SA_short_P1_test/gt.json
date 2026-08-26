@@ -1,0 +1,8 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "taxonomy": ["SA_short_P1"],
+    "description": "update_lineitem modifies lineitem pricing fields (l_extendedprice, l_discount, l_tax) but does not recalculate orders.o_totalprice. get_order reads o_totalprice directly from the orders table, returning a stale value."
+  }
+]

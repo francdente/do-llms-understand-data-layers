@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No cached or precomputed aggregate values were found in the code; all summary values are computed on-the-fly from source-of-truth lineitem rows."
+  }
+]

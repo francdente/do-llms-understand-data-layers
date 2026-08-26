@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `ship_lineitem`, `o_totalprice` in the `orders` table is a cached aggregate of line item prices (extendedprice * (1 - discount) * (1 + tax)), but when line items are shipped/updated, only `o_latest_shipdate` is recalculated while `o_totalprice` is never recalculated from the current lineitem rows. The `get_order` endpoint serves this potentially stale `o_totalprice` without recomputing it from lineitem details."
+  }
+]

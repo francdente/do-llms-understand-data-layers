@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the GET /api/products/:p_productkey endpoint, the SELECT query only filters by p_productkey and does not exclude records where p_status = 'discontinued'. Since the POST /api/products/:p_productkey/discontinue endpoint sets p_status to 'discontinued', discontinued products remain visible and returnable by the read endpoint."
+  }
+]

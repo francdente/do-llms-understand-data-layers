@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, explicit `DELETE FROM orders WHERE o_custkey = ?` removes child order records before deleting the parent customer. The `list_orders` endpoint depends on these order rows via a JOIN with customer, so after a customer deletion, orders that were tied to that customer are permanently gone and cannot be returned by the read endpoint."
+  }
+]

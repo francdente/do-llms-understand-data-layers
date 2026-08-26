@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the application explicitly deletes all orders for a customer before deleting the customer (db.prepare(\"DELETE FROM orders WHERE o_custkey = ?\")), yet the GET /api/orders endpoint only returns orders tied to active customers (WHERE o_custkey IN (SELECT c_custkey FROM customer)). This means the cascade delete causes no observable data loss for the /api/orders endpoint since it already filters out orphaned orders. However, the orders are permanently destroyed rather than preserved, and if any other endpoint or future code needs to access historical orders (e.g., for reporting, analytics, or soft-delete recovery), this constitutes unsafe cascade delete behavior. Given the strict definition requiring 'observable data loss for another endpoint that needs those child rows,' and no such endpoint exists in the current code, this is a borderline case. Re-evaluating: the GET /api/orders endpoint's comment states 'Return orders tied to active customers' and its query explicitly excludes orphaned orders, so there is no endpoint that needs child rows after parent deletion. Therefore, no unsafe cascade delete is detected in this codebase."
+  }
+]

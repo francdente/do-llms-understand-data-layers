@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, child orders are explicitly deleted via `DELETE FROM orders WHERE o_custkey = ?` before the parent customer is deleted. The GET /api/orders endpoint depends on these orders existing (it queries `FROM orders WHERE o_custkey IN (SELECT c_custkey FROM customer)`), so deleting a customer permanently removes its orders and any future read of those orders returns incomplete data."
+  }
+]
+```

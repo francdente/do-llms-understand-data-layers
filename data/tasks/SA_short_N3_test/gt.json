@@ -1,0 +1,8 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "taxonomy": ["SA_short_N3"],
+    "description": "ship_lineitem updates l_shipdate and then recalculates o_latest_shipdate as MAX(l_shipdate) across all lineitems for that order. get_order reads o_latest_shipdate, which is always up to date after the recalculation."
+  }
+]

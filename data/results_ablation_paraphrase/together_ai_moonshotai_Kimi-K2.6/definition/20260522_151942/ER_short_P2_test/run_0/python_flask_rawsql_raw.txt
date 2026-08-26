@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `get_product_availability`, the query does not filter on `p_status`, so a product that was soft-deleted via `discontinue_product` (which sets `p_status = 'discontinued'`) will still be returned to clients as available. The read endpoint treats discontinued products as still active and visible."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `ship_lineitem`, updating `l_shipdate` on a lineitem does not recalculate `o_latest_shipdate` in the parent `orders` table. The `get_order` endpoint reads `o_latest_shipdate` directly from `orders`, which may now be stale since it depends on the maximum `l_shipdate` across all lineitems but is never updated when lineitems change."
+  }
+]

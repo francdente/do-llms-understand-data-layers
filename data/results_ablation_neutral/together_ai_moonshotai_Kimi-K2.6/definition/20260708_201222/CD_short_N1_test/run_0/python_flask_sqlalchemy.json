@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, explicit `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` removes all orders for a deleted customer. However, the `list_orders` endpoint only returns orders joined to active customers, so no observable data loss occurs for any existing endpoint\u2014orders for deleted customers are already inaccessible. Wait, re-reading: the issue is 'observable data loss for another endpoint that needs those child rows to exist even after the parent is gone.' No endpoint needs orders without their customer. Thus this is NOT unsafe cascade delete."
+  }
+]

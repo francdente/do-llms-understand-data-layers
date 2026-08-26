@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the GET /api/products/:p_productkey endpoint, the query at `result := db.Table(\"product\").Select(...).Where(\"p_productkey = ?\", pProductkey).Take(&row)` fetches a product by primary key without filtering on `p_status`. Since the POST /api/products/:p_productkey/discontinue endpoint updates `p_status` to \"discontinued\", a discontinued product will still be returned by the GET endpoint as if it were active and purchasable."
+  }
+]

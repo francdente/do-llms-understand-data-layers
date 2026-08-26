@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, Order.destroy() is explicitly called before Customer.destroy(), permanently removing child order records. The GET /api/orders endpoint performs an INNER JOIN (required: true) to return only orders with active customers, so after a customer deletion, those orders are permanently lost rather than just excluded from the join result."
+  }
+]
+```

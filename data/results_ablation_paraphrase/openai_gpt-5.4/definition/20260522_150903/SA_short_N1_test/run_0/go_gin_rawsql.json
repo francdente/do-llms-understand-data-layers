@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance found: the read endpoint `getOrder` serves `orders.o_totalprice`, and the write endpoints shown recalculate or initialize `o_totalprice` when modifying the underlying lineitem rows they manage."
+  }
+]

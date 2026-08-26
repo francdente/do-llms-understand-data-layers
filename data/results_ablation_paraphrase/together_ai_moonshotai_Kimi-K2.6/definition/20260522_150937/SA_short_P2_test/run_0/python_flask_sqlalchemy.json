@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `add_lineitem`, a new lineitem is added to an order but `orders.o_totalprice` is not recalculated or updated. The `get_order` endpoint then returns this stale `o_totalprice` value, which no longer reflects the sum of all lineitems including the newly added one."
+  }
+]

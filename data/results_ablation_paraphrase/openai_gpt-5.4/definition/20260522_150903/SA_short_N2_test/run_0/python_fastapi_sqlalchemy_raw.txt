@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":false,"description":"No instance found: the read endpoint `/api/orders/{o_orderkey}` recalculates `o_totalprice` directly from current `lineitem` rows, and the write endpoint updates only detail rows without relying on or serving a cached aggregate stored in `orders`."}]

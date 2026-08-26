@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer` function, the code explicitly deletes rows from `orders` (`DELETE FROM orders WHERE o_custkey = ?`) before deleting the parent `customer` row. This causes observable data loss for the `/api/orders/history` endpoint, which needs all orders to exist to return the complete history of all existed orders."
+  }
+]
+```

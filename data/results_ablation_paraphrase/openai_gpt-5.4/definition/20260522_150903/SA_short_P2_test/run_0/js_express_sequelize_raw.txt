@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `app.post(\"/api/orders/:o_orderkey/lineitems\")`, a new `lineitem` is inserted for an existing order but `orders.o_totalprice` is not recomputed or updated. In `app.get(\"/api/orders/:o_orderkey\")`, the API reads and returns the stored `orders.o_totalprice` directly, so after this write endpoint modifies detail rows, the read endpoint can serve a stale aggregate."
+  }
+]

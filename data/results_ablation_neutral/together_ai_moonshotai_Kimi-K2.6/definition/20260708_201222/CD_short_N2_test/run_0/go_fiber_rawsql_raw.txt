@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.Delete(\"/api/customers/:c_custkey<int>\", ...)`, the handler explicitly deletes all orders with `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer. However, the `/api/orders` endpoint only returns orders tied to active customers (`WHERE o_custkey IN (SELECT c_custkey FROM customer)`), so the child rows are not independently needed after the parent is gone. This is not an unsafe cascade because no other endpoint requires these orphaned orders to exist."
+  }
+]
+```

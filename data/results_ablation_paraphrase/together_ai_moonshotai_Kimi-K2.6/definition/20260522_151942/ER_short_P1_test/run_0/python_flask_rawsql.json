@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `get_product`, the SELECT query does not filter on `p_status`, so a product that was soft-deleted/discontinued by `discontinue_product` (which sets `p_status = 'discontinued'`) is still returned to clients as if active and purchasable."
+  }
+]

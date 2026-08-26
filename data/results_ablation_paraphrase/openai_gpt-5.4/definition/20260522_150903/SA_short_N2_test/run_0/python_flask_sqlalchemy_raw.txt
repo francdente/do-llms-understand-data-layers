@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":false,"description":"No instance found: the read endpoint recalculates the order total from current lineitem rows on each GET, and no cached or stored aggregate in the parent orders table is served."}]

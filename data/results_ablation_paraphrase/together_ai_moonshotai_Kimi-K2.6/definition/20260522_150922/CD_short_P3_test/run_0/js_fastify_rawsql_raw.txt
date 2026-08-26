@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the code explicitly deletes child orders records (DELETE FROM orders WHERE o_custkey = ?) before deleting the parent customer record. This cascaded deletion permanently removes order data that the GET /api/orders/monthly-trend endpoint depends on for its monthly aggregation, causing that read endpoint to return incomplete or missing historical revenue data after customer deletions."
+  }
+]
+```

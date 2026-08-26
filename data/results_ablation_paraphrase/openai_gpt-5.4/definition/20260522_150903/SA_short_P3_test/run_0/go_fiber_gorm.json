@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In main.go, the POST /api/orders/:o_orderkey<int>/lineitems/:l_linenumber<int>/ship handler updates lineitem.l_shipdate but does not recompute or update the parent orders.o_latest_shipdate. The GET /api/orders/:o_orderkey<int> handler then reads and returns orders.o_latest_shipdate directly from the orders table, so the stored aggregate can become stale after lineitem ship-date changes."
+  }
+]

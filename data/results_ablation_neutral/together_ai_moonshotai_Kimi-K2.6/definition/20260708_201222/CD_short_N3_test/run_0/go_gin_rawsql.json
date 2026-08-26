@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The deleteCustomer function explicitly deletes only from the customer table, and the error handling suggests foreign key constraints prevent deletion when orders exist (rather than cascading). The dashboard endpoint only reads from orders and does not depend on customer rows existing."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The customer delete endpoint explicitly prevents deletion when orders exist (via foreign key constraint with foreign_keys=ON), and there is no ON DELETE CASCADE in the schema or application-level deletion of child rows that would cause data loss for the /api/dashboard endpoint."
+  }
+]
+```

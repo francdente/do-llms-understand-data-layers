@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "Detected in the Flask code at GET /api/orders/<o_orderkey> (`get_order`) together with PUT /api/orders/<o_orderkey>/lineitems/<l_linenumber> (`update_lineitem`). Signal matched: `orders.o_totalprice` is a stored aggregate computed from `lineitem` rows in `create_order`, but `update_lineitem` modifies `l_extendedprice`, `l_discount`, and `l_tax` without recomputing/updating `orders.o_totalprice`, so `get_order` can return a stale total."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In DELETE /api/customers/:c_custkey, inside the transaction, the explicit child-table delete `Order.destroy({ where: { o_custkey: c_custkey } })` removes all orders before deleting the customer. This matches an application-level cascade delete and causes observable data loss because GET /api/orders/monthly-trend depends on historical rows in `orders`, which will disappear after a customer deletion."
+  }
+]

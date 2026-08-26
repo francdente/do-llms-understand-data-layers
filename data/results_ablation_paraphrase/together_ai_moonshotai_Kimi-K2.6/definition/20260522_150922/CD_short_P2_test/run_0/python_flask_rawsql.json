@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, explicit `DELETE FROM orders WHERE o_custkey = ?` removes child order records before deleting the parent customer. The `orders_history` GET endpoint depends on these order rows to return complete history, so after customer deletion, that endpoint returns permanently missing/incomplete data."
+  }
+]

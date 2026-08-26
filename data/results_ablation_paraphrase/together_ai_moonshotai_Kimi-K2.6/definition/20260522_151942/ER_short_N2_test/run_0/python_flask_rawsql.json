@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the code does not contain any write endpoint that updates a lifecycle status field (e.g., soft-delete, archive, deactivate), and all read endpoints return records by primary key without status filtering, but there is no status-changing operation to create an inconsistency."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the read endpoint GET /api/products correctly filters on p_status: 'active', and the write endpoint POST /api/products/:p_productkey/discontinue updates p_status to 'discontinued', so discontinued products are not returned to clients."
+  }
+]
+```

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly deletes all `Order` rows with `Order.destroy({ where: { o_custkey } })` before deleting the customer. This causes data loss for the `/api/orders/summary` endpoint, which needs historical orders to compute `total_orders` and `total_revenue`."
+  }
+]

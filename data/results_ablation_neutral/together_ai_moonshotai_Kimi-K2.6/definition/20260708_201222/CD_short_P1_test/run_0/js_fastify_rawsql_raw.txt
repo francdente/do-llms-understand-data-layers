@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the application explicitly deletes all orders for a customer (DELETE FROM orders WHERE o_custkey = ?) before deleting the customer. This causes observable data loss for the GET /api/orders/summary endpoint, which needs all historical orders to compute total_orders and total_revenue, even after a customer is gone."
+  }
+]
+```

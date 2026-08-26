@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the POST /api/suppliers/:s_suppkey/suspend endpoint, Supplier.update sets supplier.s_status to 'suspended'. In the GET /api/products endpoint, Product.findAll includes Supplier with required: true but applies no filter on supplier.s_status, so products from suspended suppliers are still returned as purchasable/visible."
+  }
+]

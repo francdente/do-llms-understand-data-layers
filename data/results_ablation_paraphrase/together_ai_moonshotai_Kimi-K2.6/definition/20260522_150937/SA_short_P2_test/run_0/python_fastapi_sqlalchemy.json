@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `add_lineitem` (POST /api/orders/{o_orderkey}/lineitems), a new lineitem is inserted without recalculating and updating `orders.o_totalprice`. The read endpoint `get_order` returns this stale `o_totalprice` value, which no longer reflects the actual sum of lineitems. Detection signal: write to detail table (`lineitem`) without corresponding update to precomputed aggregate (`orders.o_totalprice`)."
+  }
+]

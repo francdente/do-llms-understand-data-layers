@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "Detected in function `delete_customer` and read endpoint `list_orders`. The signal is an explicit application-level child delete (`DELETE FROM orders WHERE o_custkey = ?`) followed by parent delete (`DELETE FROM customer WHERE c_custkey = ?`); this permanently removes `orders` rows that `/api/orders` later reads via `FROM orders o JOIN customer c`, causing those orders to disappear from that endpoint."
+  }
+]

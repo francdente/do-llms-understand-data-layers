@@ -1,0 +1,8 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "taxonomy": ["SA_short_N1"],
+    "description": "update_lineitem modifies lineitem pricing fields AND recalculates orders.o_totalprice via SUM() in the same transaction. get_order reads o_totalprice which is always consistent."
+  }
+]

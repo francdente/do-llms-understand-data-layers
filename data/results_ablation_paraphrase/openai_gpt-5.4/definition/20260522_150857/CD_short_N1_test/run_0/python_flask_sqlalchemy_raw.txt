@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In delete_customer(), the code explicitly deletes child rows with db.query(Order).filter(Order.o_custkey == c_custkey).delete(...) before deleting the parent Customer row. This matches the unsafe delete cascade signal because /api/orders reads from orders via a join to customer, so deleting a customer permanently removes that customer's orders and causes the read endpoint to return missing/incomplete data."
+  }
+]

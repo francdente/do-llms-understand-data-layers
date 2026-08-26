@@ -1,0 +1,12 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `shipLineitem`, the `o_totalprice` aggregate in the `orders` table is never recalculated when lineitem prices (l_extendedprice, l_discount, l_tax) are modified. The `getOrder` endpoint reads `o_totalprice` directly from `orders` without computing it from current lineitem rows, so any lineitem changes would make this cached value stale."
+  },
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `shipLineitem`, the `o_latest_shipdate` is correctly updated when a lineitem ships, but there is no handling for lineitem deletion or updates that could reduce the MAX(l_shipdate). The `getOrder` endpoint serves `o_latest_shipdate` from `orders` without recalculating from lineitem rows, so the cached value could become stale if the latest-shipped lineitem is deleted or its shipdate is changed to an earlier date."
+  }
+]

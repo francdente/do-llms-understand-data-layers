@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The customer deletion endpoint explicitly handles foreign key constraint errors and returns 409 when orders exist, rather than cascading or manually deleting child rows. The dashboard endpoint queries orders directly and would not suffer data loss from a safe customer deletion pattern."
+  }
+]
+```

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The DELETE endpoint for customers explicitly handles foreign key constraint violations by returning a 409 Conflict when orders exist, and the database schema does not define ON DELETE CASCADE on the foreign key. The dashboard endpoint reads from orders but does not depend on customer records being present."
+  }
+]

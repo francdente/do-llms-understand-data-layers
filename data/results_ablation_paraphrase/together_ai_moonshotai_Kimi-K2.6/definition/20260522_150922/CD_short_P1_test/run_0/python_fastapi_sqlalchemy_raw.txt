@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer` at `/api/customers/{c_custkey}`, child `Order` records are explicitly deleted via `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` before the parent `Customer` is deleted. The `/api/orders/summary` GET endpoint depends on these `Order` rows to compute `total_orders` and `total_revenue`, so after a customer deletion, historical order data is permanently lost and the summary returns incomplete results."
+  }
+]
+```

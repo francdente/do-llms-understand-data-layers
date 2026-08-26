@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the GET /api/products/:p_productkey endpoint, the read query does not filter on p_status, so a product with status 'discontinued' (set by the POST /api/products/:p_productkey/discontinue endpoint) will still be returned to clients as if it were active and purchasable."
+  }
+]
+```

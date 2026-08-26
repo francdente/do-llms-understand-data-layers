@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `get_product` (GET /api/products/{p_productkey}), the query filters only by `p_productkey` without excluding discontinued products. The `discontinue_product` endpoint sets `p_status` to 'discontinued', but `get_product` returns these records with full visibility, including the discontinued status in the response, violating the docstring claim to 'Return purchasable product'."
+  }
+]

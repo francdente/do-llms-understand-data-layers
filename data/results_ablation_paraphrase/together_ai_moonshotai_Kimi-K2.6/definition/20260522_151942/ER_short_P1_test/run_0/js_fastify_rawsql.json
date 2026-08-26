@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the GET /api/products/:p_productkey endpoint, the query selects from product WHERE p_productkey = ? without filtering on p_status, so a product with p_status = 'discontinued' (set by the POST /discontinue endpoint) will still be returned as if active. The detection signal is: write endpoint updates p_status to 'discontinued', but read endpoint does not exclude records with that status."
+  }
+]

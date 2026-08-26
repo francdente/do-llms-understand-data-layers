@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `getProductAvailability`, the query joins `product` and `inventory` but does not filter on `p.p_status`, so a product that was soft-deleted via `discontinueProduct` (which sets `p_status = 'discontinued'`) will still be returned as available. The write endpoint updates lifecycle status while the read endpoint ignores it."
+  }
+]

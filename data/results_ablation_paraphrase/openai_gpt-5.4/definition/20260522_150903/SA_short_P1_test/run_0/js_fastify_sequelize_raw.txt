@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the GET /api/orders/:o_orderkey handler, the response reads orders.o_totalprice directly, while the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler updates lineitem price/discount/tax fields without recalculating or updating the parent orders.o_totalprice. This matches the stale aggregate pattern because o_totalprice is a precomputed summary established at order creation and can become outdated after lineitem modifications, yet the read endpoint serves the cached value."
+  }
+]

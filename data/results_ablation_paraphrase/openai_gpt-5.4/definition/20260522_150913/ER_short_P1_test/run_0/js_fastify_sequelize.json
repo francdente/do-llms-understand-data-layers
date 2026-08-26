@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the POST /api/products/:p_productkey/discontinue handler, Product.update sets p_status to 'discontinued', indicating a lifecycle-status write. In the GET /api/products/:p_productkey handler, Product.findOne queries only by p_productkey and does not filter out p_status = 'discontinued', so discontinued products are still returned as active-visible records."
+  }
+]

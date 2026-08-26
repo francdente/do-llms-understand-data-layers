@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In main.go, `shipLineitem` updates the detail row `lineitem.l_shipdate` but does not update or recompute the parent summary column `orders.o_latest_shipdate`. `getOrder` then reads and returns `o_latest_shipdate` directly from `orders`, matching the signal of a write endpoint modifying source-of-truth detail records while a read endpoint serves a stale precomputed aggregate from the parent table."
+  }
+]

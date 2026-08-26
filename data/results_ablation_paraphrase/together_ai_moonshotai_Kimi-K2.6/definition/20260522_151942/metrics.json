@@ -1,0 +1,831 @@
+{
+  "model": "together_ai/moonshotai/Kimi-K2.6",
+  "prompt_type": "definition",
+  "label": "exposed_record",
+  "timestamp": "20260522_151942",
+  "runs": [
+    {
+      "run": 0,
+      "details": [
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N1_test",
+          "label": "exposed_record",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N2_test",
+          "label": "exposed_record",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_gorm",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "go_gin_gorm",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "go_gin_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "js_express_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "js_express_sequelize",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_rawsql",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_sequelize",
+          "tp": 0,
+          "fp": 1,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "python_flask_rawsql",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_N3_test",
+          "label": "exposed_record",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 0,
+          "fp": 0,
+          "tn": 1,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P1_test",
+          "label": "exposed_record",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P2_test",
+          "label": "exposed_record",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "go_fiber_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "go_gin_gorm",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "go_gin_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "js_express_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "js_express_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "js_fastify_sequelize",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "python_fastapi_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "python_flask_rawsql",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        },
+        {
+          "task": "ER_short_P3_test",
+          "label": "exposed_record",
+          "variant": "python_flask_sqlalchemy",
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0
+        }
+      ],
+      "by_variant": {
+        "python_flask_sqlalchemy": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "python_flask_rawsql": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "js_fastify_sequelize": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 1,
+            "tn": 2,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571,
+            "accuracy": 0.8333333333333334
+          }
+        },
+        "go_fiber_rawsql": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "python_fastapi_sqlalchemy": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "python_fastapi_rawsql": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "go_gin_rawsql": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        },
+        "js_fastify_rawsql": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 1,
+            "tn": 2,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571,
+            "accuracy": 0.8333333333333334
+          }
+        },
+        "js_express_sequelize": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 1,
+            "tn": 2,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571,
+            "accuracy": 0.8333333333333334
+          }
+        },
+        "go_fiber_gorm": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 2,
+            "tn": 1,
+            "fn": 0,
+            "precision": 0.6,
+            "recall": 1.0,
+            "f1": 0.7499999999999999,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "js_express_rawsql": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 1,
+            "tn": 2,
+            "fn": 0,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571,
+            "accuracy": 0.8333333333333334
+          }
+        },
+        "go_gin_gorm": {
+          "exposed_record": {
+            "tp": 3,
+            "fp": 0,
+            "tn": 3,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "accuracy": 1.0
+          }
+        }
+      },
+      "by_label": {
+        "exposed_record": {
+          "tp": 36,
+          "fp": 6,
+          "tn": 30,
+          "fn": 0,
+          "precision": 0.8571428571428571,
+          "recall": 1.0,
+          "f1": 0.923076923076923,
+          "accuracy": 0.9166666666666666
+        }
+      }
+    }
+  ],
+  "aggregate": {
+    "exposed_record": {
+      "tp": 36.0,
+      "fp": 6.0,
+      "tn": 30.0,
+      "fn": 0.0,
+      "precision": 0.8571428571428571,
+      "recall": 1.0,
+      "f1": 0.923076923076923,
+      "accuracy": 0.9166666666666666
+    }
+  }
+}

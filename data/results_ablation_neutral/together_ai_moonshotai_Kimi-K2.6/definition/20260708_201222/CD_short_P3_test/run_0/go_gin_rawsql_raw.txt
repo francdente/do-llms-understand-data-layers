@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, the code explicitly deletes all rows from `orders` where `o_custkey = ?` before deleting the parent `customer` row. The `monthlyTrend` endpoint depends on `orders` data to compute monthly revenue and order counts, so this cascade delete causes observable data loss for that endpoint."
+  }
+]
+```

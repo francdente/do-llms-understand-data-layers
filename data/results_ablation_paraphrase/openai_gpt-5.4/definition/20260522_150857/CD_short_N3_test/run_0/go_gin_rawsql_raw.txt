@@ -1,0 +1,1 @@
+[{"name":"cascade_delete","detected":false,"description":"No instance found: deleting a customer in deleteCustomer does not cascade to orders under the provided schema, and the dashboard read endpoint depends only on orders that are not deleted by this code."}]

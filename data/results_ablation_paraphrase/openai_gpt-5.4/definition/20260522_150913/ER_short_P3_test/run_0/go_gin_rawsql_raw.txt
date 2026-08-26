@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In main.go, `suspendSupplier` updates `supplier.s_status` to `'suspended'`, changing the supplier lifecycle status, but `listProducts` reads purchasable products with `JOIN supplier s ON p.p_suppkey = s.s_suppkey` and no filter on `s.s_status`. This matches the exposed-record pattern because products from suspended suppliers are still returned to clients as if their suppliers were active."
+  }
+]

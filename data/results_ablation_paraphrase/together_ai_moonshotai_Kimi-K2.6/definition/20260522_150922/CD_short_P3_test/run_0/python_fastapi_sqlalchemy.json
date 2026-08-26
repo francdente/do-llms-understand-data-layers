@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer` at `/api/customers/{c_custkey}`, child `Order` records are explicitly deleted via `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` before the parent `Customer` is removed. The `monthly_trend` read endpoint depends on these `Order` rows to compute per-month aggregates, so deleting a customer permanently destroys order history that the trend endpoint expects to report."
+  }
+]

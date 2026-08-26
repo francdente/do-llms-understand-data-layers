@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "The `app.get(\"/api/products\")` read endpoint is missing from the code, but the `app.get(\"/api/products/archived\")` endpoint only returns archived records. However, there is no general product listing endpoint shown that would return all products without filtering by `p_status`. The archive endpoint (`POST /api/products/:p_productkey/archive`) sets `p_status = 'archived'`, but without seeing a general `GET /api/products` endpoint, we cannot confirm exposed records. Wait\u2014re-examining: the issue requires a read endpoint that doesn't filter on status. The provided code only has `GET /api/products/archived` which does filter. No general listing endpoint exists in the code. But the schema has `p_status` and the archive endpoint updates it. Since no read endpoint returns unfiltered active/archived products together, no exposed record issue is detected in the provided code."
+  }
+]

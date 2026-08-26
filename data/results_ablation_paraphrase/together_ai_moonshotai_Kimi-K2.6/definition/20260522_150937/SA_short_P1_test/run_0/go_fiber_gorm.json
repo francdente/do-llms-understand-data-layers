@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the `PUT /api/orders/:o_orderkey<int>/lineitems/:l_linenumber<int>` endpoint, `o_totalprice` in the `orders` table is not recalculated after updating `l_extendedprice`, `l_discount`, or `l_tax` in `lineitem`. The read endpoint `GET /api/orders/:o_orderkey<int>` returns this stale `o_totalprice` without recomputing from lineitems, producing incorrect results."
+  }
+]

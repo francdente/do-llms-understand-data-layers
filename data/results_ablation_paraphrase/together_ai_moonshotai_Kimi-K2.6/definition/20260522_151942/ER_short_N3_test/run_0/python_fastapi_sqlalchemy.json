@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the write endpoint updates p_status to 'archived' and the only read endpoint present (/api/products/archived) correctly filters on p_status == 'archived'; there is no general product listing or retrieval endpoint that would return archived products without status filtering."
+  }
+]

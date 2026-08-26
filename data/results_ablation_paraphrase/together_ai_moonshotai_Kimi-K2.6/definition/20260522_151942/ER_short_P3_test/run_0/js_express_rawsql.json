@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `app.get('/api/products')`, the query joins `product` with `supplier` but does not filter on `s.s_status`, so products from suspended suppliers are still returned. The `s_status` field is updated to 'suspended' by the `/api/suppliers/:s_suppkey/suspend` endpoint, making this an exposed record issue."
+  }
+]

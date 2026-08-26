@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The customer delete endpoint explicitly checks for foreign key constraint violations and returns a 409 error when orders exist, preventing any cascade deletion of child order rows."
+  }
+]
+```

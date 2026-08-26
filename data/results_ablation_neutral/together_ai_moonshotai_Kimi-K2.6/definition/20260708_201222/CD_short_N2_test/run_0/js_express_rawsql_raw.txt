@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The explicit deletion of orders before deleting a customer is safe because the /api/orders endpoint only returns orders tied to active customers (via the IN (SELECT c_custkey FROM customer) subquery), so no observable data loss occurs for any endpoint that needs child rows to exist after the parent is gone."
+  }
+]
+```

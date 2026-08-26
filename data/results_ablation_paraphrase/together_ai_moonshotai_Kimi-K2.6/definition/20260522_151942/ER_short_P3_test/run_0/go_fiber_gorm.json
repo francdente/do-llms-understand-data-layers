@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the GET /api/products endpoint, products are joined with suppliers without filtering on s_status, so products from suspended suppliers continue to be returned. The POST /api/suppliers/:s_suppkey/suspend endpoint updates s_status to 'suspended', but this status is never checked in the product listing query."
+  }
+]

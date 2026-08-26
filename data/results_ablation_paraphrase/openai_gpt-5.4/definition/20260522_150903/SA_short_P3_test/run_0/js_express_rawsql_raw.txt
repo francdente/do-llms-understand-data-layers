@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the POST /api/orders/:o_orderkey/lineitems/:l_linenumber/ship handler, the code updates lineitem.l_shipdate but does not update or recalculate the parent orders.o_latest_shipdate. The GET /api/orders/:o_orderkey handler then reads and returns orders.o_latest_shipdate directly from orders, matching the signal of a stored parent aggregate becoming stale after detail-row writes."
+  }
+]

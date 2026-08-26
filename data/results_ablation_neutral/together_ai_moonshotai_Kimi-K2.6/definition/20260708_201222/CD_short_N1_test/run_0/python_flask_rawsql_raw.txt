@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, the explicit `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer removes child order rows. However, the `list_orders` endpoint only returns orders joined to active customers (`JOIN customer c ON o.o_custkey = c.c_custkey`), so no other endpoint needs orphaned orders. The cascade is safe because there is no observable data loss for any endpoint that requires those child rows to exist after parent deletion."
+  }
+]
+```

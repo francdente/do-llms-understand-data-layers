@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, child `Order` records are explicitly deleted via `Order.destroy({ where: { o_custkey } })` before the parent `Customer` is deleted. The `app.get('/api/orders/summary')` endpoint depends on all historical orders to compute `total_orders` and `total_revenue`, so deleting orders permanently removes data that this read endpoint expects, causing incomplete or missing summary data."
+  }
+]

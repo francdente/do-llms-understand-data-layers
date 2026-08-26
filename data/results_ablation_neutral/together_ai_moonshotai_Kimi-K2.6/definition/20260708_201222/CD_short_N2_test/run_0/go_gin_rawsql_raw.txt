@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, the code explicitly deletes all rows from `orders` where `o_custkey = ?` before deleting the parent `customer` row. The `listOrders` endpoint returns orders tied to active customers via `WHERE o_custkey IN (SELECT c_custkey FROM customer)`, which means orders for deleted customers are intentionally filtered out. However, this is still an unsafe cascade delete because the `orders` data is permanently lost rather than being preserved (e.g., for historical reporting, analytics, or audit purposes that other endpoints might need). The explicit `DELETE FROM orders` causes observable data loss for any endpoint that would need order history independent of customer existence."
+  }
+]
+```

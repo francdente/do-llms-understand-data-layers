@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: the DELETE endpoint removes only customer rows, and the schema/code shown do not define ON DELETE CASCADE or explicit deletion of dependent orders that would cause the dashboard's order-based reads to lose child records."
+  }
+]

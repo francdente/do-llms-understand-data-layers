@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `app.post('/api/orders/:o_orderkey/lineitems/:l_linenumber/ship')`, updating `lineitem.l_shipdate` does not recalculate `orders.o_latest_shipdate`, which is derived from line item ship dates. The read endpoint `app.get('/api/orders/:o_orderkey')` serves this stale aggregate directly from the orders table without recomputing from current lineitem rows."
+  }
+]
+```

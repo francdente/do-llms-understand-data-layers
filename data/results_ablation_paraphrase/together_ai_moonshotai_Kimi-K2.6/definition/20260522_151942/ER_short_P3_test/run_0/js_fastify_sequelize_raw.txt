@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `app.get('/api/products')`, the read endpoint joins to `Supplier` without filtering on `s_status`, so products from suspended suppliers (updated by `app.post('/api/suppliers/:s_suppkey/suspend')` which sets `s_status: 'suspended'`) continue to be returned as purchasable."
+  }
+]

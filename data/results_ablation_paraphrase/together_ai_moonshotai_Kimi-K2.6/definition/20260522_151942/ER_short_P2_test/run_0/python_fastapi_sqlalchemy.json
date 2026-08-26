@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `get_product_availability`, the query filters only by `Product.p_productkey == p_productkey` without checking `Product.p_status`, so a product marked 'discontinued' by `discontinue_product` is still returned as available. Detection signal: write endpoint updates `p_status` to 'discontinued' but read endpoint does not filter on `p_status`."
+  }
+]

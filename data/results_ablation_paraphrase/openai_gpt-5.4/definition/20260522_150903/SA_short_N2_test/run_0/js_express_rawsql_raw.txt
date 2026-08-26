@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":false,"description":"No instance found: the read endpoint computes the order total directly from current lineitem rows, and the write endpoint does not rely on or leave behind a cached aggregate in the orders table."}]

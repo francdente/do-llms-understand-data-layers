@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In main.go, the POST /api/products/:p_productkey/discontinue handler updates product.p_status to 'discontinued', but the GET /api/products/:p_productkey/availability handler queries product by p_productkey only and does not filter out discontinued status. This matches an exposed record because a lifecycle-status write endpoint marks the product inactive while a read endpoint continues to return it as available/visible."
+  }
+]

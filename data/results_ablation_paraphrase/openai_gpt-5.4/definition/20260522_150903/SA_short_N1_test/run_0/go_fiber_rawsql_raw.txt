@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance was found: the read endpoint `/api/orders/:o_orderkey` serves `orders.o_totalprice`, and the write endpoints shown that modify contributing lineitem price fields (`POST /api/orders` and `PUT /api/orders/:o_orderkey/lineitems/:l_linenumber`) both recalculate and persist `o_totalprice` before commit."
+  }
+]

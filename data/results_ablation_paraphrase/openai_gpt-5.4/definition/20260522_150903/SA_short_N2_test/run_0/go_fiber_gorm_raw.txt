@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":false,"description":"No instance found: the order total is not stored in the parent orders table and the GET /api/orders/:o_orderkey endpoint recalculates it from lineitem rows on read, so lineitem updates do not leave a cached parent aggregate stale."}]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly deletes all orders with `await Order.destroy({ where: { o_custkey } })` before deleting the customer. However, the `/api/orders` endpoint only returns orders tied to active customers (via `required: true` inner join with Customer), so no endpoint actually needs orphaned orders after parent deletion. The cascade is safe because there is no observable data loss for any existing endpoint."
+  }
+]
+```

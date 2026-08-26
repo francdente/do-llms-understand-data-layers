@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the application explicitly deletes all orders for a customer (DELETE FROM orders WHERE o_custkey = ?) before deleting the customer. The GET /api/orders/monthly-trend endpoint depends on these order rows to compute monthly revenue and order counts, so deleting a customer permanently removes their orders from the trend data, causing incomplete or missing historical reporting data."
+  }
+]

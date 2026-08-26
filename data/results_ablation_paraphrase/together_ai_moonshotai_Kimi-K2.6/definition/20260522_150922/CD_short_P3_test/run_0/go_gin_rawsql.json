@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, explicit `DELETE FROM orders WHERE o_custkey = ?` removes child order records before deleting the parent customer. The `monthlyTrend` endpoint reads aggregated data from `orders` and will now return incomplete/missing historical data for months whose orders were deleted."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No cached or precomputed aggregate values were found in the code. The `getOrder` endpoint calculates `o_totalprice` on-the-fly from `lineitem` rows using a live SUM query, and no parent table stores a precomputed total that could become stale when `updateLineitem` modifies detail records."
+  }
+]
+```

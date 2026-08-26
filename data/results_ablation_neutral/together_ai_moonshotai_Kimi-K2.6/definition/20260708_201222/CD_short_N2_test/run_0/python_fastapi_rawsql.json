@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, the explicit `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer removes child order rows. The `list_orders` endpoint only returns orders tied to active customers (`o_custkey IN (SELECT c_custkey FROM customer)`), so this cascade behavior is expected and documented by that endpoint's design\u2014no other endpoint needs orphaned orders. However, re-reading: the issue definition requires 'observable data loss for another endpoint that needs those child rows to exist even after the parent is gone.' Since `list_orders` explicitly filters out orphaned orders and no other endpoint accesses orders, there is no observable data loss for any endpoint that needs those rows. After careful analysis: no endpoint requires child rows to exist after parent deletion, so this does not qualify as unsafe cascade delete per the definition."
+  }
+]

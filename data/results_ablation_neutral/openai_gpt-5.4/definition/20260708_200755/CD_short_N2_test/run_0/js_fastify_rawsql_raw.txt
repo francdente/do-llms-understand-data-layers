@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the transaction explicitly executes `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer. This matches the unsafe delete cascade signal because removing child `orders` causes observable data loss for the `/api/orders` endpoint, which depends on those order rows existing to return them."
+  }
+]

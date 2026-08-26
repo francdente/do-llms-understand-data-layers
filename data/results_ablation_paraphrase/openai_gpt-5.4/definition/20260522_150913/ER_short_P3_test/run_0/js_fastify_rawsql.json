@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "Detected between POST /api/suppliers/:s_suppkey/suspend and GET /api/products. The write endpoint updates supplier.s_status to 'suspended', but the read query in /api/products joins supplier without filtering s_status, so products from suspended suppliers are still returned as purchasable/visible."
+  }
+]

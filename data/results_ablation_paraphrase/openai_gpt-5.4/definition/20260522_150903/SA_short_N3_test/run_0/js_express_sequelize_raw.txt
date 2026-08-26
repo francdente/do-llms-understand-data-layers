@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance was found: the write endpoint that modifies lineitem.l_shipdate recalculates and updates the summarized orders.o_latest_shipdate before the read endpoint serves it."
+  }
+]

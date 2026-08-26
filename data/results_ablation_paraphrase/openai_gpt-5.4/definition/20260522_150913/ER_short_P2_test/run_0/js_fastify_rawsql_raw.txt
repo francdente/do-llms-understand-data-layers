@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "Detected between the write endpoint `POST /api/products/:p_productkey/discontinue` and the read endpoint `GET /api/products/:p_productkey/availability`. The write endpoint updates lifecycle status via `UPDATE product SET p_status = 'discontinued'`, but the read query only filters on `p.p_productkey = ?` and does not exclude discontinued products, so discontinued records remain visible as purchasable availability results."
+  }
+]

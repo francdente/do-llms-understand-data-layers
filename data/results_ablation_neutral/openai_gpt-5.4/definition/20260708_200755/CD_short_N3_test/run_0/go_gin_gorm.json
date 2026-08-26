@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: the DELETE handler removes only from the parent customer table, and with the given schema's foreign key (no ON DELETE CASCADE) it rejects deletion when orders still exist, so child orders needed by /api/dashboard are not deleted."
+  }
+]

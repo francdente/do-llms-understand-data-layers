@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer` function, the code explicitly deletes all rows from `orders` table (`DELETE FROM orders WHERE o_custkey = ?`) before deleting the parent `customer` row. The `ordersHistory` endpoint returns all orders from the `orders` table, so deleting orders when a customer is deleted causes observable data loss for that endpoint."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The deleteCustomer function explicitly deletes only the customer record and returns a conflict error if orders exist (due to foreign key constraint without ON DELETE CASCADE), and the dashboard endpoint reads from orders independently without depending on customer records for its aggregation."
+  }
+]
+```

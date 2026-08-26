@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the code explicitly deletes child orders with 'DELETE FROM orders WHERE o_custkey = ?' before deleting the parent customer. The GET /api/orders endpoint performs a JOIN between orders and customer to return orders tied to active customers, so this explicit cascade delete permanently removes data that the read endpoint depends on, causing missing/incomplete data for any system relying on order history."
+  }
+]
+```

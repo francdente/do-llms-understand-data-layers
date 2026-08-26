@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `list_products`, products from suspended suppliers are returned because the query joins to `Supplier` without filtering on `Supplier.s_status`. The `suspend_supplier` endpoint sets `s_status` to 'suspended', but `list_products` does not exclude these suppliers, exposing records that should be inactive."
+  }
+]

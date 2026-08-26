@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, the endpoint explicitly deletes all `orders` rows with `o_custkey = ?` before deleting the customer. The `/api/orders/monthly-trend` endpoint relies on `orders` data to compute monthly revenue and order counts, so removing child rows on customer deletion causes observable data loss for that reporting endpoint."
+  }
+]
+```

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In main.go, function deleteCustomer, the transaction explicitly deletes child rows with `DELETE FROM orders WHERE o_custkey = ?` before deleting the parent row from `customer`. This matches an application-level delete cascade, and the GET endpoint `monthlyTrend` reads from `orders`, so deleting a customer permanently removes order rows that this separate read endpoint depends on, causing missing or incomplete trend data."
+  }
+]

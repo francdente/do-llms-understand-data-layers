@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance was found: the write endpoint archives records via `POST /api/products/:p_productkey/archive` by setting `p_status = 'archived'`, and the only read endpoint shown, `GET /api/products/archived`, explicitly filters on `where: { p_status: 'archived' }` rather than exposing archived records as active."
+  }
+]

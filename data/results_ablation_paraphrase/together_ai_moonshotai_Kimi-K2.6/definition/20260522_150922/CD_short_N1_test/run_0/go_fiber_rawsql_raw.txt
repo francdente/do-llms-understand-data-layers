@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, explicit `DELETE FROM orders WHERE o_custkey = ?` removes child order records before deleting the parent customer. The `listOrders` endpoint performs a JOIN between `orders` and `customer` to return orders tied to active customers, so deleting a customer and its orders causes `listOrders` to permanently lose those order rows from its results."
+  }
+]
+```

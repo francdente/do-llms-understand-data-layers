@@ -1,0 +1,42 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, explicit `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` removes all orders for a deleted customer. However, the `list_orders` endpoint only returns orders joined to active customers, so no observable data loss occurs for any existing endpoint—orders for deleted customers are already inaccessible. Wait, re-reading: the issue is 'observable data loss for another endpoint that needs those child rows to exist even after the parent is gone.' No endpoint needs orders without their customer. Thus this is NOT unsafe cascade delete."
+  }
+]
+```
+
+Wait, let me re-analyze. The issue definition says: "causes observable data loss for another endpoint that needs those child rows to exist even after the parent is gone."
+
+Looking at the code:
+- `delete_customer` explicitly deletes orders before deleting the customer
+- `list_orders` only shows orders with active customers (via JOIN)
+- No other endpoint accesses orders
+
+There is no endpoint that needs child rows to exist after the parent is gone. The `list_orders` endpoint explicitly filters to only show orders with active customers.
+
+However, the explicit deletion of orders in `delete_customer` is an application-level cascade delete. The question is whether this is "unsafe" per the definition. Since no endpoint needs those orders after the customer is deleted, this does not cause "observable data loss" for any endpoint.
+
+Actually, let me reconsider once more. The issue is about whether the cascade delete is "unsafe" - meaning some endpoint needs those child rows after parent deletion. Since `list_orders` joins with Customer, orders without customers are never shown anyway. So deleting them causes no observable data loss.
+
+But wait - is there any implicit issue? The schema has a foreign key but no ON DELETE CASCADE. The application explicitly deletes orders. 
+
+Hmm, but I need to be more careful. The issue says "another endpoint that needs those child rows to exist even after the parent is gone." Since `list_orders` joins with Customer, it doesn't need orders to exist after the customer is gone. 
+
+Actually, I think I may be overcomplicating this. Let me re-read: "A delete operation that removes rows from a child table... in a way that causes observable data loss for another endpoint that needs those child rows to exist even after the parent is gone."
+
+The key question: does any endpoint need orders to exist without their customer? No. `list_orders` explicitly joins to Customer.
+
+So the cascade delete is NOT unsafe. There is no issue.
+
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade detected. The explicit order deletion in `delete_customer` does not cause observable data loss because `list_orders` only returns orders joined to active customers, so no endpoint requires child rows to persist after their parent customer is deleted."
+  }
+]
+```

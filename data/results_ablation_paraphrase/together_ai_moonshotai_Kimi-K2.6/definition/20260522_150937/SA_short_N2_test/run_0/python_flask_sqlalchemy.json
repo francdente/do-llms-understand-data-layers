@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No cached or precomputed summary values were found in the schema or code; the GET endpoint recalculates the order total from lineitem rows on each request, and no parent table stores an aggregate that could become stale."
+  }
+]

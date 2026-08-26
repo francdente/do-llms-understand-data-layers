@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In main.go, the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler updates source-of-truth lineitem fields (l_extendedprice, l_discount, l_tax) but does not recompute or update the parent orders.o_totalprice aggregate. The GET /api/orders/:o_orderkey handler later reads and serves orders.o_totalprice directly from the orders table, so after a line item update it can return a stale summary value."
+  }
+]

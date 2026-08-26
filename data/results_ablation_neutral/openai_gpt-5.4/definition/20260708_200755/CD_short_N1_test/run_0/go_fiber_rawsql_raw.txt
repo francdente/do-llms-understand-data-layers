@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In main.go, function deleteCustomer, the explicit child-table delete `DELETE FROM orders WHERE o_custkey = ?` removes order rows before deleting the parent customer. This matches the unsafe delete cascade signal because the `/api/orders` endpoint depends on rows in `orders`, so deleting a customer causes observable loss of those child rows for that endpoint."
+  }
+]

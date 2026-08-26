@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `app.put('/api/orders/:o_orderkey/lineitems/:l_linenumber')`, updating a lineitem's `l_extendedprice`, `l_discount`, or `l_tax` does not recalculate and update the parent order's `o_totalprice`. The `o_totalprice` in `orders` was precomputed at creation time in `app.post('/api/orders')` but is never refreshed on lineitem modifications, causing reads via `app.get('/api/orders/:o_orderkey')` to return stale aggregate values."
+  }
+]
+```

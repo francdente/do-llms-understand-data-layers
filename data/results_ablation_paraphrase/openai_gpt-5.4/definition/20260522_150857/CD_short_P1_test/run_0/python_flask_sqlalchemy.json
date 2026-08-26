@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "Detected in the Flask route function delete_customer: it explicitly deletes child rows with db.query(Order).filter(Order.o_custkey == c_custkey).delete(...) before deleting the parent Customer. This matches the application-level delete cascade signal, and it breaks the separate read endpoint orders_summary, which reads historical Order rows and will return reduced or missing totals after those child records are permanently removed."
+  }
+]

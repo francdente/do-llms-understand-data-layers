@@ -1,0 +1,33 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, the code explicitly deletes all rows from `orders` where `o_custkey = ?` before deleting the parent `customer` row. The `listOrders` endpoint only returns orders joined to active customers, so this explicit child deletion does not cause observable data loss for another endpoint—no endpoint needs orphaned orders to exist after a customer is deleted. However, re-reading the definition: the issue requires that 'another endpoint needs those child rows to exist even after the parent is gone.' Since `listOrders` filters with `JOIN customer` and would never show orphaned orders, there is no endpoint that needs orphaned orders. Wait—let me re-check: the definition says 'causes observable data loss for another endpoint that needs those child rows to exist even after the parent is gone.' Since no endpoint in this code needs orders without a customer, this is NOT an unsafe cascade delete. The explicit DELETE is actually safe because no endpoint reads orphaned orders."
+  }
+]
+```
+
+Wait, I need to re-analyze. Let me re-read the issue definition more carefully.
+
+"Unsafe Delete Cascade: A delete operation that removes rows from a child table (via explicit application-level DELETEs or ON DELETE CASCADE) in a way that causes observable data loss for another endpoint that needs those child rows to exist even after the parent is gone."
+
+Key question: Is there any endpoint that needs child rows (orders) to exist even after the parent (customer) is gone?
+
+Looking at the code:
+- `listOrders` - returns orders JOINed with customer, so only active customer orders. Does NOT need orphaned orders.
+- `deleteCustomer` - deletes customer and explicitly deletes orders first
+
+There is no endpoint like `/api/orders/all` or `/api/orders/:id` that would return an order without its customer. So there is no endpoint that needs orders to exist after their customer is deleted.
+
+Therefore, this is NOT an unsafe cascade delete. The explicit deletion is safe because no endpoint needs the orphaned data.
+
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade detected. The explicit `DELETE FROM orders` in `deleteCustomer` does not cause observable data loss for any endpoint, since `listOrders` only returns orders joined to active customers and no endpoint requires orphaned orders to exist after a customer is deleted."
+  }
+]
+```

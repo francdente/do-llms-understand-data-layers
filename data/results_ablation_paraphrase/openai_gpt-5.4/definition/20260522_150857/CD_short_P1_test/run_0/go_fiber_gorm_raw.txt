@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In main.go, the DELETE /api/customers/:c_custkey handler explicitly deletes child rows with `DELETE FROM orders WHERE o_custkey = ?` before deleting the parent customer. This matches an application-level delete cascade, and it qualifies because the separate GET /api/orders/summary endpoint reads from `orders`, so deleting those order rows causes that read endpoint to return incomplete historical order data."
+  }
+]

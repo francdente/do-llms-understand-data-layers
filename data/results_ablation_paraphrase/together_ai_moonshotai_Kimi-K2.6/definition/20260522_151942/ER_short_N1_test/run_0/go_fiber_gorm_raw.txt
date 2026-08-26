@@ -1,0 +1,29 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `app.Get(\"/api/products\", ...)`, the endpoint filters by `p_status = 'active'`, but in `app.Post(\"/api/products/:p_productkey/discontinue\", ...)`, the product status is updated to `'discontinued'`. However, there is no read endpoint that retrieves a single product by key (e.g., `GET /api/products/:p_productkey`) that filters out discontinued products. The list endpoint correctly filters, but any hypothetical or actual single-product read endpoint would be missing from the provided code. Re-examining: the `GET /api/products` endpoint correctly filters with `Where(\"p_status = 'active'\")`, so discontinued products are excluded from the list. No other read endpoints exist in the code. Wait - re-checking: the issue is about a read endpoint not filtering. The `GET /api/products` DOES filter. There are no other read endpoints. Therefore, no exposed record issue exists in the provided code."
+  }
+]
+```
+
+Wait, let me re-analyze more carefully. The `GET /api/products` endpoint does filter by `p_status = 'active'`. The `POST /api/products/:p_productkey/discontinue` endpoint sets status to `'discontinued'`. 
+
+But is there any read endpoint that doesn't filter? Let me check again... The only read endpoint is `GET /api/products` which does filter. There is no `GET /api/products/:p_productkey` endpoint in the code.
+
+However, I need to be more careful. The issue definition says "a read endpoint does not filter on this updated status." The `GET /api/products` endpoint DOES filter. So there is no exposed record issue.
+
+But wait - let me re-read the code one more time. Is there any other read? No. Just the list endpoint.
+
+Actually, I need to reconsider. The issue is specifically about a read endpoint that returns a record after its status has been updated to no longer active. The `GET /api/products` filters correctly. No single-product read exists. So no issue.
+
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No exposed record issue was found. The only read endpoint (`GET /api/products`) correctly filters with `Where(\"p_status = 'active'\")`, excluding discontinued products. No other read endpoints exist in the provided code."
+  }
+]
+```

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In DELETE /api/customers/:c_custkey, the handler explicitly deletes child rows with Order.destroy({ where: { o_custkey: c_custkey } }) before deleting the parent Customer. This matches the explicit application-level child delete signal, and it causes observable data loss because GET /api/orders returns orders for existing customers, so those order rows disappear once the customer is deleted."
+  }
+]

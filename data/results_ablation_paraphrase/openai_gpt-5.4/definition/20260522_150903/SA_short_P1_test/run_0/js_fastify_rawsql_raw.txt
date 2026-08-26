@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "Detected in the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler: it updates source-of-truth lineitem values (l_extendedprice, l_discount, l_tax) but never recomputes or updates orders.o_totalprice. The GET /api/orders/:o_orderkey handler then reads and returns the cached parent aggregate o_totalprice directly from orders, so it can serve a stale summary after line item edits."
+  }
+]

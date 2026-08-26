@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The delete_customer endpoint explicitly prevents deletion of customers with existing orders by catching sqlite3.IntegrityError (foreign keys are enabled), and there are no ON DELETE CASCADE triggers or explicit child table DELETEs that would cause data loss for the dashboard endpoint."
+  }
+]
+```

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue detected. The `o_totalprice` in the `orders` table is recalculated from `lineitem` rows during `updateLineitem` and `createOrder` write operations, and `getOrder` reads the current stored value which is kept consistent with the source-of-truth detail records."
+  }
+]

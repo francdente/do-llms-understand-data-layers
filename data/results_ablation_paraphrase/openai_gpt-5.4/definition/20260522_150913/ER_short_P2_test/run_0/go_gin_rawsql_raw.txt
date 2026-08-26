@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In main.go, `discontinueProduct` updates `product.p_status` to `'discontinued'`, marking the record as no longer active. In the read endpoint `getProductAvailability`, the SQL query filters only by `p.p_productkey = ?` and does not exclude discontinued products (for example via `p_status`), so discontinued records are still returned to clients as available products."
+  }
+]

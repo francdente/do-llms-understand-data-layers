@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In delete_customer, the code explicitly deletes child rows with `DELETE FROM orders WHERE o_custkey = ?` before deleting the parent customer with `DELETE FROM customer WHERE c_custkey = ?`. This matches the unsafe delete cascade signal because the separate read endpoint list_orders depends on rows from `orders`, and after customer deletion those order rows are permanently removed, causing missing data in `/api/orders`."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the write endpoint updates p_status to 'archived', and the only read endpoint present (/api/products/archived) correctly filters on p_status == 'archived'. There is no read endpoint that returns products without filtering on p_status."
+  }
+]
+```

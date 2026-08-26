@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `discontinue_product`, the write endpoint updates `product.p_status` to `'discontinued'`, signaling the record is no longer active. In `get_product`, the read query `FROM product WHERE p_productkey = ?` does not filter out discontinued records (e.g. by `p_status`), so a discontinued product is still returned as visible/purchasable."
+  }
+]

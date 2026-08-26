@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the application explicitly deletes all orders rows with matching o_custkey before deleting the customer. This causes data loss for the GET /api/orders/history endpoint, which needs all orders to exist to return a complete history."
+  }
+]
+```

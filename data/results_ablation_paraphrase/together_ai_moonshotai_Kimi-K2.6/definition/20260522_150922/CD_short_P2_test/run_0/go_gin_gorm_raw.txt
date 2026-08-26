@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly deletes all orders with matching o_custkey before deleting the customer (tx.Exec(\"DELETE FROM orders WHERE o_custkey = ?\", cCustkey)), then commits. The GET /api/orders/history endpoint subsequently queries the orders table to return all historical orders. Since the orders are permanently removed when their parent customer is deleted, the history endpoint will return incomplete/missing data for those deleted orders."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance was found: the code does not include any write endpoint that updates a lifecycle status field such as soft-deleted, archived, or deactivated, so there is no corresponding read-path exposure to flag."
+  }
+]

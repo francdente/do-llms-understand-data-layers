@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "Detected in the DELETE /api/customers/:c_custkey handler inside the sequelize.transaction callback: it explicitly calls Order.destroy({ where: { o_custkey: c_custkey } }) before Customer.destroy(...). This matches the application-level delete cascade signal, and it qualifies because the GET /api/orders/history endpoint reads from orders and will return missing/incomplete historical order data after those child rows are permanently removed."
+  }
+]

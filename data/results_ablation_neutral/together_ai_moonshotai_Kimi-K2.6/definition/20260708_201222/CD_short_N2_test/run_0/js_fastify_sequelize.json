@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly deletes all `Order` rows with `Order.destroy({ where: { o_custkey } })` before deleting the `Customer`. However, the `GET /api/orders` endpoint only returns orders tied to active customers (via `SELECT c_custkey FROM customer` subquery), so no observable data loss occurs for that endpoint. The issue is present because another endpoint could reasonably need to access orphaned orders after customer deletion (e.g., an order history endpoint without the active-customer filter), and the explicit child deletion makes this impossible."
+  }
+]

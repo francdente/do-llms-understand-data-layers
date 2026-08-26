@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly deletes all Order records with `Order.destroy({ where: { o_custkey } })` before deleting the Customer, then `app.get('/api/orders')` performs an INNER JOIN via `required: true` to return only orders with active customers. This creates a cascade delete pattern where deleting a parent customer permanently removes child orders, and the read endpoint that depends on those orders now returns incomplete/missing data because the rows are gone."
+  }
+]

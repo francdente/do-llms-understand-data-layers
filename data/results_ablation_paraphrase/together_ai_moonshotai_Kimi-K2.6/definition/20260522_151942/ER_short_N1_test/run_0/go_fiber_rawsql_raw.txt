@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the write endpoint sets p_status to 'discontinued' and the read endpoint correctly filters with WHERE p_status = 'active', so discontinued products are not returned."
+  }
+]
+```

@@ -1,0 +1,96 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `update_lineitem`, the `o_totalprice` aggregate is recalculated and updated after a line item change, but in `create_order`, line items are inserted and `o_totalprice` is updated, yet there is no endpoint to delete line items—however, more critically, the `get_order` endpoint reads `Order.o_totalprice` directly without verifying it matches the live calculation from `lineitem` rows. The actual stale aggregate risk is absent for standard CRUD because `update_lineitem` and `create_order` both recompute and store the total, but no deletion endpoint exists that would leave the aggregate stale. Wait—re-examining: the `update_lineitem` does update the aggregate, and `create_order` does too. There is no stale aggregate issue detected because all write paths that modify line items also update the parent aggregate. The `get_order` reads the stored value, but it is kept fresh by all modifying endpoints."
+  }
+]
+
+Wait, let me re-analyze more carefully. The issue is "Stale Aggregate" - where a cached/precomputed summary becomes outdated when detail records are modified, and a read endpoint serves the outdated value without recalculation.
+
+Looking at the code:
+- `update_lineitem` (PUT): Updates line item, then recalculates total from line items and updates `Order.o_totalprice`. So aggregate is kept fresh.
+- `create_order` (POST): Creates order with 0 total, adds line items, then recalculates total and updates `Order.o_totalprice`. So aggregate is kept fresh.
+- `get_order` (GET): Reads `Order.o_totalprice` directly.
+
+Is there any write endpoint that modifies line items WITHOUT updating the aggregate? Let me check again...
+
+Actually, looking more carefully at `update_lineitem`: it updates `l_extendedprice`, `l_discount`, `l_tax` and then recalculates and updates `o_totalprice`. Good.
+
+But wait - is there any other endpoint? No DELETE endpoint for line items. No PATCH endpoint that might update only some fields.
+
+However, I need to check: does `update_lineitem` handle ALL cases correctly? What if the update fails partway? It does rollback on exception.
+
+Actually, re-reading the issue definition more carefully: "A cached or precomputed summary value stored in a parent table becomes outdated when the underlying detail records it summarizes are modified by a write endpoint."
+
+The key question: Is there ANY write endpoint that modifies detail records without updating the aggregate?
+
+- `update_lineitem`: Updates detail AND updates aggregate. ✓
+- `create_order`: Creates detail AND updates aggregate. ✓
+
+There is no stale aggregate issue here because all write endpoints that modify line items also update the parent aggregate. The `get_order` reads the stored value, but it is properly maintained.
+
+Wait - but let me re-check. Is there a possibility I'm missing? Let me look at `create_order` again...
+
+In `create_order`:
+1. `order = Order(..., o_totalprice=0, ...)` - creates with 0
+2. `db.add(order); db.flush()` - get the orderkey
+3. Add line items
+4. `db.flush()`
+5. Calculate total from line items
+6. Update `Order.o_totalprice` with the calculated total
+7. `db.commit()`
+
+Between step 4 and 6, if another transaction reads, it might see 0, but that's a different issue (not stale aggregate in the sense of the definition, which is about read endpoints serving outdated values after write completion).
+
+Actually, I think I need to be more careful. The issue says "A read endpoint serves this outdated summary value without recalculating it from the current source-of-truth rows."
+
+In `get_order`, it reads `o_totalprice` directly. If there were a write endpoint that modified line items without updating `o_totalprice`, then `get_order` would serve stale data. But since no such write endpoint exists in the code...
+
+Hmm, but wait. Let me re-read `update_lineitem` once more. The update uses `synchronize_session=False`. Then it does a subquery for total. Then updates Order. Then commits. This seems correct.
+
+Actually, I think there IS a potential issue. Let me look at `create_order` again. The `o_totalprice` is set to 0 initially, then updated after line items are added. But what if the line items list is empty? Then `total` would be 0 (from `coalesce(..., 0)`), and `o_totalprice` stays 0. That's correct.
+
+I'm now convinced there is no stale aggregate issue. But wait - let me re-check if I missed any endpoint or any path where line items can be modified without updating the aggregate.
+
+Endpoints:
+- GET `/api/orders/<int:o_orderkey>` - read only
+- PUT `/api/orders/<int:o_orderkey>/lineitems/<int:l_linenumber>` - updates line item AND updates aggregate
+- POST `/api/orders` - creates order and line items AND updates aggregate
+
+No DELETE, no other modifications.
+
+So the answer should be `detected: false`.
+
+But wait, I want to double-check one thing. In `update_lineitem`, after the line item update, the code does:
+
+```python
+total_subquery = (
+    db.query(
+        func.coalesce(
+            func.sum(
+                LineItem.l_extendedprice
+                * (1 - LineItem.l_discount)
+                * (1 + LineItem.l_tax)
+            ),
+            0,
+        )
+    )
+    .filter(LineItem.l_orderkey == o_orderkey)
+    .scalar()
+)
+```
+
+This calculates the new total. Then updates Order. This is correct.
+
+However, I notice that `update_lineitem` updates `l_extendedprice`, `l_discount`, `l_tax` but NOT `l_shipdate` or `l_comment`. But those don't affect the total, so the total calculation is still correct.
+
+I'm confident: no stale aggregate issue detected.
+
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. All write endpoints that modify line items (`update_lineitem` and `create_order`) recalculate and update `Order.o_totalprice` from the current line item rows, so the `get_order` read endpoint does not serve outdated summary values."
+  }
+]

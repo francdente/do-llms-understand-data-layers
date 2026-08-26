@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, child `Order` records are explicitly deleted via `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` before the parent `Customer` is deleted. The `orders_summary` endpoint depends on these `Order` rows to compute `total_orders` and `total_revenue`, so deleting a customer permanently removes their orders from the historical summary, causing incomplete or missing data."
+  }
+]

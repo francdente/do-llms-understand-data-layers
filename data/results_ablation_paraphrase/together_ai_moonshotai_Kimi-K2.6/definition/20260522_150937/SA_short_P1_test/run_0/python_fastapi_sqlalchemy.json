@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `update_lineitem` (PUT /api/orders/{o_orderkey}/lineitems/{l_linenumber}), `l_extendedprice`, `l_discount`, and `l_tax` are updated on a lineitem row, but `orders.o_totalprice` is never recalculated or updated. The `get_order` read endpoint returns `o_totalprice` from the parent `orders` table, which is now stale because it was last set during `create_order` and does not reflect the lineitem changes."
+  }
+]

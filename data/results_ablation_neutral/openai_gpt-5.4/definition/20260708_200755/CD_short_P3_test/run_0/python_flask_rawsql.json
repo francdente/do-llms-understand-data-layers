@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/<int:c_custkey> handler, function delete_customer(), the code explicitly executes \"DELETE FROM orders WHERE o_custkey = ?\" before deleting the customer. This matches the application-level child-row delete signal and qualifies because /api/orders/monthly-trend reads from orders, so deleting a customer also removes order rows needed by that endpoint, causing observable data loss."
+  }
+]

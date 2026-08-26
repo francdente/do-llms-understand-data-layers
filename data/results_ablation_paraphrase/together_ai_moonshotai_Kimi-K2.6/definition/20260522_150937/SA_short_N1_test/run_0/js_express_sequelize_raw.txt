@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `app.put('/api/orders/:o_orderkey/lineitems/:l_linenumber')`, the `o_totalprice` aggregate is correctly recalculated and updated after lineitem modification. However, in `app.post('/api/orders')`, if the `lineitems` array in the payload is empty or omitted, `o_totalprice` is set to 0 during creation but never recalculated, and more critically, there is no endpoint to add lineitems to an existing order after creation that updates the aggregate. The POST endpoint does recalculate within the same transaction, but any future lineitem additions (not shown in code) or the missing `DELETE /api/orders/:o_orderkey/lineitems/:l_linenumber` endpoint would leave `o_totalprice` stale. Actually, re-examining: the PUT endpoint does recalculate `o_totalprice`. The POST endpoint recalculates after creating lineitems. No stale aggregate issue exists in the provided code - all write endpoints that modify lineitems also update `o_totalprice`."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: the customer delete endpoint explicitly prevents deleting a customer when child orders exist via foreign key enforcement and returns 409, and there is no ON DELETE CASCADE or explicit delete of rows from the orders table."
+  }
+]

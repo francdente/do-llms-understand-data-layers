@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In function `add_lineitem` (`POST /api/orders/{o_orderkey}/lineitems`), a new `lineitem` row is inserted for an existing order but `orders.o_totalprice` is not recalculated or updated. The read endpoint `get_order` (`GET /api/orders/{o_orderkey}`) returns the stored `Orders.o_totalprice` directly, so after this write the parent aggregate can be stale relative to the current `lineitem` rows."
+  }
+]

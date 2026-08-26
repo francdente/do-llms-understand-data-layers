@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, the code explicitly deletes child `orders` records with `DELETE FROM orders WHERE o_custkey = ?` before deleting the parent `customer` record. The `listOrders` endpoint then returns incomplete data because it filters orders by `o_custkey IN (SELECT c_custkey FROM customer)`, and those orders are permanently gone."
+  }
+]
+```

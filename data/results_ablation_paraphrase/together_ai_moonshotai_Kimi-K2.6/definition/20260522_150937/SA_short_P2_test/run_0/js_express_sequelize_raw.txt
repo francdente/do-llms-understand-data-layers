@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `POST /api/orders/:o_orderkey/lineitems`, new lineitems are inserted without recalculating and updating `orders.o_totalprice`. The read endpoint `GET /api/orders/:o_orderkey` returns this stale `o_totalprice` value, which no longer reflects the actual sum of lineitem prices after the insert."
+  }
+]

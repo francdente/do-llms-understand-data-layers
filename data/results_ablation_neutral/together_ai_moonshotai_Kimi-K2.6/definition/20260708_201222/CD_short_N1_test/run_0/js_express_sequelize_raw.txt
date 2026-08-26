@@ -1,0 +1,21 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly deletes all `Order` rows with `Order.destroy({ where: { o_custkey } })` before deleting the customer. However, the `GET /api/orders` endpoint only returns orders tied to active customers (via `required: true` inner join), so no other endpoint needs orphaned orders to exist after parent deletion. This means there is no observable data loss for another endpoint."
+  }
+]
+```
+
+Wait - let me re-analyze. The issue definition says "causes observable data loss for another endpoint that needs those child rows to exist even after the parent is gone." The GET /api/orders endpoint uses `required: true` which means it only shows orders with active customers. So there is no endpoint that needs child rows to exist after parent is gone. Therefore, this is NOT an unsafe delete cascade by the definition.
+
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The explicit deletion of orders before customer deletion does not cause observable data loss because the GET /api/orders endpoint only returns orders tied to active customers (inner join with required: true), so no endpoint needs orphaned orders to exist after the parent customer is deleted."
+  }
+]
+```

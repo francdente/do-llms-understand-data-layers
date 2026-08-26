@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `list_products`, the JOIN query does not filter on `s.s_status`, so products from suspended suppliers (set by `suspend_supplier` which updates `s_status` to 'suspended') are still returned as purchasable. The read endpoint fails to respect the lifecycle status updated by the write endpoint."
+  }
+]

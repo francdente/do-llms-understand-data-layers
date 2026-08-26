@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The `o_totalprice` in the `orders` table is recalculated from `lineitem` rows whenever line items are updated via PUT `/api/orders/:o_orderkey/lineitems/:l_linenumber` and when orders are created via POST `/api/orders`, so the cached value stays synchronized with the source-of-truth detail records."
+  }
+]

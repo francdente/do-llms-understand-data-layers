@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `shipLineitem`, updating `l_shipdate` on a lineitem does not recalculate `o_latest_shipdate` in the parent `orders` table. The `getOrder` endpoint reads `o_latest_shipdate` directly from `orders`, which can now be stale since it should reflect the latest ship date across all lineitems for that order."
+  }
+]
+```

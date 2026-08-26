@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance was found: the code does not contain any write endpoint that updates a lifecycle status field (e.g., soft-delete, archive, deactivate), so the issue definition's precondition is not met."
+  }
+]

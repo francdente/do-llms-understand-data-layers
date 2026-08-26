@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance found: the write endpoint that modifies lineitem.l_shipdate recalculates and updates the cached parent summary orders.o_latest_shipdate in the same transaction, and the read endpoint serves that maintained value."
+  }
+]

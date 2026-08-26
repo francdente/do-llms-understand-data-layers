@@ -1,0 +1,14 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the `POST /api/orders/:o_orderkey/lineitems` endpoint, when a new lineitem is inserted for an existing order, the `o_totalprice` in the parent `orders` table is not recalculated and updated. The `o_totalprice` was originally computed from lineitem prices in `POST /api/orders`, but adding new lineitems via the separate endpoint leaves this aggregate stale."
+  },
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the `POST /api/orders` endpoint, `o_totalprice` is computed and stored based on the initial lineitems provided in the payload. However, if lineitems are later modified or added through other endpoints (like `POST /api/orders/:o_orderkey/lineitems`), this precomputed value becomes outdated since there is no mechanism to recalculate it upon detail record changes."
+  }
+]
+```

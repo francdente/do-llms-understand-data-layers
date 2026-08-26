@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, the code explicitly deletes all `orders` rows with `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer. This causes observable data loss for the `/api/orders/summary` endpoint, which relies on `orders` rows to compute historical `total_orders` and `total_revenue`."
+  }
+]

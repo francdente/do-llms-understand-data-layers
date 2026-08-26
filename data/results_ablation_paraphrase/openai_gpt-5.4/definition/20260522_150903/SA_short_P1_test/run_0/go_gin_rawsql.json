@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In main.go, `updateLineitem` updates detail rows in `lineitem` (`l_extendedprice`, `l_discount`, `l_tax`) but never recomputes or updates the parent `orders.o_totalprice`. The read endpoint `getOrder` then serves `o_totalprice` directly from `orders`, so after a line item change it can return a stale aggregate instead of the current sum derived from `lineitem`."
+  }
+]

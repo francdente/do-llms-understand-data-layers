@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `getProductAvailability`, the query `SELECT p.p_productkey, p.p_name, COALESCE(SUM(i.i_quantity), 0) AS total_stock FROM product p LEFT JOIN inventory i ON p.p_productkey = i.i_productkey WHERE p.p_productkey = ? GROUP BY p.p_productkey` does not filter on `p_status`, so a product that was soft-deleted/discontinued by `discontinueProduct` (which sets `p_status = 'discontinued'`) will still be returned as available. The read endpoint fails to exclude records whose lifecycle status marks them as no longer active."
+  }
+]
+```

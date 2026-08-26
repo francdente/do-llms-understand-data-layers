@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In main.go, `suspendSupplier` updates `supplier.s_status` to `'suspended'`, but `listProducts` queries `product` joined to `supplier` without filtering supplier status (e.g. no `WHERE s.s_status != 'suspended'`). This matches the exposed-record signal because products from suspended suppliers are still returned by the read endpoint as purchasable/visible."
+  }
+]

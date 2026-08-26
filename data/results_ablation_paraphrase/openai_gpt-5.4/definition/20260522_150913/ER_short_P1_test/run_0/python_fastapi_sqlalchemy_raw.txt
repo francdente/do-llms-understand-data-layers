@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the FastAPI code, `discontinue_product` updates `Product.p_status` to `\"discontinued\"`, but `get_product` reads by `Product.p_productkey` only and does not filter out discontinued records. This matches the exposed record signal because a lifecycle-status write endpoint marks the product no longer active while the read endpoint still returns it as visible."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer` endpoint, `db.query(Order).filter(Order.o_custkey == c_custkey).delete()` explicitly deletes all orders belonging to a customer before deleting the customer. The `/api/orders/monthly-trend` endpoint aggregates and returns historical order data, so deleting orders causes observable data loss for this reporting endpoint that needs order rows to exist even after the parent customer is gone."
+  }
+]

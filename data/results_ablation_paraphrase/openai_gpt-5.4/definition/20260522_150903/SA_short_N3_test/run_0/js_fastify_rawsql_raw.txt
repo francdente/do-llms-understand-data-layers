@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":false,"description":"No instance was found: the write endpoint that modifies detail rows (/api/orders/:o_orderkey/lineitems/:l_linenumber/ship) recalculates and updates the parent aggregate field o_latest_shipdate, and the read endpoint simply returns that maintained value."}]

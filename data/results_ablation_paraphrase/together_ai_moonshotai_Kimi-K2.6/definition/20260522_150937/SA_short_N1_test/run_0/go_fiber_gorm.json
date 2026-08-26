@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the `app.Post(\"/api/orders\")` endpoint, `o_totalprice` is set to 0 on INSERT and later updated after lineitems are created, but if any lineitem insertion fails and rolls back, the order exists with `o_totalprice = 0` (stale). More critically, there is no endpoint to delete lineitems, but if one existed or if lineitems could be modified through other means not shown, the aggregate could become stale. However, the actual bug is in `app.Post(\"/api/orders\")`: `o_totalprice` is initialized to 0 in the INSERT, and if the subsequent lineitem insertions or total calculation fail after the order is created, the order row persists with the stale 0 value (though this is partially mitigated by transaction rollback). The real stale aggregate issue: in `app.Post(\"/api/orders\")`, `o_totalprice` is set to 0 initially and only updated after all lineitems are inserted; if the transaction commits successfully but the lineitem loop or total calculation has a logic error, the 0 remains. Most importantly: there is NO endpoint shown for deleting lineitems, but the `PUT /api/orders/:o_orderkey/lineitems/:l_linenumber` correctly recalculates `o_totalprice`. However, `app.Post(\"/api/orders\")` has a bug where `o_totalprice` is inserted as 0 before lineitems exist, making it a stale aggregate until the final UPDATE runs within the same transaction."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In main.go, the POST /api/suppliers/:s_suppkey<int>/suspend handler updates supplier.s_status to \"suspended\", but the GET /api/products handler joins product to supplier without filtering supplier status (no WHERE s.s_status != 'suspended' or equivalent). This matches the exposed record signal because products from suspended suppliers are still returned to clients as purchasable/visible."
+  }
+]

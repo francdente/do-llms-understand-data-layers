@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In the GET /api/orders/:o_orderkey handler, the response reads orders.o_totalprice directly from the orders table, while the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler updates lineitem.l_extendedprice, l_discount, and l_tax without recalculating or updating orders.o_totalprice. This matches a stale aggregate signal: the parent summary value is precomputed at order creation time but becomes outdated after line item writes, and the read endpoint serves the stale value."
+  }
+]

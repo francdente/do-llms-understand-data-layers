@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance was found: the only read endpoint serving orders reads orders.o_totalprice, and the write endpoint that modifies lineitem rows (PUT /api/orders/:o_orderkey/lineitems/:l_linenumber) recalculates and updates orders.o_totalprice in the same transaction."
+  }
+]

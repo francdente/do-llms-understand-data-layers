@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance of exposed record was found. The code does not contain any write endpoint that updates a lifecycle status field (such as soft-delete, archive, or deactivate), and the read endpoint simply fetches by primary key without any status filtering logic to evaluate."
+  }
+]

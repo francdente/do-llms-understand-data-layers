@@ -1,0 +1,8 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "taxonomy": ["SA_short_P3"],
+    "description": "ship_lineitem updates l_shipdate to today's date but does not recalculate orders.o_latest_shipdate. get_order reads o_latest_shipdate directly, returning a stale value that does not reflect the most recent shipment."
+  }
+]

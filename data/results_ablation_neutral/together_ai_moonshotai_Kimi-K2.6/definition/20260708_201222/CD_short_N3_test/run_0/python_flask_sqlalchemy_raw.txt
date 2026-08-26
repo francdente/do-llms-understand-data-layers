@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The delete_customer endpoint explicitly checks for existing orders and returns a 409 error if found, preventing data loss. There is no ON DELETE CASCADE in the schema, no explicit child row deletion, and no endpoint that needs child rows to exist after parent deletion."
+  }
+]
+```

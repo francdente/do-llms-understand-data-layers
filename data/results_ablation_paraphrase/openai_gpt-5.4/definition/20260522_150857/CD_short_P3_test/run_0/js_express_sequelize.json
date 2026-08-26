@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the transaction explicitly calls Order.destroy({ where: { o_custkey: c_custkey } }) before Customer.destroy(...), which is an application-level cascade delete of child orders when a parent customer is removed. The GET /api/orders/monthly-trend endpoint reads from the orders table to compute counts and revenue, so deleting those child rows causes that separate read endpoint to return incomplete historical data."
+  }
+]

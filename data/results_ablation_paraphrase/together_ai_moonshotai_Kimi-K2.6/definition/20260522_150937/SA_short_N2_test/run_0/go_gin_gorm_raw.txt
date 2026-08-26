@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The GET endpoint computes OTotalprice on-the-fly from lineitem rows using SUM() rather than reading a cached value, and no precomputed summary column exists in the orders table."
+  }
+]
+```

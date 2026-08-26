@@ -1,0 +1,1 @@
+[{"name":"stale_aggregate","detected":false,"description":"No instance was found: write endpoints that modify lineitem rows recalculate orders.o_totalprice, and the read endpoint returns that maintained aggregate without evidence it can become stale from the shown writes."}]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The read endpoint `/api/orders/{o_orderkey}` computes `o_totalprice` dynamically from lineitem rows on each request rather than using a cached or precomputed summary value, so modifications to line items in `update_lineitem` cannot produce stale results."
+  }
+]

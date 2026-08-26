@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No cached or precomputed aggregate values were found in the schema or code; all calculations are performed on-demand from source lineitem rows."
+  }
+]

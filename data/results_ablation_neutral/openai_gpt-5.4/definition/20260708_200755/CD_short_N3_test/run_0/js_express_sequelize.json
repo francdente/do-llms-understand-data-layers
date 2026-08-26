@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance found: deleting a customer is blocked when orders exist via foreign key constraint handling, and there is no explicit child-row delete or ON DELETE CASCADE behavior shown that would remove orders needed by another endpoint."
+  }
+]

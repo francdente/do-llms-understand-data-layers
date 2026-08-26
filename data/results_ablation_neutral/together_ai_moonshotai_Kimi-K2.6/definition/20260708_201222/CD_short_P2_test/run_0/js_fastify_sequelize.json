@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `app.delete('/api/customers/:c_custkey')`, the code explicitly calls `Order.destroy({ where: { o_custkey } })` before deleting the customer, which removes all orders for that customer. The `/api/orders/history` endpoint returns all orders (including historical ones), so deleting orders causes observable data loss for that endpoint."
+  }
+]

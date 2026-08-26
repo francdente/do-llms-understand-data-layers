@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "Detected in the write endpoint `discontinue_product` and the read endpoint `get_product`. The write endpoint updates lifecycle status via `UPDATE product SET p_status = 'discontinued'`, but `get_product` reads with `FROM product WHERE p_productkey = ?` and does not filter out discontinued records, so discontinued products remain visible as purchasable/active."
+  }
+]

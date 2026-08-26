@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "Detected in the DELETE /api/customers/:c_custkey handler inside the transaction: it explicitly deletes child rows with Order.destroy({ where: { o_custkey: c_custkey } }) before deleting the parent Customer row. This matches an application-level delete cascade, and the separate GET /api/orders endpoint depends on those orders, so deleting a customer permanently removes rows that endpoint would otherwise return."
+  }
+]

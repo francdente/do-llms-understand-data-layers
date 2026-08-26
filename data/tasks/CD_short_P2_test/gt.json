@@ -1,0 +1,8 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "taxonomy": ["CD_short_P4"],
+    "description": "delete_customer removes all orders for that customer, but orders_history reads from orders without any customer-existence filter. The route name implies complete historical records are required, yet deleted orders silently disappear."
+  }
+]

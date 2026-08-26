@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the code explicitly deletes all orders for a customer before deleting the customer: `db.prepare('DELETE FROM orders WHERE o_custkey = ?').run(c_custkey)`. This causes data loss for the /api/orders endpoint, which returns orders joined to active customers\u2014once a customer is deleted, their orders are permanently gone and cannot be recovered or referenced. This is an unsafe cascade delete because the child table rows (orders) are needed by another endpoint but are destroyed when the parent (customer) is removed."
+  }
+]

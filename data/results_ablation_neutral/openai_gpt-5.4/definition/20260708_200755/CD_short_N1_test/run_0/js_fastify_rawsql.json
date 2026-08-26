@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the code explicitly executes `DELETE FROM orders WHERE o_custkey = ?` before deleting the parent customer. This matches an application-level child-row cascade delete, and it causes observable data loss because the `/api/orders` endpoint depends on rows in `orders`, which will no longer exist after a customer deletion."
+  }
+]

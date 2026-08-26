@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, the explicit child-table delete `Order.destroy({ where: { o_custkey: c_custkey } })` removes all orders before deleting the customer. This matches the unsafe delete cascade signal because the GET /api/orders endpoint depends on those child rows existing, so deleting a customer causes observable loss of order data from that endpoint."
+  }
+]

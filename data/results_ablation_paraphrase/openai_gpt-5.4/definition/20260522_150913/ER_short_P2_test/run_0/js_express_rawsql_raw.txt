@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the Express route handlers `POST /api/products/:p_productkey/discontinue` and `GET /api/products/:p_productkey/availability`, the write endpoint updates `product.p_status` to `'discontinued'`, but the read query only filters by `p.p_productkey = ?` and does not exclude discontinued products. This matches the exposed-record signal because a product marked no longer active remains returned by the availability endpoint as if still purchasable/visible."
+  }
+]

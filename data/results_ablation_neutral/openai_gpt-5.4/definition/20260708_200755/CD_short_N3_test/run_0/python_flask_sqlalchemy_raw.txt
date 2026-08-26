@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: deleting a customer in delete_customer does not cascade to orders, and the code explicitly returns a 409 when existing child orders prevent parent deletion."
+  }
+]

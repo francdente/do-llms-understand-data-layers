@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `app.get('/api/products/:p_productkey/availability')`, the query selects from `product` joined with `inventory` filtering only by `p.p_productkey = ?` without checking `p_status`. Since `app.post('/api/products/:p_productkey/discontinue')` sets `p_status = 'discontinued'`, discontinued products continue to be returned as available."
+  }
+]

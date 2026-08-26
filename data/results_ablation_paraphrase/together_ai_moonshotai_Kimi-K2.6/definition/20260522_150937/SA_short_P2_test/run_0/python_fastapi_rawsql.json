@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `create_order`, the `o_totalprice` is computed from `lineitem` rows and stored in `orders`. However, `add_lineitem` inserts new line items without recalculating and updating `orders.o_totalprice`, causing `o_totalprice` to become stale. The `get_order` endpoint reads this stale cached value without recalculating from current line items."
+  }
+]

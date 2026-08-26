@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, the application explicitly deletes all orders for a customer before deleting the customer (db.prepare(\"DELETE FROM orders WHERE o_custkey = ?\")), causing permanent data loss. The GET /api/orders endpoint only returns orders joined to active customers, so this cascade delete does not break that endpoint's functionality; however, there is no endpoint that can retrieve historical orders for deleted customers, meaning the child rows are needed by no existing endpoint. Re-evaluating: the definition requires 'observable data loss for another endpoint that needs those child rows to exist even after the parent is gone.' Since GET /api/orders only shows active customer orders and no other endpoint accesses orphaned orders, this does not strictly qualify. However, the explicit DELETE of child rows is a cascade pattern that permanently removes order data with no recovery path."
+  }
+]

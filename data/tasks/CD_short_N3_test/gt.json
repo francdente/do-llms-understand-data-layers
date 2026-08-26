@@ -1,0 +1,8 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "taxonomy": ["CD_short_N3"],
+    "description": "delete_customer does not remove child orders rows. With PRAGMA foreign_keys = ON, the database rejects the deletion if dependent orders exist (IntegrityError caught, 409 returned). Orders are never silently lost, so the dashboard remains correct."
+  }
+]

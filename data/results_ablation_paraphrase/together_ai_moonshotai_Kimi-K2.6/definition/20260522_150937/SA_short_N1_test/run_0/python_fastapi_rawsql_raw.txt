@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The `o_totalprice` in the `orders` table is recalculated from `lineitem` rows whenever line items are updated via `update_lineitem`, and is computed from scratch during `create_order`."
+  }
+]

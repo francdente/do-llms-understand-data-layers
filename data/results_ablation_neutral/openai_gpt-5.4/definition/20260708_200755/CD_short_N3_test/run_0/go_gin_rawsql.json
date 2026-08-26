@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance was found: the schema has no ON DELETE CASCADE on orders.o_custkey, and main.go deleteCustomer deletes only from customer while explicitly failing when existing orders prevent the parent delete."
+  }
+]

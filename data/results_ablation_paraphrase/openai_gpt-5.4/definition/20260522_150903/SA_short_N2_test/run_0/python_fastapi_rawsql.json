@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance found: the read endpoint `get_order` recalculates `o_totalprice` directly from current `lineitem` rows, and no cached or stored aggregate in `orders` is read without refresh."
+  }
+]

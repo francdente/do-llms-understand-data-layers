@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `update_lineitem` (PUT /api/orders/<o_orderkey>/lineitems/<l_linenumber>), the `l_extendedprice`, `l_discount`, and `l_tax` of a line item are updated, but `orders.o_totalprice` is never recalculated and updated. The `get_order` endpoint then serves this stale `o_totalprice` value, which no longer reflects the actual sum of line item prices for that order."
+  }
+]
+```

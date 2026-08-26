@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `deleteCustomer`, the code explicitly deletes all `orders` rows with `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer. The `monthlyTrend` endpoint depends on all historical orders to compute per-month aggregates, so this cascade delete causes observable data loss for that endpoint."
+  }
+]

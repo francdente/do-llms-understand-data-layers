@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The DELETE endpoint for customers explicitly checks for existing orders and returns a 409 error if found, preventing cascade deletion. The dashboard read endpoint queries orders directly and is not affected by customer deletions."
+  }
+]

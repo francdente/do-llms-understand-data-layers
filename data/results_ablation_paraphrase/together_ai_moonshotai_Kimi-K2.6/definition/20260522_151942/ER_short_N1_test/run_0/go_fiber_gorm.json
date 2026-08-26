@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In `app.Get(\"/api/products\", ...)`, the endpoint filters by `p_status = 'active'`, but in `app.Post(\"/api/products/:p_productkey/discontinue\", ...)`, the product status is updated to `'discontinued'`. However, there is no read endpoint that retrieves a single product by key (e.g., `GET /api/products/:p_productkey`) that filters out discontinued products. The list endpoint correctly filters, but any hypothetical or actual single-product read endpoint would be missing from the provided code. Re-examining: the `GET /api/products` endpoint correctly filters with `Where(\"p_status = 'active'\")`, so discontinued products are excluded from the list. No other read endpoints exist in the code. Wait - re-checking: the issue is about a read endpoint not filtering. The `GET /api/products` DOES filter. There are no other read endpoints. Therefore, no exposed record issue exists in the provided code."
+  }
+]

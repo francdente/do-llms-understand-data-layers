@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The write endpoint at POST /api/orders/:o_orderkey/lineitems/:l_linenumber/ship correctly recalculates the MAX(l_shipdate) from the current lineitem rows and updates o_latest_shipdate in the same transaction, ensuring the cached summary value remains synchronized with the source-of-truth detail records."
+  }
+]

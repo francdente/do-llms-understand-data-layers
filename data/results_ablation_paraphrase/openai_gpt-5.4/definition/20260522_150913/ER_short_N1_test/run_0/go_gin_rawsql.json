@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance was found: the write endpoint `discontinueProduct` updates lifecycle status to `p_status = 'discontinued'`, and the read endpoint `listProducts` filters with `WHERE p_status = 'active'`, so discontinued records are not returned as active."
+  }
+]

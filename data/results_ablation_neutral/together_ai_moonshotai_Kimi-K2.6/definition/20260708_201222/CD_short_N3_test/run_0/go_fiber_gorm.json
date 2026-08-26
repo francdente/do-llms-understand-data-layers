@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The customer delete endpoint explicitly handles foreign key constraint errors and returns 409 when orders exist, preventing automatic deletion of child rows. The dashboard endpoint only reads from orders and does not require customer rows to exist."
+  }
+]

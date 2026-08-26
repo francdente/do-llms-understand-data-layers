@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance found: the write endpoint `shipLineitem` updates the detail row and then recomputes and persists `orders.o_latest_shipdate` from current `lineitem` rows before the read endpoint `getOrder` serves it."
+  }
+]

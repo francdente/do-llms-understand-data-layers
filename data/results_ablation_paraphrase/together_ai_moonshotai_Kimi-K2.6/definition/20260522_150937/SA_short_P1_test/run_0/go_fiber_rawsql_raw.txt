@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `updateLineitem`, the `o_totalprice` in the `orders` table is not recalculated after `l_extendedprice`, `l_discount`, or `l_tax` are modified on a line item. The read endpoint `getOrder` returns this stale `o_totalprice` without recalculating from current lineitem rows, producing incorrect results."
+  }
+]
+```

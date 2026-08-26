@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, child orders are explicitly deleted via 'DELETE FROM orders WHERE o_custkey = ?' before the parent customer is deleted. The GET /api/orders/monthly-trend endpoint depends on all orders for its aggregation, so deleting a customer permanently removes their orders from the monthly trend report, causing incomplete/missing data."
+  }
+]
+```

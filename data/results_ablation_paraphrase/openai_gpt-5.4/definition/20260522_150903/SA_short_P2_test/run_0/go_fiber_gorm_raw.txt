@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In main.go, the POST /api/orders/:o_orderkey<int>/lineitems handler inserts a new lineitem for an existing order but never recalculates or updates orders.o_totalprice. The GET /api/orders/:o_orderkey<int> handler later reads and returns the stored o_totalprice directly from orders, so after this write endpoint modifies detail rows, the parent aggregate can be stale and incorrect."
+  }
+]

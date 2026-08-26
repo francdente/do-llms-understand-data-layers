@@ -1,0 +1,8 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "taxonomy": ["CD_short_P1"],
+    "description": "delete_customer removes all orders for that customer, but orders_summary aggregates all rows in orders without filtering by existing customers. After deletion, the summary incorrectly drops the deleted customer's order count and revenue."
+  }
+]

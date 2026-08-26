@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No instance found: the read endpoint recomputes o_totalprice from lineitem rows on each GET, and there is no cached or stored aggregate in orders that can become stale after lineitem updates."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In delete_customer, the explicit child-table delete `db.query(Order).filter(Order.o_custkey == c_custkey).delete(...)` removes all orders before deleting the customer. This matches the unsafe delete cascade signal because `/api/orders/monthly-trend` depends on orders continuing to exist for historical aggregation, so deleting a customer causes observable loss of order data for that endpoint."
+  }
+]

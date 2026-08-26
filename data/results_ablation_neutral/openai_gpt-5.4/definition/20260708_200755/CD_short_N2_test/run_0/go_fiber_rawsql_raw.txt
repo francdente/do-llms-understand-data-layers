@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No instance found: the DELETE /api/customers/:c_custkey handler explicitly deletes child orders before deleting the customer, but the only shown consumer endpoint (/api/orders) is defined to return orders tied to active customers, so the code does not show another endpoint that needs those child rows to remain after parent deletion."
+  }
+]

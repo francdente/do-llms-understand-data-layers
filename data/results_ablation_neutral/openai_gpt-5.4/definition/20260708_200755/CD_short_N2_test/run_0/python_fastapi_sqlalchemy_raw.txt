@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In delete_customer, the explicit child-table delete `db.execute(delete(Order).where(Order.o_custkey == c_custkey))` removes all orders before deleting the customer. This matches an application-level cascade delete, and it causes observable data loss because the `/api/orders` endpoint depends on rows in `orders` and those rows disappear when a customer is deleted."
+  }
+]

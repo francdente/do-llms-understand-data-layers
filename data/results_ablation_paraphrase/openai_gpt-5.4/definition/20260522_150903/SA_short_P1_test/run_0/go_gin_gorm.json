@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In main.go, the PUT /api/orders/:o_orderkey/lineitems/:l_linenumber handler updates lineitem.l_extendedprice, l_discount, and l_tax but never recomputes or updates the parent orders.o_totalprice. The GET /api/orders/:o_orderkey handler then reads o_totalprice directly from orders, so after a line item change it can serve a stale aggregate value."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `app.post('/api/orders/:o_orderkey/lineitems')`, new lineitems are inserted without recalculating and updating `orders.o_totalprice`. The GET endpoint returns this stale `o_totalprice` value, which no longer reflects the actual sum of lineitem prices. The `app.post('/api/orders')` endpoint correctly computes and stores `o_totalprice` from lineitems, but the lineitem addition endpoint breaks this invariant."
+  }
+]

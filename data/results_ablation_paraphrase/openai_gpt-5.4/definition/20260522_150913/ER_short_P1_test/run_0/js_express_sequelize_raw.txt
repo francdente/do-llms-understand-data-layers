@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the Express handlers `POST /api/products/:p_productkey/discontinue` and `GET /api/products/:p_productkey`, the write endpoint updates `p_status` to `\"discontinued\"`, but the read endpoint fetches by `p_productkey` only and does not filter out discontinued records. This matches the exposed-record signal because a lifecycle status change is written and the record remains returned to clients as a purchasable product."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the write endpoint archives records by setting product.p_status = 'archived', and the only read endpoint shown for archived products explicitly filters with WHERE p_status = 'archived' rather than exposing archived records as active."
+  }
+]

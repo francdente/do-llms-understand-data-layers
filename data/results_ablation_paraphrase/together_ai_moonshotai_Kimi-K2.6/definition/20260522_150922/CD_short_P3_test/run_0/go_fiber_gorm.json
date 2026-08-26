@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey endpoint, deleting a customer explicitly deletes dependent orders via `DELETE FROM orders WHERE o_custkey = ?` before deleting the customer. The separate GET /api/orders/monthly-trend endpoint depends on these order rows to compute monthly revenue and order counts; after a customer deletion, this endpoint will return incomplete data because the associated orders have been permanently removed."
+  }
+]

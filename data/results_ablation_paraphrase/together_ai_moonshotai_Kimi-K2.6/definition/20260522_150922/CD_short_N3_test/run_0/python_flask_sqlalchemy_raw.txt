@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In `delete_customer`, the code attempts to delete a customer with `db.query(Customer).filter(...).delete()` while `PRAGMA foreign_keys = ON` is enabled, which causes SQLite to cascade delete all related `orders` rows via the foreign key constraint. The `dashboard` endpoint depends on `orders` data for its aggregations, so after customer deletion, the dashboard will return incomplete/missing revenue and order counts because the child order records were permanently removed by the database-level cascade."
+  }
+]

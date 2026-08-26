@@ -1,0 +1,8 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "taxonomy": ["ER_short_N1"],
+    "description": "discontinue_product sets p_status to 'discontinued', and list_products filters with WHERE p_status = 'active'. Discontinued products are properly excluded from results."
+  }
+]

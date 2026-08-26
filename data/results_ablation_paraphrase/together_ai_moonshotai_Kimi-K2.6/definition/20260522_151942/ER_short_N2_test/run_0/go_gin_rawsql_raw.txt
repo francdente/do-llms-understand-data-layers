@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance found: the code does not contain any write endpoint that updates a lifecycle status field (e.g., soft-delete, archive, deactivate), so there is no status to filter on in read endpoints."
+  }
+]
+```

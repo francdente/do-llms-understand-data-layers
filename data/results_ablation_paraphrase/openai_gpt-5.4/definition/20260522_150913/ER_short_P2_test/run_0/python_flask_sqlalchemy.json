@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "description": "In the Flask app, `discontinue_product` marks a product as inactive by updating `Product.p_status` to `\"discontinued\"`, but `get_product_availability` reads and returns the product using only `Product.p_productkey == p_productkey` and does not filter out discontinued records. This matches the exposed-record pattern because a write endpoint changes lifecycle status while a read endpoint continues to expose that record as available/visible."
+  }
+]

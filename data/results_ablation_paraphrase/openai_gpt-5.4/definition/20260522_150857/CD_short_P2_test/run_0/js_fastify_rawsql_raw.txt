@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "Detected in the DELETE /api/customers/:c_custkey handler, inside the transaction that executes `DELETE FROM orders WHERE o_custkey = ?` followed by `DELETE FROM customer WHERE c_custkey = ?`. This matches an explicit application-level delete cascade: deleting a customer also permanently removes dependent `orders`, and the separate GET /api/orders/history endpoint reads from `orders`, so it will return missing/incomplete history after the customer deletion."
+  }
+]

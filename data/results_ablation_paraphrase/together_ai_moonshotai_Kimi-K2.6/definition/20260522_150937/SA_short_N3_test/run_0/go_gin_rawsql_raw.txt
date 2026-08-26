@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": false,
+    "description": "No stale aggregate issue was found. The `shipLineitem` endpoint correctly recalculates `MAX(l_shipdate)` from the lineitem detail rows and updates `orders.o_latest_shipdate` within the same transaction, ensuring the cached value stays synchronized with the source-of-truth data."
+  }
+]
+```

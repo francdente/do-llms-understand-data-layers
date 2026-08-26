@@ -1,0 +1,7 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "description": "In the DELETE /api/customers/:c_custkey handler, explicit application-level DELETE statements first remove all orders with 'DELETE FROM orders WHERE o_custkey = ?' before deleting the customer. The GET /api/orders endpoint depends on these child records to return complete order data tied to active customers, so deleting a customer permanently removes its orders and causes that read endpoint to return incomplete/missing data for those orders."
+  }
+]

@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "cascade_delete",
+    "detected": false,
+    "description": "No unsafe delete cascade was found. The delete_customer endpoint explicitly deletes orders before deleting the customer, but the list_orders endpoint only returns orders joined to active customers, so no endpoint requires orphaned orders to exist after customer deletion."
+  }
+]
+```

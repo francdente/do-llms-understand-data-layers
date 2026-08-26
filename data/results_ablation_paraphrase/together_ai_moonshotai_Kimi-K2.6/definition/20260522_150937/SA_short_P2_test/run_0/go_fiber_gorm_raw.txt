@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `app.Post(\"/api/orders/:o_orderkey<int>/lineitems\")`, adding a new lineitem to an existing order does not recalculate or update `orders.o_totalprice`. The read endpoint `app.Get(\"/api/orders/:o_orderkey<int>\")` returns the stale `o_totalprice` value, which no longer reflects the actual sum of lineitems for that order."
+  }
+]
+```

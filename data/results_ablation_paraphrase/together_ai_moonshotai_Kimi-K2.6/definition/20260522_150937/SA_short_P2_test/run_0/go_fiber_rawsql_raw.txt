@@ -1,0 +1,9 @@
+```json
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `addLineitem`, a new lineitem is inserted but `orders.o_totalprice` is not recalculated or updated. The `getOrder` endpoint reads `o_totalprice` directly from the `orders` table, which now contains a stale aggregate that does not reflect the newly added lineitem's price. Detection signal: write to detail table (`lineitem`) without corresponding update to precomputed summary column (`orders.o_totalprice`) that is read by a read endpoint."
+  }
+]
+```

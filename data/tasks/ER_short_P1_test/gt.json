@@ -1,0 +1,8 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": true,
+    "taxonomy": ["ER_short_P1"],
+    "description": "discontinue_product sets p_status to 'discontinued', but get_product returns the product without checking p_status. A discontinued product is still served to clients as if it were available."
+  }
+]

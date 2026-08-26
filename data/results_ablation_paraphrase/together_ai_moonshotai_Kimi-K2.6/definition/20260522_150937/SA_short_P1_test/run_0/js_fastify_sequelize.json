@@ -1,0 +1,7 @@
+[
+  {
+    "name": "stale_aggregate",
+    "detected": true,
+    "description": "In `app.put('/api/orders/:o_orderkey/lineitems/:l_linenumber')`, line items are updated (l_extendedprice, l_discount, l_tax) but `orders.o_totalprice` is not recalculated and updated. The read endpoint `app.get('/api/orders/:o_orderkey')` returns this stale `o_totalprice` value, which no longer reflects the actual sum of line items."
+  }
+]

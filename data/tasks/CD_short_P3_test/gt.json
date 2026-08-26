@@ -1,0 +1,8 @@
+[
+  {
+    "name": "cascade_delete",
+    "detected": true,
+    "taxonomy": ["CD_short_P3"],
+    "description": "delete_customer removes all orders for that customer. monthly_trend groups orders by month to compute trends without any customer-existence filter. Deleted orders silently disappear, distorting historical monthly counts and revenue."
+  }
+]

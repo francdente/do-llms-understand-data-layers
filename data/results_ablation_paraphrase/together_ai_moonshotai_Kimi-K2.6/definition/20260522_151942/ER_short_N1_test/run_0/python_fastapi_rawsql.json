@@ -1,0 +1,7 @@
+[
+  {
+    "name": "exposed_record",
+    "detected": false,
+    "description": "No instance of exposed record was found. The write endpoint `/api/products/{p_productkey}/discontinue` updates `p_status` to 'discontinued', and the read endpoint `/api/products` correctly filters with `WHERE p_status = 'active'`, so discontinued products are not returned."
+  }
+]
