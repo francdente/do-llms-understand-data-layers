@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do LLMs Understand Backend Data-Layer Semantics?</title>
+<meta name="description" content="LLMs recognize a backend data-layer bug when it is described to them, but rarely discover it on their own. A controlled benchmark of 216 tiny database-backed tasks, EMNLP 2026.">
+<link rel="canonical" href="https://francdente.github.io/do-llms-understand-data-layers/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Do LLMs Understand Backend Data-Layer Semantics? A Controlled Study of Cross-Endpoint Issues">
+<meta property="og:description" content="LLMs recognize a backend data-layer bug when it is described to them, but rarely discover it on their own. A controlled benchmark of 216 tiny database-backed tasks, EMNLP 2026.">
+<meta property="og:url" content="https://francdente.github.io/do-llms-understand-data-layers/">
+<meta property="og:image" content="https://francdente.github.io/do-llms-understand-data-layers/assets/teaser.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#004664">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23004664'/%3E%3Cpath d='M8 10h16v3H8zm0 5h16v3H8zm0 5h10v3H8z' fill='%23F5F4EF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F4EF;--card:#FFFFFF;--stroke:#D9D8D2;--ink:#111111;--ink2:#4A4945;--muted:#6B6A64;
+  --accent:#004664;--on-accent:#FFFFFF;--free:#E07020;--def:#17628F;--alarm:#D2232A;--human:#3F3E3B;
+  --track:#E7E5DD;--band:#F5F4EF;--callout:#FADADA;--callout-stroke:#D2232A;--pill:#EFEEE9;--pill-stroke:#C9C8C1;
+  --code:#FBFAF7;--comment:#B81F25;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#121416;--card:#1B1D1F;--stroke:#34383C;--ink:#ECEBE6;--ink2:#C4C3BC;--muted:#9C9B94;
+  --accent:#8CC8E2;--on-accent:#0B1A22;--free:#E07020;--def:#3A86BC;--alarm:#E5484D;--human:#B9B8B1;
+  --track:#2B2F33;--band:#24272B;--callout:#3A1D20;--callout-stroke:#E5484D;--pill:#26292D;--pill-stroke:#474B50;
+  --code:#16181A;--comment:#FF8A8F;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 Lato,"Helvetica Neue",Helvetica,Arial,sans-serif;border-top:10px solid var(--accent)}
+main,header.hero,footer{max-width:1120px;margin:0 auto;padding:0 20px}
+a{color:var(--accent);text-underline-offset:3px}
+h1,h2,h3,h4,p{margin:0}
+h1{font-size:clamp(2rem,6.4vw,3.5rem);line-height:1.08;font-weight:900;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(1.6rem,4.4vw,2.2rem);line-height:1.15;font-weight:900;margin-bottom:14px}
+h3{font-size:1.3rem;line-height:1.2;font-weight:900}
+section{padding-top:52px}
+section>p{max-width:68ch;color:var(--ink2)}
+section>p+p{margin-top:12px}
+b,strong{font-weight:900;color:var(--ink)}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.hero{padding-top:34px}
+.venue{display:inline-block;background:var(--accent);color:var(--on-accent);font-weight:900;font-size:.85rem;letter-spacing:.06em;padding:4px 11px;border-radius:999px;margin-bottom:16px}
+.subtitle{font-size:clamp(1.2rem,3.6vw,1.75rem);line-height:1.25;margin-top:8px}
+.authors{margin-top:18px;font-size:1.08rem;font-weight:700;color:var(--ink2);text-wrap:pretty}
+.affil{font-size:.95rem;color:var(--muted);margin-top:2px}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;font-weight:900;text-decoration:none;border:1.5px solid var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.note{font-size:.92rem;color:var(--muted);margin-top:10px}
+
+.lead{margin-top:34px;padding:20px 22px;background:var(--card);border:1.5px solid var(--stroke);border-radius:14px}
+.lead p:first-child{font-size:clamp(1.25rem,3.6vw,1.6rem);line-height:1.3;font-weight:900;text-wrap:balance}
+.lead p+p{margin-top:8px;color:var(--ink2)}
+
+.card{background:var(--card);border:1.5px solid var(--stroke);border-radius:14px;padding:18px 18px 16px;min-width:0}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));margin-top:20px}
+figure{margin:20px 0 0}
+figure img{display:block;width:100%;height:auto;max-width:760px;background:#FFFFFF;border-radius:14px;padding:6px}
+figcaption{font-size:.92rem;color:var(--muted);margin-top:8px;max-width:68ch}
+
+.issue h3 code{font-size:.8rem;font-weight:400;color:var(--muted);margin-left:4px;white-space:nowrap}
+.issue .q{font-style:italic;color:var(--ink2);margin:2px 0 8px}
+.issue{display:flex;flex-direction:column}
+.issue p{font-size:.98rem}
+.issue .callout{margin-top:auto}
+pre{margin:12px 0;padding:12px 12px;background:var(--code);border:1px solid var(--stroke);border-radius:8px;overflow-x:auto;font-size:11.5px;line-height:1.55;-webkit-overflow-scrolling:touch}
+pre .c{color:var(--comment)}
+pre .u{text-decoration:underline;text-underline-offset:3px}
+.callout{background:var(--callout);border:1.5px solid var(--callout-stroke);border-radius:10px;padding:10px 12px;color:var(--ink)}
+
+.facts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:20px 0 0;padding:0;list-style:none}
+.facts li{background:var(--card);border:1.5px solid var(--stroke);border-radius:14px;padding:14px 16px;font-size:.95rem;color:var(--ink2);line-height:1.35}
+.facts b{display:block;font-size:2rem;line-height:1.1;margin-bottom:4px}
+.regimes{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));margin-top:14px}
+.regimes .card{border-left-width:8px}
+.regimes .r-free{border-left-color:var(--free)}
+.regimes .r-def{border-left-color:var(--def)}
+.regimes p{color:var(--ink2);font-size:.98rem;margin-top:4px}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:18px;font-size:.98rem;color:var(--ink2)}
+.legend>b{flex-basis:100%}
+.key{display:inline-flex;align-items:baseline;gap:8px}
+.key i{flex:none;width:14px;height:14px;border-radius:3px;align-self:center}
+.results{margin-top:12px}
+.result header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px;margin-bottom:12px}
+.pill{font-size:.88rem;color:var(--ink2);background:var(--pill);border:1.5px solid var(--pill-stroke);border-radius:999px;padding:2px 12px;white-space:nowrap}
+.pill.sig{background:var(--callout);border-color:var(--callout-stroke)}
+.row{display:grid;grid-template-columns:118px minmax(0,1fr);align-items:center;column-gap:8px;padding:5px 0}
+.row .name{font-size:.95rem;line-height:1.2}
+.row.avg{background:var(--band);margin:6px -8px 0;padding:9px 8px;border-radius:9px}
+.row.avg .name{font-weight:900}
+.pair{display:grid;row-gap:2px}
+.b{display:grid;grid-template-columns:minmax(0,1fr) 46px;align-items:center;column-gap:8px}
+.track{display:block;height:13px;background:var(--track);border-radius:0 4px 4px 0;overflow:hidden}
+.track i{display:block;height:100%;border-radius:0 4px 4px 0}
+i.free{background:var(--free)}i.def{background:var(--def)}i.alarm{background:var(--alarm)}i.human{background:var(--human)}
+.v{font-weight:700;font-size:.95rem;line-height:1;text-align:right;font-variant-numeric:tabular-nums}
+.flagged{border-top:1.5px solid var(--stroke);margin-top:14px;padding-top:12px}
+.flagged h4{font-size:.98rem;font-weight:900;margin-bottom:4px}
+.flagged .row{padding:3px 0}
+.foot{font-size:.88rem;color:var(--muted);margin-top:12px;max-width:none}
+
+.findings{counter-reset:f;display:grid;gap:14px;margin-top:6px}
+.finding h3{display:flex;align-items:center;gap:12px}
+.finding h3::before{counter-increment:f;content:counter(f);flex:none;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:1rem;display:grid;place-items:center}
+.finding p{color:var(--ink2);margin-top:8px;max-width:70ch}
+.finding .chart{margin-top:14px;max-width:560px}
+.finding .legend{margin:0 0 6px;font-size:.92rem}
+.takeaway{margin-top:18px;font-size:clamp(1.15rem,3.2vw,1.4rem);line-height:1.35;font-weight:900;max-width:40ch;text-wrap:balance}
+
+.headrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.headrow h2{margin:0}
+#bib{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:0}
+.copy{min-height:40px;font:inherit;font-size:.85rem;font-weight:700;color:var(--accent);background:var(--card);border:1.5px solid var(--stroke);border-radius:8px;padding:6px 12px;cursor:pointer}
+footer{padding-top:44px;padding-bottom:56px;color:var(--muted);font-size:.92rem}
+footer p+p{margin-top:6px}
+@media (min-width:720px){body{font-size:18px}.row{grid-template-columns:128px minmax(0,1fr)}pre{font-size:12px}}
+@media (max-width:719px){.facts li:last-child{grid-column:1/-1}}
+@media (max-width:380px){.row{grid-template-columns:104px minmax(0,1fr)}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="venue">EMNLP 2026</p>
+  <h1>Do LLMs Understand Backend Data-Layer Semantics?</h1>
+  <p class="subtitle">A Controlled Study of Cross-Endpoint Issues</p>
+  <p class="authors">Francesco Dente<sup>1*</sup>, Dario Satriani<sup>2*</sup>, Donatello Santoro<sup>2</sup>, Enzo Veltri<sup>2</sup>, Paolo Papotti<sup>1</sup></p>
+  <p class="affil"><sup>1</sup>EURECOM, France &nbsp;·&nbsp; <sup>2</sup>University of Basilicata, Italy &nbsp;·&nbsp; <sup>*</sup>equal contribution</p>
+  <nav class="links" aria-label="Paper resources">
+    <a class="btn primary" href="https://github.com/francdente/do-llms-understand-data-layers"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>Code and data</a>
+    <!-- When the paper is online, add: <a class="btn" href="PAPER_URL">Paper</a> and remove the note below. -->
+    <a class="btn" href="#results">Results</a>
+    <a class="btn" href="#cite">Cite</a>
+  </nav>
+  <p class="note">The paper will appear in the EMNLP 2026 proceedings.</p>
+
+  <div class="lead">
+    <p>LLMs recognize a data-layer bug when it is described to them, but they rarely discover it on their own.</p>
+    <p>We test five models on 216 tiny backends. With the definition of the issue in the prompt, average F1 is between 0.73 and 0.94. Without it, it falls as low as 0.03.</p>
+  </div>
+</header>
+
+<main>
+
+<section id="problem">
+  <h2>The problem</h2>
+  <p>LLMs are increasingly used to <b>review</b> code, not only to write it. Most evaluations check code against known bug patterns or an explicit specification.</p>
+  <p><b>Semantic data-layer issues are different.</b> Nothing crashes, and every endpoint is correct on its own. The bug exists only across endpoints that share persistent state, so finding it means connecting the schema, the behaviour of each endpoint, and what the application is meant to do.</p>
+  <figure>
+    <a href="assets/teaser.png"><img src="assets/teaser.png" width="1304" height="750" alt="Two panels showing the same backend. A DELETE /customers endpoint deletes the customer row and their orders, while GET /orders/history promises the history of all orders that have existed. In panel A, an open-ended review with no issue definition, the LLM misses that the cascade delete breaks the history endpoint. In panel B, with the issue definition given, the LLM detects it."></a>
+    <figcaption>The same backend under the two settings. Deleting a customer also deletes their orders, while another endpoint promises the history of all orders. Asked for an open-ended review (A), the model misses the problem. Given the definition of the issue (B), it finds it.</figcaption>
+  </figure>
+</section>
+
+<section id="issues">
+  <h2>Three issue types</h2>
+  <p>One per dimension of persistent state: who can see the data, whether it stays coherent, and whether it survives. None of these patterns is a bug by itself. Each becomes one only when a second endpoint observes the side effect.</p>
+  <div class="grid">
+      <article class="card issue">
+        <h3>Visibility <code>exposed_record</code></h3>
+        <p class="q">Is the data visible to the correct reader?</p>
+        <p>A write changes a record's status, but a read endpoint still serves it without checking.</p>
+        <pre><code>@app.post(&quot;/products/&lt;pid&gt;/discontinue&quot;)
+def discontinue(pid):
+    <span class="u">db.execute(&quot;mark as discontinued&quot;)</span>
+
+@app.get(&quot;/products/&lt;pid&gt;&quot;)
+def get_product(pid):
+    <span class="u">&quot;&quot;&quot;Return a product</span>
+    <span class="u">available for purchase&quot;&quot;&quot;</span>
+    row = db.execute(
+        &quot;SELECT * FROM product &quot;
+        &quot;WHERE p_id=?&quot;, (pid,))
+    <span class="c"># no p_status filter</span>
+    return jsonify(row)</code></pre>
+        <p class="callout">The read <b>never filters</b> on status: discontinued products are still served as if on sale.</p>
+      </article>
+      <article class="card issue">
+        <h3>Consistency <code>stale_aggregate</code></h3>
+        <p class="q">Does the data stay coherent?</p>
+        <p>A write modifies source rows but does not update a stored aggregate that another endpoint returns.</p>
+        <pre><code><span class="c"># the invariant is stated only here</span>
+@app.post(&quot;/orders&quot;)
+def create_order():
+    <span class="u">total = &quot;sum of lineitem prices&quot;</span>
+    db.execute(&quot;insert order, &quot;
+               &quot;o_totalprice=total&quot;)
+
+@app.put(&quot;/orders/&lt;oid&gt;/lineitems/&lt;id&gt;&quot;)
+def update_lineitem(oid, id):
+    db.execute(&quot;update lineitem price&quot;)
+    <span class="c"># o_totalprice never recomputed</span></code></pre>
+        <p class="callout">Editing an item <b>never recomputes</b> the cached total: every later read returns a stale value.</p>
+      </article>
+      <article class="card issue">
+        <h3>Retention <code>cascade_delete</code></h3>
+        <p class="q">Does the correct data survive?</p>
+        <p>A delete removes child rows that a read endpoint expects to remain observable.</p>
+        <pre><code>@app.delete(&quot;/customers/&lt;c_custkey&gt;&quot;)
+def delete_customer(c_custkey):
+    <span class="c"># the customer&#x27;s orders are</span>
+    <span class="c"># deleted in cascade</span>
+    <span class="u">db.execute(&quot;delete related orders&quot;)</span>
+    db.execute(&quot;delete customer&quot;)
+
+@app.get(&quot;/orders/summary&quot;)
+def orders_summary():
+    <span class="u">&quot;&quot;&quot;Return the summary of</span>
+    <span class="u">all historical orders&quot;&quot;&quot;</span>
+    return db.execute(&quot;orders summary&quot;)</code></pre>
+        <p class="callout">Deleting a customer erases their orders: the summary silently <b>loses the history</b> it promises.</p>
+      </article>
+  </div>
+  <p class="foot">Simplified sketches of benchmark tasks. The real tasks, with schemas and ground truth, are in <a href="https://github.com/francdente/do-llms-understand-data-layers/tree/main/data/tasks"><code>data/tasks</code></a>.</p>
+</section>
+
+<section id="setup">
+  <h2>A deliberately small benchmark</h2>
+  <p>Each task is a handbook-scale backend, scoped so that the only reachable defect is the semantic one under test. The schema and the code arrive in a single prompt, with no retrieval and no repository navigation, so every number here is an upper bound on real-world review.</p>
+  <ul class="facts">
+    <li><b>216</b>task instances: 18 hand-written scenarios, each in 12 variants</li>
+    <li><b>3</b>languages (Python, JavaScript, Go), with raw SQL and ORM variants</li>
+    <li><b>~53</b>lines per backend: 1 to 2 tables, 2 to 3 endpoints</li>
+    <li><b>50%</b>of the instances contain the issue, 50% do not</li>
+    <li><b>5</b>models: GPT-5.4, Kimi-K2.6, DeepSeek-V3.1, Gemma-4-31b, Qwen3.5-397B</li>
+  </ul>
+  <div class="regimes">
+    <div class="card r-free"><h3>FREE</h3><p>An open-ended review of the backend's data layer, with no hint. Measures <b>discovery</b>.</p></div>
+    <div class="card r-def"><h3>DEF</h3><p>The prompt includes a natural-language definition of the target issue. Measures <b>recognition</b>.</p></div>
+  </div>
+  <p style="margin-top:14px">The tasks are solvable from code and schema alone: 10 developers with 3+ years of experience reviewed them under the FREE conditions, and every issue type was found by at least three of them.</p>
+</section>
+
+<section id="results">
+  <h2>Results</h2>
+  <div class="legend" role="group" aria-label="Legend">
+    <b>F1 score per model</b>
+    <span class="key"><i class="free"></i><span><b>FREE</b> no hint: the model must discover the issue</span></span>
+    <span class="key"><i class="def"></i><span><b>DEF</b> issue definition given: the model must recognize it</span></span>
+  </div>
+  <div class="grid results">
+      <article class="card result" aria-labelledby="r-vis">
+        <header>
+          <h3 id="r-vis">Visibility</h3>
+          <span class="pill">discovery gap <b>+0.06</b></span>
+        </header>
+        <div class="row"><span class="name">GPT-5.4</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:89%"></i></span><span class="v"><span class="sr">without the definition: </span>0.89</span></span><span class="b"><span class="track"><i class="def" style="width:90%"></i></span><span class="v"><span class="sr">with the definition: </span>0.90</span></span></span></div>
+        <div class="row"><span class="name">Kimi-K2.6</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:94%"></i></span><span class="v"><span class="sr">without the definition: </span>0.94</span></span><span class="b"><span class="track"><i class="def" style="width:91%"></i></span><span class="v"><span class="sr">with the definition: </span>0.91</span></span></span></div>
+        <div class="row"><span class="name">DeepSeek-V3.1</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:74%"></i></span><span class="v"><span class="sr">without the definition: </span>0.74</span></span><span class="b"><span class="track"><i class="def" style="width:76%"></i></span><span class="v"><span class="sr">with the definition: </span>0.76</span></span></span></div>
+        <div class="row"><span class="name">Gemma-4-31b</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:97%"></i></span><span class="v"><span class="sr">without the definition: </span>0.97</span></span><span class="b"><span class="track"><i class="def" style="width:100%"></i></span><span class="v"><span class="sr">with the definition: </span>1.00</span></span></span></div>
+        <div class="row"><span class="name">Qwen3.5-397B</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:69%"></i></span><span class="v"><span class="sr">without the definition: </span>0.69</span></span><span class="b"><span class="track"><i class="def" style="width:100%"></i></span><span class="v"><span class="sr">with the definition: </span>1.00</span></span></span></div>
+        <div class="row avg"><span class="name">Average F1</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:85%"></i></span><span class="v"><span class="sr">without the definition: </span>0.85</span></span><span class="b"><span class="track"><i class="def" style="width:91%"></i></span><span class="v"><span class="sr">with the definition: </span>0.91</span></span></span></div>
+        <div class="flagged">
+          <h4>With DEF, how often is the issue flagged?</h4>
+          <div class="row"><span class="name">Issue present</span><span class="pair"><span class="b"><span class="track"><i class="def" style="width:100%"></i></span><span class="v"><span class="sr">flagged in </span>100%</span></span></span></div>
+          <div class="row"><span class="name">Issue absent</span><span class="pair"><span class="b"><span class="track"><i class="alarm" style="width:21%"></i></span><span class="v"><span class="sr">flagged in </span>21%</span></span></span></div>
+        </div>
+      </article>
+      <article class="card result" aria-labelledby="r-con">
+        <header>
+          <h3 id="r-con">Consistency</h3>
+          <span class="pill sig">discovery gap <b>+0.38</b></span>
+        </header>
+        <div class="row"><span class="name">GPT-5.4</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:84%"></i></span><span class="v"><span class="sr">without the definition: </span>0.84</span></span><span class="b"><span class="track"><i class="def" style="width:100%"></i></span><span class="v"><span class="sr">with the definition: </span>1.00</span></span></span></div>
+        <div class="row"><span class="name">Kimi-K2.6</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:62%"></i></span><span class="v"><span class="sr">without the definition: </span>0.62</span></span><span class="b"><span class="track"><i class="def" style="width:97%"></i></span><span class="v"><span class="sr">with the definition: </span>0.97</span></span></span></div>
+        <div class="row"><span class="name">DeepSeek-V3.1</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:24%"></i></span><span class="v"><span class="sr">without the definition: </span>0.24</span></span><span class="b"><span class="track"><i class="def" style="width:84%"></i></span><span class="v"><span class="sr">with the definition: </span>0.84</span></span></span></div>
+        <div class="row"><span class="name">Gemma-4-31b</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:80%"></i></span><span class="v"><span class="sr">without the definition: </span>0.80</span></span><span class="b"><span class="track"><i class="def" style="width:100%"></i></span><span class="v"><span class="sr">with the definition: </span>1.00</span></span></span></div>
+        <div class="row"><span class="name">Qwen3.5-397B</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:33%"></i></span><span class="v"><span class="sr">without the definition: </span>0.33</span></span><span class="b"><span class="track"><i class="def" style="width:90%"></i></span><span class="v"><span class="sr">with the definition: </span>0.90</span></span></span></div>
+        <div class="row avg"><span class="name">Average F1</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:56%"></i></span><span class="v"><span class="sr">without the definition: </span>0.56</span></span><span class="b"><span class="track"><i class="def" style="width:94%"></i></span><span class="v"><span class="sr">with the definition: </span>0.94</span></span></span></div>
+        <div class="flagged">
+          <h4>With DEF, how often is the issue flagged?</h4>
+          <div class="row"><span class="name">Issue present</span><span class="pair"><span class="b"><span class="track"><i class="def" style="width:100%"></i></span><span class="v"><span class="sr">flagged in </span>100%</span></span></span></div>
+          <div class="row"><span class="name">Issue absent</span><span class="pair"><span class="b"><span class="track"><i class="alarm" style="width:14%"></i></span><span class="v"><span class="sr">flagged in </span>14%</span></span></span></div>
+        </div>
+      </article>
+      <article class="card result" aria-labelledby="r-ret">
+        <header>
+          <h3 id="r-ret">Retention</h3>
+          <span class="pill sig">discovery gap <b>+0.70</b></span>
+        </header>
+        <div class="row"><span class="name">GPT-5.4</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:15%"></i></span><span class="v"><span class="sr">without the definition: </span>0.15</span></span><span class="b"><span class="track"><i class="def" style="width:76%"></i></span><span class="v"><span class="sr">with the definition: </span>0.76</span></span></span></div>
+        <div class="row"><span class="name">Kimi-K2.6</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:0%"></i></span><span class="v"><span class="sr">without the definition: </span>0.00</span></span><span class="b"><span class="track"><i class="def" style="width:73%"></i></span><span class="v"><span class="sr">with the definition: </span>0.73</span></span></span></div>
+        <div class="row"><span class="name">DeepSeek-V3.1</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:0%"></i></span><span class="v"><span class="sr">without the definition: </span>0.00</span></span><span class="b"><span class="track"><i class="def" style="width:71%"></i></span><span class="v"><span class="sr">with the definition: </span>0.71</span></span></span></div>
+        <div class="row"><span class="name">Gemma-4-31b</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:0%"></i></span><span class="v"><span class="sr">without the definition: </span>0.00</span></span><span class="b"><span class="track"><i class="def" style="width:75%"></i></span><span class="v"><span class="sr">with the definition: </span>0.75</span></span></span></div>
+        <div class="row"><span class="name">Qwen3.5-397B</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:0%"></i></span><span class="v"><span class="sr">without the definition: </span>0.00</span></span><span class="b"><span class="track"><i class="def" style="width:71%"></i></span><span class="v"><span class="sr">with the definition: </span>0.71</span></span></span></div>
+        <div class="row avg"><span class="name">Average F1</span><span class="pair"><span class="b"><span class="track"><i class="free" style="width:3%"></i></span><span class="v"><span class="sr">without the definition: </span>0.03</span></span><span class="b"><span class="track"><i class="def" style="width:73%"></i></span><span class="v"><span class="sr">with the definition: </span>0.73</span></span></span></div>
+        <div class="flagged">
+          <h4>With DEF, how often is the issue flagged?</h4>
+          <div class="row"><span class="name">Issue present</span><span class="pair"><span class="b"><span class="track"><i class="def" style="width:100%"></i></span><span class="v"><span class="sr">flagged in </span>100%</span></span></span></div>
+          <div class="row"><span class="name">Issue absent</span><span class="pair"><span class="b"><span class="track"><i class="alarm" style="width:74%"></i></span><span class="v"><span class="sr">flagged in </span>74%</span></span></span></div>
+        </div>
+      </article>
+  </div>
+  <p class="foot">Discovery gap = average F1 with the definition (DEF) minus without it (FREE). Red: the 95% bootstrap interval of the gap excludes zero. Flagged = share of backends where the 5 models report the issue.</p>
+</section>
+
+<section id="findings">
+  <h2>Three findings</h2>
+  <div class="findings">
+    <article class="card finding">
+      <h3>Discovery gap</h3>
+      <p>Removing the definition drops average F1 from 0.91 to 0.85 for visibility, from 0.94 to 0.56 for consistency, and from 0.73 to 0.03 for retention. The gap is statistically significant for consistency and retention, exactly where models fail to find the issue unprompted.</p>
+    </article>
+    <article class="card finding">
+      <h3>Hierarchy of detectability</h3>
+      <p>Visibility issues are often found unprompted, consistency issues sometimes, retention issues almost never. Models spot what resembles familiar security practice more readily than latent data-integrity invariants. Developers show the same ranking.</p>
+      <div class="chart">
+        <div class="legend" role="group" aria-label="Legend">
+          <b>Issues found with no hints</b>
+          <span class="key"><i class="human"></i><span><b>Developers</b></span></span>
+          <span class="key"><i class="free"></i><span><b>LLMs</b> FREE, average of 5 models</span></span>
+        </div>
+        <div class="row"><span class="name">Visibility</span><span class="pair"><span class="b"><span class="track"><i class="human" style="width:69%"></i></span><span class="v"><span class="sr">developers: </span>69%</span></span><span class="b"><span class="track"><i class="free" style="width:75%"></i></span><span class="v"><span class="sr">LLMs: </span>75%</span></span></span></div><div class="row"><span class="name">Consistency</span><span class="pair"><span class="b"><span class="track"><i class="human" style="width:31%"></i></span><span class="v"><span class="sr">developers: </span>31%</span></span><span class="b"><span class="track"><i class="free" style="width:44%"></i></span><span class="v"><span class="sr">LLMs: </span>44%</span></span></span></div><div class="row"><span class="name">Retention</span><span class="pair"><span class="b"><span class="track"><i class="human" style="width:23%"></i></span><span class="v"><span class="sr">developers: </span>23%</span></span><span class="b"><span class="track"><i class="free" style="width:2%"></i></span><span class="v"><span class="sr">LLMs: </span>2%</span></span></span></div>
+        <p class="foot">Recall on backends that contain the issue. Developers: 10 engineers, 39 reviews (13 per issue type).</p>
+      </div>
+    </article>
+    <article class="card finding">
+      <h3>Compliance bias</h3>
+      <p>With the definition, models never miss the issue, but in retention they also flag <b>74% of the backends where it is absent</b> (21% for visibility, 14% for consistency). They react to the cascade delete named in the definition, not to whether any data is actually lost: a harmless cascade delete is flagged in 119 of 120 cases.</p>
+    </article>
+  </div>
+  <p class="takeaway">Targeted detection benchmarks overestimate what a model finds in an open-ended review.</p>
+</section>
+
+<section id="reproduce">
+  <h2>Reproduce the numbers</h2>
+  <p>The repository ships the benchmark, the prompts, and every model output behind the paper's tables, so the results can be recomputed without API keys.</p>
+<pre><code>git clone https://github.com/francdente/do-llms-understand-data-layers
+cd do-llms-understand-data-layers
+uv sync
+unzip data/results.zip -d data
+# main results table
+uv run reproduce_table.py
+# FREE scores from the manual annotations
+uv run compute_free_from_annotations.py</code></pre>
+  <p>The <a href="https://github.com/francdente/do-llms-understand-data-layers#readme">README</a> maps every table in the paper to the script and data that produce it.</p>
+</section>
+
+<section id="cite">
+  <div class="headrow"><h2>Cite</h2><button class="copy" type="button" data-copy="bib">Copy BibTeX</button></div>
+<pre id="bib"><code>@inproceedings{dente2026datalayer,
+  title     = {Do {LLMs} Understand Backend Data-Layer Semantics? A Controlled Study of Cross-Endpoint Issues},
+  author    = {Dente, Francesco and Satriani, Dario and Santoro, Donatello and Veltri, Enzo and Papotti, Paolo},
+  booktitle = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing},
+  year      = {2026},
+  note      = {To appear}
+}</code></pre>
+</section>
+
+</main>
+
+<footer>
+  <p>Contact: <a href="mailto:francesco.dente@eurecom.fr">francesco.dente@eurecom.fr</a></p>
+  <p>Code and data are released under the MIT license. <a href="https://github.com/francdente/do-llms-understand-data-layers">github.com/francdente/do-llms-understand-data-layers</a></p>
+</footer>
+
+<script>
+document.querySelectorAll("[data-copy]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent).then(function () {
+      b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy BibTeX"; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>
