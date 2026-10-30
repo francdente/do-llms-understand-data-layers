@@ -4,7 +4,11 @@ Reproducibility package for the paper:
 
 > **Do LLMs Understand Backend Data-Layer Semantics? A Controlled Study of Cross-Endpoint Issues**
 >
-> EMNLP 2026
+> Francesco Dente\*, Dario Satriani\*, Donatello Santoro, Enzo Veltri, Paolo Papotti (\*equal contribution)
+>
+> *Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing (EMNLP 2026)*, pages 49005–49019
+>
+> [[Paper]](https://aclanthology.org/2026.emnlp-main.2154/) · [[Project page]](https://francdente.github.io/do-llms-understand-data-layers/)
 
 ## Overview
 
@@ -313,6 +317,32 @@ All experiments use temperature 0 and reasoning disabled for reproducibility.
 
 ### AI-disclosure
 The code in this repository was developed with AI assistance.
+
+## Citation
+
+```bibtex
+@inproceedings{dente-etal-2026-llms,
+    title = "Do {LLM}s Understand Backend Data-Layer Semantics? A Controlled Study of Cross-Endpoint Issues",
+    author = "Dente, Francesco  and
+      Satriani, Dario  and
+      Santoro, Donatello  and
+      Veltri, Enzo  and
+      Papotti, Paolo",
+    editor = "Lee, Hung-Yi  and
+      Dev, Sunipa  and
+      Li, Jessy  and
+      Elliott, Desmond",
+    booktitle = "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing",
+    month = oct,
+    year = "2026",
+    address = "Budapest, Hungary",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.emnlp-main.2154/",
+    doi = "10.18653/2026.emnlp-main.2154",
+    pages = "49005--49019",
+    ISBN = "979-8-89176-459-0"
+}
+```
 
 ## License
 
